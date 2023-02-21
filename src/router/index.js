@@ -3,12 +3,24 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Layout from '@/layout/index.vue'
+
 // 导入子路由规则模块
 import home from '@/router/home/home'
+
+//考勤模块路由
+import attendances from '@/router/attendances/attendances'
+//工资模块路由
+import salarys from '@/router/salarys/salarys'
 
 Vue.use(VueRouter)
 
 const routes = [
+  {path:'/',redirect:'layout'},
+  {path:'/layout',component:Layout,redirect:'/layout/home',children:[
+    home,
+    attendances,
+    salarys
+  ]},
   { 
     path: '/', 
     redirect: 'layout' 
