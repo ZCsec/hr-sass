@@ -1,16 +1,9 @@
 <template>
-  <div>
-    Home组件
-    111111111111111111111
-  </div>
+  <div>Home组件</div>
 </template>
 
 <script>
-  export default {
-    
-  }
+export default {}
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>
