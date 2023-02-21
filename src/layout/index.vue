@@ -1,14 +1,12 @@
 <template>
   <div>
+    Layout
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'App',
-  components: {}
-}
+export default {}
 </script>
 
-<style></style>
+<style scoped></style>
