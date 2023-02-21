@@ -20,12 +20,24 @@ const routes = [
     home,
     attendances,
     salarys
-  ]}
+  ]},
+  { 
+    path: '/', 
+    redirect: 'layout' 
+  },
+  {
+    path: '/layout', 
+    component: Layout, 
+    redirect: '/layout/home', 
+    children: [
+      home
+    ]
+  }
 ]
 
 const router = new VueRouter({
   routes,
-  mode:'history'
+  mode: 'history'
 })
 
 export default router

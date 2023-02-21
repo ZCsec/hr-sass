@@ -82,8 +82,9 @@ export default {}
   }
 }
 
-.el-menu-item.is-active {
-  background: #e3568f !important;
-  color: #2e0ecf !important;
-}
+// .el-menu-item.is-active {
+  // background-color: #fff;
+  // color: rgb(75, 124, 251) !important;
+  // color: #fff !important;
+// }
 </style>
