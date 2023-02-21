@@ -1,45 +1,25 @@
 <template>
-  <div>
+  <div class="em">
     <el-container style="height: 690px; border: 1px solid #eee">
       <el-aside
         width="200px"
         style="background-color: rgb(75, 124, 251); height: 100%"
       >
-        <el-menu text-color="#fff" style="background-color: rgb(75, 124, 251)">
+        <el-menu
+          router
+          text-color="#fff"
+          style="background-color: rgb(75, 124, 251)"
+        >
           <div class="logo"><img src="@/assets/common/logo.png" alt="" /></div>
-          <el-menu-item>
-            <router-link class="router-l" to="/layout/home">首页</router-link>
-          </el-menu-item>
-          <el-menu-item>
-            <router-link class="router-l" to="/layout/home"
-              >组织架构</router-link
-            >
-          </el-menu-item>
-          <el-menu-item>
-            <router-link class="router-l" to="/layout/home">员工</router-link>
-          </el-menu-item>
-          <el-menu-item>
-            <router-link class="router-l" to="/layout/home"
-              >公司设置</router-link
-            >
-          </el-menu-item>
-          <el-menu-item>
-            <router-link class="router-l" to="/layout/home"
-              >权限设置</router-link
-            >
-          </el-menu-item>
-          <el-menu-item>
-            <router-link class="router-l" to="/layout/home">社保</router-link>
-          </el-menu-item>
-          <el-menu-item>
-            <router-link class="router-l" to="/layout/home">考勤</router-link>
-          </el-menu-item>
-          <el-menu-item>
-            <router-link class="router-l" to="/layout/home">工资</router-link>
-          </el-menu-item>
-          <el-menu-item>
-            <router-link class="router-l" to="/layout/home">审批</router-link>
-          </el-menu-item>
+          <el-menu-item index="/layout/home"> 首页 </el-menu-item>
+          <el-menu-item index="/layout/home"> 组织架构 </el-menu-item>
+          <el-menu-item index="/layout/home"> 员工 </el-menu-item>
+          <el-menu-item index="/layout/home"> 公司设置 </el-menu-item>
+          <el-menu-item index="/layout/home"> 权限设置 </el-menu-item>
+          <el-menu-item index="/layout/home"> 社保 </el-menu-item>
+          <el-menu-item index="/layout/home"> 考勤 </el-menu-item>
+          <el-menu-item index="/layout/home"> 工资 </el-menu-item>
+          <el-menu-item index="/layout/home"> 审批 </el-menu-item>
         </el-menu>
         <div class="left-bottom-bg"></div>
       </el-aside>
@@ -49,7 +29,6 @@
           <span style="text-align: left; color: #fff"
             >南昌中兴软件技术有限公司</span
           >
-          
         </el-header>
 
         <el-main>
@@ -103,16 +82,8 @@ export default {}
   }
 }
 
-.router-l {
-  display: inline-block;
-  width: 100%;
-  color: #fff !important;
-  text-decoration: none;
-  font-size: 16px;
-  text-align: center;
-
-  &:hover {
-    color: rgb(75, 124, 251) !important;
-  }
+.el-menu-item.is-active {
+  background: #e3568f !important;
+  color: #2e0ecf !important;
 }
 </style>
