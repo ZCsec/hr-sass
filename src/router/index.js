@@ -9,15 +9,23 @@ import home from '@/router/home/home'
 Vue.use(VueRouter)
 
 const routes = [
-  {path:'/',redirect:'layout'},
-  {path:'/layout',component:Layout,redirect:'/layout/home',children:[
-    home
-  ]}
+  { 
+    path: '/', 
+    redirect: 'layout' 
+  },
+  {
+    path: '/layout', 
+    component: Layout, 
+    redirect: '/layout/home', 
+    children: [
+      home
+    ]
+  }
 ]
 
 const router = new VueRouter({
   routes,
-  mode:'history'
+  mode: 'history'
 })
 
 export default router
