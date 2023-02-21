@@ -83,7 +83,8 @@ export default {}
 }
 
 .el-menu-item.is-active {
-  background: #e3568f !important;
-  color: #2e0ecf !important;
+  // background-color: #fff;
+  // color: rgb(75, 124, 251) !important;
+  // color: #fff !important;
 }
 </style>
