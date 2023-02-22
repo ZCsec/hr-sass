@@ -5,6 +5,7 @@ import VueRouter from 'vue-router'
 import Layout from '@/layout/index.vue'
 // 导入子路由规则模块
 import home from '@/router/home/home'
+import organ from '@/router/organ/organ'
 
 Vue.use(VueRouter)
 
@@ -16,11 +17,12 @@ const routes = [
   {
     path: '/layout', 
     component: Layout, 
-    redirect: '/layout/home', 
+    redirect: '/layout/home',
     children: [
-      home
+      home,organ
     ]
-  }
+  },
+
 ]
 
 const router = new VueRouter({

@@ -12,7 +12,7 @@
         >
           <div class="logo"><img src="@/assets/common/logo.png" alt="" /></div>
           <el-menu-item index="/layout/home"> 首页 </el-menu-item>
-          <el-menu-item index="/layout/home"> 组织架构 </el-menu-item>
+          <el-menu-item index="/layout/Organ"> 组织架构 </el-menu-item>
           <el-menu-item index="/layout/home"> 员工 </el-menu-item>
           <el-menu-item index="/layout/home"> 公司设置 </el-menu-item>
           <el-menu-item index="/layout/home"> 权限设置 </el-menu-item>
