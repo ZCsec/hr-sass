@@ -13,6 +13,9 @@ import attendances from '@/router/attendances/attendances'
 //工资模块路由
 import salarys from '@/router/salarys/salarys'
 
+// 公司设置路由
+import companySettings from '@/router/CompanySettings/CompanySettings'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -20,7 +23,8 @@ const routes = [
   {path:'/layout',component:Layout,redirect:'/layout/home',children:[
     home,
     attendances,
-    salarys
+    salarys,
+    companySettings
   ]},
   { 
     path: '/', 
