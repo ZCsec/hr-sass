@@ -17,8 +17,8 @@
           <el-menu-item index="/layout/home"> 公司设置 </el-menu-item>
           <el-menu-item index="/layout/sysSet"> 权限设置 </el-menu-item>
           <el-menu-item index="/layout/home"> 社保 </el-menu-item>
-          <el-menu-item index="/layout/home"> 考勤 </el-menu-item>
-          <el-menu-item index="/layout/home"> 工资 </el-menu-item>
+          <el-menu-item index="/layout/attendances"> 考勤 </el-menu-item>
+          <el-menu-item index="/layout/salarys"> 工资 </el-menu-item>
           <el-menu-item index="/layout/home"> 审批 </el-menu-item>
         </el-menu>
         <div class="left-bottom-bg"></div>
@@ -82,8 +82,9 @@ export default {}
   }
 }
 
-.el-menu-item.is-active {
-  background: #e3568f !important;
-  color: #2e0ecf !important;
-}
+// .el-menu-item.is-active {
+  // background-color: #fff;
+  // color: rgb(75, 124, 251) !important;
+  // color: #fff !important;
+// }
 </style>
