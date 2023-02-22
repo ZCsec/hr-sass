@@ -59,7 +59,11 @@ export default {}
   }
 
   .el-menu-item:hover {
-    color: rgb(75, 124, 251) !important;
+    color: #43a7fe !important;
+  }
+
+  .el-menu-item:focus {
+    color: #43a7fe !important;
   }
 
   .logo {
@@ -83,8 +87,8 @@ export default {}
 }
 
 // .el-menu-item.is-active {
-  // background-color: #fff;
-  // color: rgb(75, 124, 251) !important;
-  // color: #fff !important;
+// background-color: #fff;
+// color: rgb(75, 124, 251) !important;
+// color: #fff !important;
 // }
 </style>
