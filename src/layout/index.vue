@@ -15,7 +15,7 @@
           <el-menu-item index="/layout/home"> 组织架构 </el-menu-item>
           <el-menu-item index="/layout/home"> 员工 </el-menu-item>
           <el-menu-item index="/layout/home"> 公司设置 </el-menu-item>
-          <el-menu-item index="/layout/home"> 权限设置 </el-menu-item>
+          <el-menu-item index="/layout/sysSet"> 权限设置 </el-menu-item>
           <el-menu-item index="/layout/home"> 社保 </el-menu-item>
           <el-menu-item index="/layout/home"> 考勤 </el-menu-item>
           <el-menu-item index="/layout/home"> 工资 </el-menu-item>
