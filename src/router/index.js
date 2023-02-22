@@ -24,29 +24,13 @@ const routes = [
   {path:'/',redirect:'/login'},
   {path:'/login',component:Login},
   {path:'/layout',component:Layout,redirect:'/layout/home',children:[
+    // 在这里放你对应的模块！！！
     home,
     attendances,
     salarys,
-<<<<<<< HEAD
-    companySettings
-  ]},
-  { 
-    path: '/', 
-    redirect: 'layout' 
-  },
-  {
-    path: '/layout', 
-    component: Layout, 
-    redirect: '/layout/home', 
-    children: [
-      home,
-      sysSet
-    ]
-  }
-=======
-    sysSet,
+    companySettings,
+    sysSet
   ]}
->>>>>>> 5057652dab0cb94832ab78afdee97b17497493e7
 ]
 
 const router = new VueRouter({

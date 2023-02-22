@@ -54,18 +54,62 @@
           <span class="ap-title">流程申请</span>
           <ul class="ap-content">
             <li>
-              <a href="">加班离职</a>
+              <el-button type="text" @click="dialogFormVisible = true"
+                >加班离职</el-button
+              >
             </li>
             <li>
-              <a href="">请假调休</a>
+              <el-button type="text" @click="dialogFormVisible = true"
+                >请假调休</el-button
+              >
             </li>
             <li>
-              <a href="">审批列表</a>
+              <a href="#">审批列表</a>
             </li>
             <li>
-              <a href="">我的信息</a>
+              <a href="#">我的信息</a>
             </li>
           </ul>
+          <el-dialog title="审批地址" :visible.sync="dialogFormVisible">
+            <el-form ref="form" :model="form" label-width="80px">
+              <el-form-item label="申请类型">
+                <el-select v-model="form.region" placeholder="请选择活动区域">
+                  <el-option label="加班" value="addWork"></el-option>
+                  <el-option label="离职" value="leave"></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="开始时间">
+                <el-col :span="11">
+                  <el-date-picker
+                    type="date"
+                    placeholder="选择日期时间"
+                    v-model="form.date1"
+                    style="width: 100%"
+                  ></el-date-picker>
+                </el-col>
+              </el-form-item>
+              <el-form-item label="结束时间">
+                <el-col :span="11">
+                  <el-date-picker
+                    type="date"
+                    placeholder="选择日期时间"
+                    v-model="form.date2"
+                    style="width: 100%"
+                  ></el-date-picker>
+                </el-col>
+              </el-form-item>
+              <el-form-item label="补偿方式">
+                <p class="tiaoxiu">调休</p>
+              </el-form-item>
+              <el-form-item label="活动形式">
+                <el-input type="textarea" v-model="form.desc"></el-input>
+              </el-form-item>
+              <el-form-item>
+                <el-button type="primary" @click="onSubmit">提交</el-button>
+                <el-button>取消</el-button>
+              </el-form-item>
+            </el-form>
+          </el-dialog>
         </div>
       </div>
     </div>
@@ -80,6 +124,22 @@ export default {
         return this.$store.state.home.date
       },
       set() {}
+    }
+  },
+  data() {
+    return {
+      dialogFormVisible: false,
+      formLabelWidth: '120px',
+      form: {
+        name: '',
+        region: '',
+        date1: '',
+        date2: '',
+        delivery: false,
+        type: [],
+        resource: '',
+        desc: ''
+      }
     }
   }
 }
@@ -211,5 +271,18 @@ export default {
   height: 50px;
   // line-height: 50px;
   text-align: center;
+}
+
+.tiaoxiu {
+  margin: 0;
+  // margin-top: 10px;
+}
+
+/deep/.el-textarea__inner {
+  width: 50%;
+}
+
+/deep/.el-textarea__inner {
+  width: 50%;
 }
 </style>
