@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Layout from '@/layout/index.vue'
+import Login from '@/components/login.vue'
 
 // 导入子路由规则模块
 import home from '@/router/home/home'
@@ -12,34 +13,38 @@ import sysSet from '@/router/sysSet/sysSet'
 import attendances from '@/router/attendances/attendances'
 //工资模块路由
 import salarys from '@/router/salarys/salarys'
+import store from "@/store/index"
 
 Vue.use(VueRouter)
 
 const routes = [
-  {path:'/',redirect:'layout'},
+  {path:'/',redirect:'/login'},
+  {path:'/login',component:Login},
   {path:'/layout',component:Layout,redirect:'/layout/home',children:[
     home,
     attendances,
-    salarys
-  ]},
-  { 
-    path: '/', 
-    redirect: 'layout' 
-  },
-  {
-    path: '/layout', 
-    component: Layout, 
-    redirect: '/layout/home', 
-    children: [
-      home,
-      sysSet
-    ]
-  }
+    salarys,
+    sysSet,
+  ]}
 ]
 
 const router = new VueRouter({
   routes,
   mode: 'history'
+})
+
+const arrs = ["/login","/404"]
+router.beforeEach(async (to,from,next)=>{
+  if(arrs.indexOf(to.path)===-1){
+    if(store.getters.token){
+      next();
+    }else{
+      next("/login")
+    }
+  }else{
+    next();
+  }
+  
 })
 
 export default router
