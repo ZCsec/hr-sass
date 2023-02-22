@@ -15,6 +15,9 @@ import attendances from '@/router/attendances/attendances'
 import salarys from '@/router/salarys/salarys'
 import store from "@/store/index"
 
+// 公司设置路由
+import companySettings from '@/router/CompanySettings/CompanySettings'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -24,8 +27,26 @@ const routes = [
     home,
     attendances,
     salarys,
+<<<<<<< HEAD
+    companySettings
+  ]},
+  { 
+    path: '/', 
+    redirect: 'layout' 
+  },
+  {
+    path: '/layout', 
+    component: Layout, 
+    redirect: '/layout/home', 
+    children: [
+      home,
+      sysSet
+    ]
+  }
+=======
     sysSet,
   ]}
+>>>>>>> 5057652dab0cb94832ab78afdee97b17497493e7
 ]
 
 const router = new VueRouter({
