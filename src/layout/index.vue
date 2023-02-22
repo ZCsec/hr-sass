@@ -43,7 +43,7 @@
 export default {}
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .el-header {
   background-color: rgb(75, 124, 251);
   color: #333;
@@ -86,6 +86,10 @@ export default {}
   }
 }
 
+/deep/.el-main {
+  background-color: #f0f2f5 !important;
+
+}
 // .el-menu-item.is-active {
 // background-color: #fff;
 // color: rgb(75, 124, 251) !important;
