@@ -6,6 +6,7 @@ import Layout from '@/layout/index.vue'
 
 // 导入子路由规则模块
 import home from '@/router/home/home'
+import sysSet from '@/router/sysSet/sysSet'
 
 //考勤模块路由
 import attendances from '@/router/attendances/attendances'
@@ -30,7 +31,8 @@ const routes = [
     component: Layout, 
     redirect: '/layout/home', 
     children: [
-      home
+      home,
+      sysSet
     ]
   }
 ]
