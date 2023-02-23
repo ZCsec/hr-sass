@@ -17,6 +17,7 @@ import store from "@/store/index"
 
 // 公司设置路由
 import companySettings from '@/router/CompanySettings/CompanySettings'
+import employee from '@/router/CompanySettings/Employee'
 
 Vue.use(VueRouter)
 
@@ -29,7 +30,8 @@ const routes = [
     attendances,
     salarys,
     companySettings,
-    sysSet
+    sysSet,
+    employee
   ]}
 ]
 
