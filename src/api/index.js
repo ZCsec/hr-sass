@@ -7,6 +7,11 @@
 // 在模块文件中 统一导入 '@/utils/request.js' 作为axios请求包 
 // 文件内已经设置好接口的基础地址，调用时直接调用接口地址
 
+//登录接口
 import { getLogin } from "@/api/login/login";
-
 export const getLoginAPI = getLogin
+
+//部门接口 考勤数据接口
+import { getDepartment,getAttendance } from "@/api/attendances/attendances";
+export const getDepartmentAPI = getDepartment;
+export const getAttendanceAPI =getAttendance;

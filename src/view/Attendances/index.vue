@@ -3,11 +3,13 @@
     <el-row>
       <el-col :span="24">
         <div class="grid-content bg-purple-dark">
-          <div><i class="el-icon-info" style="color:blue"></i> 有 0 条考勤审批尚未处理</div>
+          <div>
+            <i class="el-icon-info" style="color:blue"></i> 有 0 条考勤审批尚未处理
+          </div>
           <div>
             <button class="el-button">导入</button>
             <button class="el-button" @click="open">提醒</button>
-            <button class="el-button">设置</button>
+            <button class="el-button" @click="dialogFormVisible = true">设置</button>
             <button class="el-button">历史归档</button>
             <button class="el-button">3月份报表</button>
           </div>
@@ -49,10 +51,118 @@
         <el-table-column prop="phone" label="手机" width="300"></el-table-column>
       </el-table>
     </div>
+    <!-- 设置点击效果 -->
+    <el-dialog title="设置" :visible.sync="dialogFormVisible">
+      <el-tabs v-model="activeName">
+        <el-tab-pane label="出勤设置" name="first">
+          <div class="main1">
+            <strong style="color:red">*</strong>部门：
+            <el-select v-model="value" placeholder="请选择">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </div>
+          <div class="main2">
+            <strong style="color:red">*</strong>出勤时间：
+            <el-time-select
+              style="width:140px"
+              v-model="startTime"
+              :picker-options="{
+              start: '08:30',
+              step: '00:15',
+              end: '18:30'
+            }"
+            ></el-time-select>-
+            <el-time-select
+              style="width:140px"
+              v-model="endTime"
+              :picker-options="{
+              start: '08:30',
+              step: '00:15',
+              end: '18:30',
+              minTime: startTime
+            }"
+            ></el-time-select>-
+            <el-time-select
+              style="width:140px"
+              v-model="startTime1"
+              :picker-options="{
+              start: '14:00',
+              step: '00:15',
+              end: '17:30'
+            }"
+            ></el-time-select>-
+            <el-time-select
+              style="width:140px"
+              v-model="endTime1"
+              :picker-options="{
+              start: '18:30',
+              step: '00:15',
+              end: '21:30',
+              minTime: startTime
+            }"
+            ></el-time-select>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="请假设置" name="second">
+          <div class="main1">
+            <strong style="color:red">*</strong>部门：
+            <el-select v-model="value" placeholder="请选择">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </div>
+          <div class="type">
+            <p>假期类型</p>
+            <b>类型</b>
+            <b>是否可用</b>
+          </div>
+          <div class="main3">
+            <li>事假<el-switch v-model="value1" active-color="#13ce66" inactive-color="#ff4949"></el-switch></li>
+            <li>事假<el-switch v-model="value1" active-color="#13ce66" inactive-color="#ff4949"></el-switch></li>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="扣款设置" name="third">
+          <div class="main1">
+            <strong style="color:red">*</strong>部门：
+            <el-select v-model="value" placeholder="请选择">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </div>
+          <div>
+            <li>迟到退款<el-switch v-model="value1" active-color="#13ce66" inactive-color="#ff4949"></el-switch></li>
+            <el-input v-model="input" placeholder="请输入内容"></el-input>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="加班设置" name="fourth">定时任务补偿</el-tab-pane>
+      </el-tabs>
+      <!-- {{ token }} -->
+      <div>
+        <router-view></router-view>
+      </div>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="dialogFormVisible = false">保存更新</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -62,94 +172,190 @@ export default {
           name: "lx",
           phone: "12345678910",
           work_number: 1,
-          department: "人事部",
+          department: "人事部"
         },
         {
-            No: 2,
+          No: 2,
           name: "lx",
           phone: "12345678910",
           work_number: 1,
-          department: "人事部",
+          department: "人事部"
         },
         {
-            No: 3,
+          No: 3,
           name: "lx",
           phone: "12345678910",
           work_number: 1,
-          department: "人事部",
+          department: "人事部"
         },
         {
-            No: 4,
+          No: 4,
           name: "lx",
           phone: "12345678910",
           work_number: 1,
-          department: "人事部",
+          department: "人事部"
         },
         {
-            No: 5,
+          No: 5,
           name: "lx",
           phone: "12345678910",
           work_number: 1,
-          department: "人事部",
+          department: "人事部"
         },
         {
-            No: 6,
+          No: 6,
           name: "lx",
           phone: "12345678910",
           work_number: 1,
-          department: "人事部",
+          department: "人事部"
         },
         {
-            No: 7,
+          No: 7,
           name: "lx",
           phone: "12345678910",
           work_number: 1,
-          department: "人事部",
+          department: "人事部"
         },
         {
-            No: 8,
+          No: 8,
           name: "lx",
           phone: "12345678910",
           work_number: 1,
-          department: "人事部",
+          department: "人事部"
         },
         {
-            No: 9,
+          No: 9,
           name: "lx",
           phone: "12345678910",
           work_number: 1,
-          department: "人事部",
+          department: "人事部"
         }
       ],
-      dateList:[]
+      //时间集合
+      dateList: [],
+      //设置按钮状态
+      dialogFormVisible: false,
+
+      //设置选项卡片
+      activeName: "first",
+      options: [
+        {
+          value: "选项1",
+          label: "总裁办"
+        },
+        {
+          value: "选项2",
+          label: "人事部"
+        },
+        {
+          value: "选项3",
+          label: "技术部"
+        },
+        {
+          value: "选项4",
+          label: "运营部"
+        },
+        {
+          value: "选项5",
+          label: "生产部"
+        }
+      ],
+      value: "",
+      startTime: "",
+      endTime: "",
+      startTime1: "",
+      endTime1: "",
+      value1: true
     };
   },
   methods: {
-    handleClick(row) {
-      console.log(row);
-    },
+    // handleClick(row) {
+    //   console.log(row);
+    // },
+    // handleClick(tab, event) {
+    //   console.log(tab, event);
+    // },
+    //提醒
     open() {
-        this.$confirm('系统将通过邮件与短信的形式，对全体员工中存在旷工的考勤进行提醒，该提醒每月仅可发送 1 次。', '提醒', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
+      this.$confirm(
+        "系统将通过邮件与短信的形式，对全体员工中存在旷工的考勤进行提醒，该提醒每月仅可发送 1 次。",
+        "提醒",
+        {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }
+      )
+        .then(() => {
           this.$message({
-            type: 'success',
-            message: '提醒成功!'
+            type: "success",
+            message: "提醒成功!"
           });
-        }).catch(() => {
+        })
+        .catch(() => {
           this.$message({
-            type: 'info',
-            message: '已取消提醒'
-          });          
+            type: "info",
+            message: "已取消提醒"
+          });
         });
-      }
+    },
+    //设置
+    attendanceSet() {
+      this.$router.push({
+        path: "/layout/attendanceSet/attendanceSet"
+      });
+      this.isActive = true;
     }
+  },
+  computed: {
+    ...mapGetters(["token"]),
+    ...mapGetters(["departList", "attendancesList"])
+  },
+  created() {
+    this.$store.dispatch("attendances/getDepartList");
   }
+};
 </script>
 
 <style lang="less" scoped>
+//设置模块
+.type{
+  margin: 10px;
+  b{
+    list-style: none;
+    width: 65px;
+    height: 30px;
+    margin-left: 10px;
+    display: inline-block;
+    text-align: center;
+    line-height: 30px;
+  }
+  b:nth-of-type(1){
+    margin-left: 10px;
+  }
+}
+.el-dialog__header {
+  padding: 0;
+  margin: 20px;
+}
+.main1{
+  margin-top: 20px;
+  margin-left: 28px;
+}
+.main2 {
+  margin-top: 20px;
+}
+.main3{
+  margin-top: 20px;
+  margin-left: 43px;
+  li{
+    list-style: none;
+    margin-top: 10px;
+    .el-switch{
+      margin-left: 32px;
+    }
+  }
+}
 .el-row {
   margin-bottom: 20px;
   &:last-child {
@@ -241,9 +447,27 @@ export default {
     }
   }
 }
-
 .row-bg {
   padding: 10px 0;
   background-color: #f9fafc;
+}
+
+//设置
+.el-dialog__header {
+  background-color: lightblue;
+}
+.department {
+  margin: 20px;
+}
+.dialog-footer {
+  .el-button:nth-of-type(1) {
+    margin-right: 30px;
+  }
+  .el-button:nth-of-type(2) {
+    margin-right: 260px;
+  }
+}
+.el-dialog__header {
+  background-color: #409eff;
 }
 </style>

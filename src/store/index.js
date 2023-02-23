@@ -6,13 +6,16 @@ import Vuex from 'vuex'
 // 在store/index.js中将你写好的模块导入，放在modules数组内
 import login from '@/store/login/login.js'
 import home  from '@/store/home/home.js'
+//部门
+import department from '@/store/attendances/attendances'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   modules:{
     login,
-    home
+    home,
+    department
   },
   // 快捷引用
   getters:{
