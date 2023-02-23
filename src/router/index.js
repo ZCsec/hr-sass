@@ -17,23 +17,22 @@ import store from "@/store/index"
 
 // 公司设置路由
 import companySettings from '@/router/CompanySettings/CompanySettings'
+import employee from '@/router/CompanySettings/Employee'
 
 Vue.use(VueRouter)
 
 const routes = [
-  { path: '/', redirect: '/login' },
-  { path: '/login', component: Login },
-  {
-    path: '/layout', component: Layout, redirect: '/layout/home', children: [
-      // 在这里放你对应的模块！！！
-      home,
-      attendances,
-      salarys,
-      companySettings,
-      sysSet,
-      organ
-    ]
-  }
+  {path:'/',redirect:'/login'},
+  {path:'/login',component:Login},
+  {path:'/layout',component:Layout,redirect:'/layout/home',children:[
+    // 在这里放你对应的模块！！！
+    home,
+    attendances,
+    salarys,
+    companySettings,
+    sysSet,
+    organ
+  ]}
 ]
 
 const router = new VueRouter({
