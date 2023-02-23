@@ -3,13 +3,21 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Layout from '@/layout/index.vue'
+import attendances from '@/router/attendances/attendances'
+import  salarys from '@/router/salarys/salarys'
+import organ    from '@/router/organ/organ'
 // 导入子路由规则模块
 import home from '@/router/home/home'
-import organ from '@/router/organ/organ'
 
 Vue.use(VueRouter)
 
 const routes = [
+  {path:'/',redirect:'layout'},
+  {path:'/layout',component:Layout,redirect:'/layout/home',children:[
+    home,
+    attendances,
+    salarys
+  ]},
   { 
     path: '/', 
     redirect: 'layout' 
@@ -19,7 +27,8 @@ const routes = [
     component: Layout, 
     redirect: '/layout/home',
     children: [
-      home,organ
+      home,
+      organ 
     ]
   },
 
