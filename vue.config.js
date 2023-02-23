@@ -8,9 +8,9 @@ module.exports = defineConfig({
       '/api': {
         target: 'http://ihrm-java.itheima.net',
         changeOrigin: true,
-        // pathRewrite: {
-        //   '^/api': ''
-        // }
+        pathRewrite: {
+          '^/api': ''
+        }
       }
     }
   }

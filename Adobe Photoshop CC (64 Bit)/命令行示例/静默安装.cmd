@@ -1,1 +1,0 @@
-..\QuickInstall.exe i

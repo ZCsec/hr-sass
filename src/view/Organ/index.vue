@@ -280,7 +280,7 @@ export default {
   methods:{
     getDispatch(){
          this.$store.dispatch("organ/getHomePage");
-         this.deptList = organ.tranListToTreeData(this.$store.getters.depts);
+        //  this.deptList = organ.tranListToTreeData(this.$store.getters.depts);
     }
   }
 };
