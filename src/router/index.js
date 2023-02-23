@@ -31,6 +31,7 @@ const routes = [
     salarys,
     companySettings,
     sysSet,
+    employee,
     organ
   ]}
 ]
