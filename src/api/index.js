@@ -8,5 +8,7 @@
 // 文件内已经设置好接口的基础地址，调用时直接调用接口地址
 
 import { getLogin } from "@/api/login/login";
-
+import {getUserData} from '@/api/getUserMsg/getUserMsg'
+ 
 export const getLoginAPI = getLogin
+export const getUserDataAPI = getUserData
