@@ -12,3 +12,9 @@ import { getPermissionList } from "@/api/permission/permission"
 
 export const getLoginAPI = getLogin;
 export const getPermissionListAPI = getPermissionList;
+
+import { departmentList } from "@/api/Organ"
+import {getUserData} from '@/api/getUserMsg/getUserMsg'
+// export const getLoginAPI = getLogin
+export const getUserDataAPI = getUserData
+export const departmentListAPI = departmentList

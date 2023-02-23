@@ -16,6 +16,8 @@
     "less-loader": "^11.1.0",
     "sass": "^1.58.3",
     "sass-loader": "^13.2.0",
+    "save": "^2.9.0",
+    "screenfull": "^6.0.2",
     "style-resources-loader": "^1.5.0",
     "vue": "^2.6.14",
     "vue-router": "^3.6.5",

@@ -3,10 +3,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Layout from '@/layout/index.vue'
-import Login from '@/components/login.vue'
-
+import organ from '@/router/organ/organ'
 // 导入子路由规则模块
 import home from '@/router/home/home'
+import Login from '@/components/login.vue'
 
 //导入权限路由
 import sysSet from '@/router/sysSet/sysSet'
@@ -20,6 +20,7 @@ import store from "@/store/index"
 
 // 公司设置路由
 import companySettings from '@/router/CompanySettings/CompanySettings'
+import employee from '@/router/CompanySettings/Employee'
 
 Vue.use(VueRouter)
 
@@ -33,7 +34,9 @@ const routes = [
     salarys,
     companySettings,
     sysSet,
-    socialSec
+    socialSec,
+    employee,
+    organ
   ]}
 ]
 
@@ -42,18 +45,20 @@ const router = new VueRouter({
   mode: 'history'
 })
 
-const arrs = ["/login","/404"]
-router.beforeEach(async (to,from,next)=>{
-  if(arrs.indexOf(to.path)===-1){
-    if(store.getters.token){
+const arrs = ["/login", "/404"]
+router.beforeEach(async (to, from, next) => {
+  if (arrs.indexOf(to.path) === -1) {
+    if (store.getters.token) {
       next();
-    }else{
+    } else {
       next("/login")
     }
-  }else{
+  } else {
     next();
   }
-  
 })
+
+
+
 
 export default router
