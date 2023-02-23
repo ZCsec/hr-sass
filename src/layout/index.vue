@@ -14,7 +14,7 @@
           <el-menu-item index="/layout/home"> 首页 </el-menu-item>
           <el-menu-item index="/layout/home"> 组织架构 </el-menu-item>
           <el-menu-item index="/layout/home"> 员工 </el-menu-item>
-          <el-menu-item index="/layout/home"> 公司设置 </el-menu-item>
+          <el-menu-item index="/layout/companySettings"> 公司设置 </el-menu-item>
           <el-menu-item index="/layout/sysSet"> 权限设置 </el-menu-item>
           <el-menu-item index="/layout/socialSec"> 社保 </el-menu-item>
           <el-menu-item index="/layout/attendances"> 考勤 </el-menu-item>
@@ -43,7 +43,7 @@
 export default {}
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .el-header {
   background-color: rgb(75, 124, 251);
   color: #333;
@@ -59,7 +59,11 @@ export default {}
   }
 
   .el-menu-item:hover {
-    color: rgb(75, 124, 251) !important;
+    color: #43a7fe !important;
+  }
+
+  .el-menu-item:focus {
+    color: #43a7fe !important;
   }
 
   .logo {
@@ -82,9 +86,13 @@ export default {}
   }
 }
 
+/deep/.el-main {
+  background-color: #f0f2f5 !important;
+
+}
 // .el-menu-item.is-active {
-  // background-color: #fff;
-  // color: rgb(75, 124, 251) !important;
-  // color: #fff !important;
+// background-color: #fff;
+// color: rgb(75, 124, 251) !important;
+// color: #fff !important;
 // }
 </style>
