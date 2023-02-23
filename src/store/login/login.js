@@ -16,7 +16,7 @@ export default{
       state.token = val
       setToken(val)
       setTokenTime()
-      // this.$router.push('/layout')
+      $router.push('/layout')
     }
   },
   // 异步操作

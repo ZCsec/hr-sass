@@ -9,7 +9,10 @@
 
 import { getLogin } from "@/api/login/login";
 import { departmentList } from "@/api/Organ"
-import {getUserData} from '@/api/getUserMsg/getUserMsg'
+import {getUserData} from '@/api/home/getUserMsg'
+import { getApplication } from '@/api/home/application'
+
 export const getLoginAPI = getLogin
 export const getUserDataAPI = getUserData
 export const departmentListAPI = departmentList
+export const getApplicationAPI = getApplication

@@ -54,7 +54,7 @@
                 src="@/assets/common/bigUserHeader.png"
                 alt=""
               />
-              <span>管理员</span>
+              <span>{{ username }}</span>
               <i class="el-icon-arrow-down"></i>
               <div class="userOperate">
                 <a href="http://localhost:8080/layout/home">首页</a>
@@ -76,6 +76,7 @@
 <script>
 import { removeToken, removeTokenTime } from '@/utils/cookie'
 import screenfull from 'screenfull'
+import { mapState } from 'vuex'
 export default {
   data() {
     return {
@@ -137,6 +138,9 @@ export default {
   mounted() {
     this.$store.dispatch('home/getUserData')
     this.restaurants = this.loadAll()
+  },
+  computed: {
+    ...mapState('home', ['username'])
   }
 }
 </script>

@@ -4,8 +4,8 @@
     <div class="header">
       <img class="userImg" src="@/assets/common/head.jpg" alt="" />
       <div class="hint">
-        <p class="userName">早安，管理员，祝你开心每一天！</p>
-        <p>管理员|传智播客-总裁办</p>
+        <p class="userName">早安，{{ username }}，祝你开心每一天！</p>
+        <p>{{ username }}|{{ company }}</p>
       </div>
     </div>
     <div class="main">
@@ -134,6 +134,8 @@
 
 <script>
 import { getDate, getTime } from '@/utils/getDate'
+import { mapState } from 'vuex'
+
 export default {
   computed: {
     date: {
@@ -158,23 +160,23 @@ export default {
       set(val) {
         this.$store.state.home.form = val
       }
-    }
+    },
+    ...mapState('home', ['username', 'company', 'getStatus'])
   },
   data() {
     return {}
   },
   methods: {
     submitForm() {
-      //       startDate1: '',
-      // startDate2: '',
-      // endDate1:'',
-      // endDate2:'',
-      console.log(this.$store.state.home.form.region)
-      console.log(this.$store.state.home.form.startDate1)
-      console.log(this.$store.state.home.form.startDate2.slice(11, 19))
-      console.log(this.$store.state.home.form.endDate1)
-      console.log(this.$store.state.home.form.endDate2.slice(11, 19))
-      console.log(this.$store.state.home.form.desc)
+      this.$store.dispatch('home/getApplication').then((res) => {
+        if (this.getStatus === 200) {
+          this.$store.state.home.dialogFormVisible = false
+          this.$message({
+            message: '操作成功！',
+            type: 'success'
+          })
+        }
+      })
     }
   },
   watch: {
