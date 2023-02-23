@@ -1,22 +1,13 @@
 <template>
   <div class="em">
     <el-container style="height: 690px; border: 1px solid #eee">
-      <el-aside
-        width="200px"
-        style="background-color: rgb(75, 124, 251); height: 100%"
-      >
-        <el-menu
-          router
-          text-color="#fff"
-          style="background-color: rgb(75, 124, 251)"
-        >
+      <el-aside width="200px" style="background-color: rgb(75, 124, 251); height: 100%">
+        <el-menu router text-color="#fff" style="background-color: rgb(75, 124, 251)">
           <div class="logo"><img src="@/assets/common/logo.png" alt="" /></div>
           <el-menu-item index="/layout/home"> 首页 </el-menu-item>
-          <el-menu-item index="/layout/home"> 组织架构 </el-menu-item>
-          <el-menu-item index="/layout/home"> 员工 </el-menu-item>
-          <el-menu-item index="/layout/companySettings">
-            公司设置
-          </el-menu-item>
+          <el-menu-item index="/layout/organ"> 组织架构 </el-menu-item>
+          <el-menu-item index="/layout/employee"> 员工 </el-menu-item>
+          <el-menu-item index="/layout/companySettings"> 公司设置 </el-menu-item>
           <el-menu-item index="/layout/sysSet"> 权限设置 </el-menu-item>
           <el-menu-item index="/layout/home"> 社保 </el-menu-item>
           <el-menu-item index="/layout/attendances"> 考勤 </el-menu-item>
@@ -31,7 +22,6 @@
           <span style="text-align: left; color: #fff"
             >南昌中兴软件技术有限公司</span
           >
-
           <ul class="el-h-right">
             <li class="search">
               <i class="el-icon-search" @click="showInp" title="站内搜索"></i>
@@ -62,7 +52,6 @@
               </div>
             </li>
           </ul>
-          <!-- 站内搜索 -->
         </el-header>
 
         <el-main>
@@ -280,4 +269,3 @@ export default {
 .fade-leave-to {
   opacity: 0;
 }
-</style>
