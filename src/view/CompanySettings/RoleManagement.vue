@@ -135,6 +135,7 @@ export default {
 <style lang="scss">
 .block {
   float: right;
+  margin-top: 10px;
 }
 .btn {
   border: 1px solid #409eff;
