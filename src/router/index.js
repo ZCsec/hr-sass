@@ -2,19 +2,21 @@
 // 导入后直接加载 routes 数组里
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Layout from '@/layout/index.vue'
-import organ from '@/router/organ/organ'
+
 // 导入子路由规则模块
+import Layout from '@/layout/index.vue'
+// 布局路由模块
+import organ from '@/router/organ/organ'
+// 主页子路由模块
 import home from '@/router/home/home'
+// 登陆主路由模块
 import Login from '@/components/login.vue'
 import sysSet from '@/router/sysSet/sysSet'
-
 //考勤模块路由
 import attendances from '@/router/attendances/attendances'
 //工资模块路由
 import salarys from '@/router/salarys/salarys'
 import store from "@/store/index"
-
 // 公司设置路由
 import companySettings from '@/router/CompanySettings/CompanySettings'
 import employee from '@/router/CompanySettings/Employee'
@@ -31,7 +33,8 @@ const routes = [
     salarys,
     companySettings,
     sysSet,
-    organ
+    organ,
+    employee
   ]}
 ]
 

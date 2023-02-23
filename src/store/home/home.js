@@ -1,4 +1,6 @@
-import {getDate,getTime} from '@/utils/getDate'
+// 导入getUserData方法 在路由守卫中获取用户的信息
+import { getUserDataAPI } from '@/api/index'
+import axios from 'axios';
 
 export default{
   namespaced:true,
@@ -16,6 +18,12 @@ export default{
   },
   mutations:{},
   actions:{
-    
+    async getUserData(){
+      const res = await getUserDataAPI({
+        "Content-Type":"application/x-www-form-urlencoded"
+      })
+
+      console.log(res.data.data);
+    }
   }
 }

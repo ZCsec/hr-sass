@@ -1,6 +1,6 @@
 import axios from 'axios'
 import store from "@/store"
-axios.defaults.baseURL = "/api"
+// axios.defaults.baseURL = "/api"
 
 
 // 请求拦截器
@@ -17,7 +17,7 @@ axios.interceptors.request.use(config => {
     //     router.push('/login')
     //     return Promise.reject(new Error('token超时了'))
     //   }
-    console.log(store.getters.token);
+    // console.log(store.getters.token);
     config.headers['Authorization'] = `Bearer ${store.getters.token}`
     // }
     return config // 必须要返回的
