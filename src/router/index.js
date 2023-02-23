@@ -33,8 +33,8 @@ const routes = [
     salarys,
     companySettings,
     sysSet,
-    organ,
-    employee
+    employee,
+    organ
   ]}
 ]
 
