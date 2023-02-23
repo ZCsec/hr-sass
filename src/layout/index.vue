@@ -12,7 +12,7 @@
         >
           <div class="logo"><img src="@/assets/common/logo.png" alt="" /></div>
           <el-menu-item index="/layout/home"> 首页 </el-menu-item>
-          <el-menu-item index="/layout/home"> 组织架构 </el-menu-item>
+          <el-menu-item index="/layout/organ"> 组织架构 </el-menu-item>
           <el-menu-item index="/layout/employee"> 员工 </el-menu-item>
           <el-menu-item index="/layout/companySettings">
             公司设置
@@ -135,6 +135,7 @@ export default {
     }
   },
   mounted() {
+    this.$store.dispatch('home/getUserData')
     this.restaurants = this.loadAll()
   }
 }

@@ -54,7 +54,7 @@ export default {
       this.$store.dispatch('login/getLogindata', [this.input, this.pwd])
       setTimeout(() => {
         this.$router.push('/layout')
-      }, 1000)
+      }, 500)
     }
   }
 }
