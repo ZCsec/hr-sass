@@ -52,7 +52,9 @@ export default {
     loginFn() {
       // console.log(this.$store.state.login.pwd)
       this.$store.dispatch('login/getLogindata', [this.input, this.pwd])
-      this.$router.push('/layout')
+      setTimeout(() => {
+        this.$router.push('/layout')
+      }, 1000)
     }
   }
 }

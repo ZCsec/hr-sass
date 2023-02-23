@@ -70,12 +70,12 @@
               <a href="#">我的信息</a>
             </li>
           </ul>
-          <el-dialog title="审批地址" :visible.sync="dialogFormVisible">
+          <el-dialog title="申请" :visible.sync="dialogFormVisible">
             <el-form ref="form" :model="form" label-width="80px">
               <el-form-item label="申请类型">
                 <el-select v-model="form.region" placeholder="请选择活动区域">
-                  <el-option label="加班" value="addWork"></el-option>
-                  <el-option label="离职" value="leave"></el-option>
+                  <el-option label="加班" value="加班"></el-option>
+                  <el-option label="离职" value="离职"></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item label="开始时间">
@@ -83,9 +83,17 @@
                   <el-date-picker
                     type="date"
                     placeholder="选择日期时间"
-                    v-model="form.date1"
+                    v-model="form.startDate1"
                     style="width: 100%"
-                  ></el-date-picker>
+                  ></el-date-picker
+                  ><el-col class="line" :span="2">-</el-col>
+                  <el-col :span="11">
+                    <el-time-picker
+                      placeholder="选择时间"
+                      v-model="form.startDate2"
+                      style="width: 100%"
+                    ></el-time-picker>
+                  </el-col>
                 </el-col>
               </el-form-item>
               <el-form-item label="结束时间">
@@ -93,9 +101,17 @@
                   <el-date-picker
                     type="date"
                     placeholder="选择日期时间"
-                    v-model="form.date2"
+                    v-model="form.endDate1"
                     style="width: 100%"
                   ></el-date-picker>
+                  <el-col class="line" :span="2">-</el-col>
+                  <el-col :span="11">
+                    <el-time-picker
+                      placeholder="选择时间"
+                      v-model="form.endDate2"
+                      style="width: 100%"
+                    ></el-time-picker>
+                  </el-col>
                 </el-col>
               </el-form-item>
               <el-form-item label="补偿方式">
@@ -105,7 +121,7 @@
                 <el-input type="textarea" v-model="form.desc"></el-input>
               </el-form-item>
               <el-form-item>
-                <el-button type="primary" @click="onSubmit">提交</el-button>
+                <el-button type="primary" @click="submitForm">提交</el-button>
                 <el-button>取消</el-button>
               </el-form-item>
             </el-form>
@@ -117,6 +133,7 @@
 </template>
 
 <script>
+import { getDate, getTime } from '@/utils/getDate'
 export default {
   computed: {
     date: {
@@ -124,21 +141,50 @@ export default {
         return this.$store.state.home.date
       },
       set() {}
+    },
+    dialogFormVisible: {
+      get() {
+        return this.$store.state.home.dialogFormVisible
+      },
+      set(val) {
+        this.$store.state.home.dialogFormVisible = val
+        console.log(val)
+      }
+    },
+    form: {
+      get() {
+        return this.$store.state.home.form
+      },
+      set(val) {
+        this.$store.state.home.form = val
+      }
     }
   },
   data() {
-    return {
-      dialogFormVisible: false,
-      formLabelWidth: '120px',
-      form: {
-        name: '',
-        region: '',
-        date1: '',
-        date2: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: ''
+    return {}
+  },
+  methods: {
+    submitForm() {
+      //       startDate1: '',
+      // startDate2: '',
+      // endDate1:'',
+      // endDate2:'',
+      console.log(this.$store.state.home.form.region)
+      console.log(this.$store.state.home.form.startDate1)
+      console.log(this.$store.state.home.form.startDate2.slice(11, 19))
+      console.log(this.$store.state.home.form.endDate1)
+      console.log(this.$store.state.home.form.endDate2.slice(11, 19))
+      console.log(this.$store.state.home.form.desc)
+    }
+  },
+  watch: {
+    form: {
+      deep: true,
+      handler(oldVal, newVal) {
+        newVal.startDate1 = getDate(newVal.startDate1)
+        newVal.startDate2 = getTime(newVal.startDate2)
+        newVal.endDate1 = getDate(newVal.endDate1)
+        newVal.endDate2 = getTime(newVal.endDate2)
       }
     }
   }
@@ -284,5 +330,9 @@ export default {
 
 /deep/.el-textarea__inner {
   width: 50%;
+}
+
+/deep/.el-button--text {
+  color: #777;
 }
 </style>
