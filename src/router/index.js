@@ -3,40 +3,58 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Layout from '@/layout/index.vue'
-import attendances from '@/router/attendances/attendances'
-import  salarys from '@/router/salarys/salarys'
-import organ    from '@/router/organ/organ'
+import organ from '@/router/organ/organ'
 // 导入子路由规则模块
 import home from '@/router/home/home'
+import Login from '@/components/login.vue'
+import sysSet from '@/router/sysSet/sysSet'
+
+//考勤模块路由
+import attendances from '@/router/attendances/attendances'
+//工资模块路由
+import salarys from '@/router/salarys/salarys'
+import store from "@/store/index"
+
+// 公司设置路由
+import companySettings from '@/router/CompanySettings/CompanySettings'
 
 Vue.use(VueRouter)
 
 const routes = [
-  {path:'/',redirect:'layout'},
-  {path:'/layout',component:Layout,redirect:'/layout/home',children:[
-    home,
-    attendances,
-    salarys
-  ]},
-  { 
-    path: '/', 
-    redirect: 'layout' 
-  },
+  { path: '/', redirect: '/login' },
+  { path: '/login', component: Login },
   {
-    path: '/layout', 
-    component: Layout, 
-    redirect: '/layout/home',
-    children: [
+    path: '/layout', component: Layout, redirect: '/layout/home', children: [
+      // 在这里放你对应的模块！！！
       home,
-      organ 
+      attendances,
+      salarys,
+      companySettings,
+      sysSet,
+      organ
     ]
-  },
-
+  }
 ]
 
 const router = new VueRouter({
   routes,
   mode: 'history'
 })
+
+const arrs = ["/login", "/404"]
+router.beforeEach(async (to, from, next) => {
+  if (arrs.indexOf(to.path) === -1) {
+    if (store.getters.token) {
+      next();
+    } else {
+      next("/login")
+    }
+  } else {
+    next();
+  }
+})
+
+
+
 
 export default router

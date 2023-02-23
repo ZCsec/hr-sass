@@ -2,21 +2,24 @@ import { departmentListAPI } from "@/api/index"
 export default {
     namespaced: true,
     state: {
-        codes: [],
-        datas: [],
+        companyId: "",
+        companyName: "",
+        companyManage: "",
+        depts: []
     },
     mutations: {
         updatcodes(state, val) {
-            state.codes = val;
+            state.companyId = val.companyId;
+            state.companyName = val.companyName;
+            state.companyManage = val.companyManage;
+            state.depts = val.depts;
         }
     },
     actions: {
-        async getHomePage(context, val) {
-            const res = await departmentListAPI({
-                Authorization: "Bearer " + val
-            });
-
-            context.commit("updatcodes", res.data.result)
+        async getHomePage(context) {
+            const res = await departmentListAPI();
+            console.log(res);
+            context.commit("updatcodes", res.data.data)
 
         }
     }

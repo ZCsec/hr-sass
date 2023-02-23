@@ -30,7 +30,7 @@
           <div class="custom-tree-container">
             <div class="block">
               <el-tree
-                :data="data"
+                :data="deptList"
                 show-checkbox
                 node-key="id"
                 default-expand-all
@@ -88,6 +88,7 @@
 
 <script>
 import { mapGetters } from "vuex";
+import organ from "@/utils/organ"
 let id = 1000;
 export default {
   data() {
@@ -198,6 +199,7 @@ export default {
       },
     ];
     return {
+      deptList:[],
       data: JSON.parse(JSON.stringify(data)),
       data: JSON.parse(JSON.stringify(data)),
         dialogTableVisible: false,
@@ -269,11 +271,18 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["codes", "datas"]),
+    ...mapGetters(["depts"]),
   },
   created() {
-    this.$store.dispatch("organ/getHomePage",this.$store.token);
+    this.getDispatch();
+   
   },
+  methods:{
+    getDispatch(){
+         this.$store.dispatch("organ/getHomePage");
+         this.deptList = organ.tranListToTreeData(this.$store.getters.depts);
+    }
+  }
 };
 </script>
 

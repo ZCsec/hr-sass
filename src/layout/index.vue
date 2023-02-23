@@ -1,20 +1,13 @@
 <template>
   <div class="em">
     <el-container style="height: 690px; border: 1px solid #eee">
-      <el-aside
-        width="200px"
-        style="background-color: rgb(75, 124, 251); height: 100%"
-      >
-        <el-menu
-          router
-          text-color="#fff"
-          style="background-color: rgb(75, 124, 251)"
-        >
+      <el-aside width="200px" style="background-color: rgb(75, 124, 251); height: 100%">
+        <el-menu router text-color="#fff" style="background-color: rgb(75, 124, 251)">
           <div class="logo"><img src="@/assets/common/logo.png" alt="" /></div>
           <el-menu-item index="/layout/home"> 首页 </el-menu-item>
-          <el-menu-item index="/layout/Organ"> 组织架构 </el-menu-item>
+          <el-menu-item index="/layout/organ"> 组织架构 </el-menu-item>
           <el-menu-item index="/layout/home"> 员工 </el-menu-item>
-          <el-menu-item index="/layout/home"> 公司设置 </el-menu-item>
+          <el-menu-item index="/layout/companySettings"> 公司设置 </el-menu-item>
           <el-menu-item index="/layout/sysSet"> 权限设置 </el-menu-item>
           <el-menu-item index="/layout/home"> 社保 </el-menu-item>
           <el-menu-item index="/layout/attendances"> 考勤 </el-menu-item>
@@ -26,9 +19,7 @@
 
       <el-container>
         <el-header>
-          <span style="text-align: left; color: #fff"
-            >南昌中兴软件技术有限公司</span
-          >
+          <span style="text-align: left; color: #fff">南昌中兴软件技术有限公司</span>
         </el-header>
 
         <el-main>
@@ -40,10 +31,10 @@
 </template>
 
 <script>
-export default {}
+export default {};
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .el-header {
   background-color: rgb(75, 124, 251);
   color: #333;
@@ -59,7 +50,11 @@ export default {}
   }
 
   .el-menu-item:hover {
-    color: rgb(75, 124, 251) !important;
+    color: #43a7fe !important;
+  }
+
+  .el-menu-item:focus {
+    color: #43a7fe !important;
   }
 
   .logo {
@@ -74,7 +69,7 @@ export default {}
     position: absolute;
     height: 100px;
     width: 100%;
-    background-image: url('@/assets/common/leftnavBg.png');
+    background-image: url("@/assets/common/leftnavBg.png");
     background-position: 0 -50px;
     background-size: cover;
     background-repeat: no-repeat;
@@ -82,9 +77,12 @@ export default {}
   }
 }
 
+/deep/.el-main {
+  background-color: #f0f2f5 !important;
+}
 // .el-menu-item.is-active {
-  // background-color: #fff;
-  // color: rgb(75, 124, 251) !important;
-  // color: #fff !important;
+// background-color: #fff;
+// color: rgb(75, 124, 251) !important;
+// color: #fff !important;
 // }
 </style>
