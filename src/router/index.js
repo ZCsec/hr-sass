@@ -6,7 +6,7 @@ import VueRouter from 'vue-router'
 // 导入子路由规则模块
 import Layout from '@/layout/index.vue'
 // 布局路由模块
-import organ from '@/router/organ/organ'
+import organs from '@/router/organ/organ'
 // 主页子路由模块
 import home from '@/router/home/home'
 // 登陆主路由模块
@@ -34,7 +34,7 @@ const routes = [
     companySettings,
     sysSet,
     employee,
-    organ
+    organs
   ]}
 ]
 

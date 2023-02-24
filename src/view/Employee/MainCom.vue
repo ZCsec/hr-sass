@@ -2,7 +2,7 @@
   <div>
     <div class="top">
       <el-button type="primary">导入</el-button>
-      <el-button type="text" @click="dialogFormVisible = true" class="btn"> + 新增员工</el-button></el-button>
+      <el-button type="text" @click="dialogFormVisible = true" class="btn"> + 新增员工</el-button>
       <el-dialog title="编辑员工" :visible.sync="dialogFormVisible">
         <el-form :model="form">
          <el-form-item label="姓名：" :label-width="formLabelWidth">

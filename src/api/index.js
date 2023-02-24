@@ -9,17 +9,14 @@
 
 //登录接口
 import { getLogin } from "@/api/login/login";
-<<<<<<< HEAD
 export const getLoginAPI = getLogin
 
 //部门接口 考勤数据接口
 import { getDepartment,getAttendance } from "@/api/attendances/attendances";
 export const getDepartmentAPI = getDepartment;
 export const getAttendanceAPI =getAttendance;
-=======
+
 import { departmentList } from "@/api/Organ"
 import {getUserData} from '@/api/getUserMsg/getUserMsg'
-export const getLoginAPI = getLogin
 export const getUserDataAPI = getUserData
 export const departmentListAPI = departmentList
->>>>>>> 2b91f4167771b41bbae41daa358fc95f0034e74c

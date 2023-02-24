@@ -1,35 +1,26 @@
-import {getDepartmentAPI} from '@/api/attendances/attendances'
+import {getDepartmentAPI} from '@/api/index'
 
 export default{
     namespaced:true,
     state:{
-        departList:[],
-        attendancesList:[]
+        companyId: "",
+        companyName: "",
+        companyManage: "",
+        depts: []
     },
     mutations:{
         updateDepartList(state,val){
-            state.departList=val;
-        },
-        updatAttenList(state,val){
-            state.attendancesList=val;
+            state.companyId = val.companyId;
+            state.companyName = val.companyName;
+            state.companyManage = val.companyManage;
+            state.depts = val.depts;
         }
     },
     actions:{
-        async getDepartList(context,val){
-            console.log(val);
-            //查找部门列表
-            const res =await getDepartmentAPI({
-                "Authorization":"Bearer " +val
-            })
-            context.commit("updateDepartList",res);
-            //部门考勤数据
-            const res1=await getAttendanceAPI({
-                "Authorization":"Bearer " +val,
-                page,
-                pagesize:9
-            })
+       async getDepartment(context){
+            const res =await getDepartmentAPI();
             console.log(res);
-            context.comit("updatAttenList",res);
-        }
+            context.commit("updateDepartList",res.data.data)
+       }
     }
 }

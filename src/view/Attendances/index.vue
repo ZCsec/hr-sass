@@ -144,7 +144,7 @@
           </div>
           <div>
             <li>迟到退款<el-switch v-model="value1" active-color="#13ce66" inactive-color="#ff4949"></el-switch></li>
-            <el-input v-model="input" placeholder="请输入内容"></el-input>
+            <el-input  placeholder="请输入内容"></el-input>
           </div>
         </el-tab-pane>
         <el-tab-pane label="加班设置" name="fourth">定时任务补偿</el-tab-pane>
@@ -158,6 +158,8 @@
         <el-button type="primary" @click="dialogFormVisible = false">保存更新</el-button>
       </div>
     </el-dialog>
+    <!-- {{ $store.state.depts}} -->
+    {{ depts}}
   </div>
 </template>
 
@@ -268,14 +270,31 @@ export default {
       value1: true
     };
   },
+  computed: {
+    ...mapGetters(["depts"]),
+    // depts(){
+      // var obj={};
+      // this.$store.state.depts;
+      // for (var i of data) {
+      //   for (var k in i) {
+      //     console.log('键：' + k)
+      //     console.log('值：' + i[k])
+      //   }
+      // }
+      // return this.$store.state.depts;
+      // return depts1.map(function (e, item) {
+      //   obj[e.num] = e.name;
+      // }
+    },
+  // },
+    created() {
+      this.getDispatch();
+    },
   methods: {
-    // handleClick(row) {
-    //   console.log(row);
-    // },
-    // handleClick(tab, event) {
-    //   console.log(tab, event);
-    // },
-    //提醒
+    list(){
+      console.log(this.$store.state.depts);
+    },
+   //提醒
     open() {
       this.$confirm(
         "系统将通过邮件与短信的形式，对全体员工中存在旷工的考勤进行提醒，该提醒每月仅可发送 1 次。",
@@ -299,22 +318,12 @@ export default {
           });
         });
     },
-    //设置
-    attendanceSet() {
-      this.$router.push({
-        path: "/layout/attendanceSet/attendanceSet"
-      });
-      this.isActive = true;
+    getDispatch(){
+         this.$store.dispatch("attendances/getDepartment");
     }
-  },
-  computed: {
-    ...mapGetters(["token"]),
-    ...mapGetters(["departList", "attendancesList"])
-  },
-  created() {
-    this.$store.dispatch("attendances/getDepartList");
   }
 };
+
 </script>
 
 <style lang="less" scoped>
