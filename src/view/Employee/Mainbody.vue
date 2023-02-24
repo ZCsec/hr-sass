@@ -63,7 +63,7 @@
       label="操作"
       width="230">
       <template slot-scope="scope">
-        <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
+        <el-button @click="golook" type="text" size="small">查看</el-button>
         <el-button type="text" size="small">转正</el-button>
         <el-button type="text" size="small">调岗</el-button>
         <el-button type="text" size="small">离职</el-button>
@@ -111,7 +111,11 @@ export default {
   },
 
   methods: {
-    
+    golook() {
+      this.$router.push({
+        path:'/layout/golook'
+      })
+    }
   },
 };
 </script>
