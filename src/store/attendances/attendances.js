@@ -20,7 +20,7 @@ export default{
        async getDepartment(context){
             const res =await getDepartmentAPI();
             console.log(res);
-            context.commit("updateDepartList",res.data.data)
+            context.commit("updateDepartList",res.data.data.depts)
        }
     }
 }

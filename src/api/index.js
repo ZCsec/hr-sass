@@ -17,6 +17,9 @@ export const getDepartmentAPI = getDepartment;
 export const getAttendanceAPI =getAttendance;
 
 import { departmentList } from "@/api/Organ"
-import {getUserData} from '@/api/getUserMsg/getUserMsg'
+// import {getUserData} from '@/api/getUserMsg/getUserMsg'
 export const getUserDataAPI = getUserData
 export const departmentListAPI = departmentList
+import {getUserData} from '@/api/home/getUserMsg'
+import { getApplication } from '@/api/home/application'
+export const getApplicationAPI = getApplication

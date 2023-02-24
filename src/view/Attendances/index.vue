@@ -15,7 +15,7 @@
           </div>
           <div>
             <span>部门：</span>
-            <el-checkbox>总裁办</el-checkbox>
+            <el-checkbox v-for="(item,index) in detps" :key="index">{{item.name}}</el-checkbox>
             <el-checkbox>人事部</el-checkbox>
             <el-checkbox>行政部</el-checkbox>
             <el-checkbox>技术部</el-checkbox>
@@ -126,8 +126,14 @@
             <b>是否可用</b>
           </div>
           <div class="main3">
-            <li>事假<el-switch v-model="value1" active-color="#13ce66" inactive-color="#ff4949"></el-switch></li>
-            <li>事假<el-switch v-model="value1" active-color="#13ce66" inactive-color="#ff4949"></el-switch></li>
+            <li>
+              事假
+              <el-switch v-model="value1" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
+            </li>
+            <li>
+              事假
+              <el-switch v-model="value1" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
+            </li>
           </div>
         </el-tab-pane>
         <el-tab-pane label="扣款设置" name="third">
@@ -142,9 +148,39 @@
               ></el-option>
             </el-select>
           </div>
-          <div>
-            <li>迟到退款<el-switch v-model="value1" active-color="#13ce66" inactive-color="#ff4949"></el-switch></li>
-            <el-input  placeholder="请输入内容"></el-input>
+          <div class="table">
+            <table>
+              <tbody>
+                  <tr>
+                    <td>
+                      <!-- 迟到扣款 -->
+                        <div>
+                          迟到扣款
+                          <el-switch v-model="value1" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
+                        </div>
+                        <div>
+                          <p>迟到<= <el-input v-model="input" placeholder="" style="width:80px"></el-input>分钟</p>
+                          <p>迟到<= <el-input v-model="input" placeholder="" style="width:80px"></el-input>次</p><p>每次罚款<el-input v-model="input" placeholder="" style="width:80px"></el-input>元</p>
+                          <p>迟到><el-input v-model="input" placeholder="" style="width:80px"></el-input>次</p><p>每次罚款<el-input v-model="input" placeholder="" style="width:80px"></el-input>元</p>
+                          <p>迟到<= <el-input v-model="input" placeholder="" style="width:80px"></el-input>分钟</p>
+                          <p>迟到<= <el-input v-model="input" placeholder="" style="width:80px"></el-input>次</p><p>每次罚款<el-input v-model="input" placeholder="" style="width:80px"></el-input>元</p>
+                        </div>
+                        <!-- 早退扣款 -->
+                        <!-- <div>
+                          早退扣款
+                          <el-switch v-model="value1" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
+                        </div>
+                        <div>
+                          <p>迟到<= <el-input v-model="input" placeholder="" style="width:80px"></el-input>分钟</p>
+                          <p>迟到<= <el-input v-model="input" placeholder="" style="width:80px"></el-input>次</p><p>每次罚款<el-input v-model="input" placeholder="" style="width:80px"></el-input>元</p>
+                          <p>迟到><el-input v-model="input" placeholder="" style="width:80px"></el-input>次</p><p>每次罚款<el-input v-model="input" placeholder="" style="width:80px"></el-input>元</p>
+                          <p>迟到<= <el-input v-model="input" placeholder="" style="width:80px"></el-input>分钟</p>
+                          <p>迟到<= <el-input v-model="input" placeholder="" style="width:80px"></el-input>次</p><p>每次罚款<el-input v-model="input" placeholder="" style="width:80px"></el-input>元</p>
+                        </div> -->
+                    </td>
+                  </tr>
+              </tbody>
+            </table>
           </div>
         </el-tab-pane>
         <el-tab-pane label="加班设置" name="fourth">定时任务补偿</el-tab-pane>
@@ -158,8 +194,7 @@
         <el-button type="primary" @click="dialogFormVisible = false">保存更新</el-button>
       </div>
     </el-dialog>
-    <!-- {{ $store.state.depts}} -->
-    {{ depts}}
+    {{ depts }}
   </div>
 </template>
 
@@ -267,34 +302,19 @@ export default {
       endTime: "",
       startTime1: "",
       endTime1: "",
-      value1: true
+      value1: true,
+      input:''
     };
   },
   computed: {
-    ...mapGetters(["depts"]),
-    // depts(){
-      // var obj={};
-      // this.$store.state.depts;
-      // for (var i of data) {
-      //   for (var k in i) {
-      //     console.log('键：' + k)
-      //     console.log('值：' + i[k])
-      //   }
-      // }
-      // return this.$store.state.depts;
-      // return depts1.map(function (e, item) {
-      //   obj[e.num] = e.name;
-      // }
-    },
+    ...mapGetters(["depts"])
+  },
   // },
-    created() {
-      this.getDispatch();
-    },
+  created() {
+    this.getDispatch();
+  },
   methods: {
-    list(){
-      console.log(this.$store.state.depts);
-    },
-   //提醒
+    //提醒
     open() {
       this.$confirm(
         "系统将通过邮件与短信的形式，对全体员工中存在旷工的考勤进行提醒，该提醒每月仅可发送 1 次。",
@@ -318,19 +338,21 @@ export default {
           });
         });
     },
-    getDispatch(){
-         this.$store.dispatch("attendances/getDepartment");
+    getDispatch() {
+      this.$store.dispatch("attendances/getDepartment");
     }
   }
 };
-
 </script>
 
 <style lang="less" scoped>
+.table{
+
+}
 //设置模块
-.type{
+.type {
   margin: 10px;
-  b{
+  b {
     list-style: none;
     width: 65px;
     height: 30px;
@@ -339,7 +361,7 @@ export default {
     text-align: center;
     line-height: 30px;
   }
-  b:nth-of-type(1){
+  b:nth-of-type(1) {
     margin-left: 10px;
   }
 }
@@ -347,20 +369,20 @@ export default {
   padding: 0;
   margin: 20px;
 }
-.main1{
+.main1 {
   margin-top: 20px;
   margin-left: 28px;
 }
 .main2 {
   margin-top: 20px;
 }
-.main3{
+.main3 {
   margin-top: 20px;
   margin-left: 43px;
-  li{
+  li {
     list-style: none;
     margin-top: 10px;
-    .el-switch{
+    .el-switch {
       margin-left: 32px;
     }
   }
