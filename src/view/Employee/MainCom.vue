@@ -1,8 +1,10 @@
 <template>
   <div>
     <div class="top">
-      <el-button type="primary">导入</el-button>
-      <el-button type="text" @click="dialogFormVisible = true" class="btn"> + 新增员工</el-button></el-button>
+      <div>
+        <el-button type="primary" @click="imp">导入</el-button>
+        <el-button type="text" @click="dialogFormVisible = true" class="btn3"> + 新增员工</el-button></el-button>
+      </div>
       <el-dialog title="编辑员工" :visible.sync="dialogFormVisible">
         <el-form :model="form">
          <el-form-item label="姓名：" :label-width="formLabelWidth">
@@ -51,6 +53,7 @@ export default {
   data() {
     return {
          dialogFormVisible: false,
+         formLabelWidth: 120,
          form: {
           name: '',
           region: '',
@@ -96,7 +99,11 @@ export default {
   },
 
   methods: {
-    
+    imp() {
+      this.$router.push({
+        path:'/layout/imp'
+      })
+    }
   },
 };
 </script>
@@ -104,11 +111,12 @@ export default {
 <style lang="scss" scoped>
 .top {
   background-color: #fff;
-  height: 57px;display: flex;
-  justify-content:  flex-end;
+  height: 57px;
+  display: flex;
+  justify-content: flex-end;
   align-items: center
 }
-.btn {
+.btn3 {
      padding: 12px 20px;
      background-color: #409eff;
      color: #fff;

@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="app">
     <!-- 点击新增 -->
-    <el-button type="text" @click="dialogFormVisible = true" class="btn"> + 新增角色</el-button></el-button>
+    <el-button type="text" @click="dialogFormVisible = true" class="btn66"> + 新增角色</el-button></el-button>
     <el-dialog title="角色编辑" :visible.sync="dialogFormVisible" class="bianji">
   <el-form :model="form">
     <el-form-item label="角色名称" :label-width="formLabelWidth">
@@ -137,7 +137,7 @@ export default {
   float: right;
   margin-top: 10px;
 }
-.btn {
+.btn66 {
   border: 1px solid #409eff;
   padding: 5px 15px;
   margin-top: 20px;
@@ -145,6 +145,7 @@ export default {
   font-size: 10px;
   color: #fff;
   background-color: #409eff;
+  float: left;
 }
 .cell2 {
   display: flex;

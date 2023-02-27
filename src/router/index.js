@@ -20,6 +20,8 @@ import store from "@/store/index"
 // 公司设置路由
 import companySettings from '@/router/CompanySettings/CompanySettings'
 import employee from '@/router/CompanySettings/Employee'
+import imp from '@/router/CompanySettings/Imp'
+import golook from '@/router/CompanySettings/golook'
 
 Vue.use(VueRouter)
 
@@ -34,7 +36,9 @@ const routes = [
     companySettings,
     sysSet,
     employee,
-    organ
+    organ,
+    imp,
+    golook
   ]}
 ]
 
