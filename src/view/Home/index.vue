@@ -59,7 +59,7 @@
               >
             </li>
             <li>
-              <el-button type="text" @click="dialogFormVisible = true"
+              <el-button type="text" @click="dialogFormVisible2 = true"
                 >请假调休</el-button
               >
             </li>
@@ -71,9 +71,62 @@
             </li>
           </ul>
           <div>
-            <elForm>
-
-            </elForm>
+            <!-- 加班离职的双模块 -->
+            <elForm> </elForm>
+            <holiday></holiday>
+          </div>
+        </div>
+        <div class="application">
+          <span class="ap-title">快速开始/便捷导航</span>
+          <ul class="ap-content">
+            <li>
+              <a href="#">人事月报</a>
+            </li>
+            <li>
+              <a href="#">考勤查询</a>
+            </li>
+            <li>
+              <a href="#">考勤统计</a>
+            </li>
+            <li>
+              <a href="#">员工审核</a>
+            </li>
+            <li>
+              <a href="#">组织架构</a>
+            </li>
+          </ul>
+          <div>
+            <!-- 加班离职的双模块 -->
+            <elForm> </elForm>
+            <holiday></holiday>
+          </div>
+        </div>
+        <div class="help">
+          <span class="ap-title">帮助链接</span>
+          <ul class="ap-content">
+            <li>
+              <a href="#">
+                <div class="bg-icon"></div>
+                <span>入门指南</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <div class="bg-icon"></div>
+                <span>入门指南</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <div class="bg-icon"></div>
+                <span>入门指南</span>
+              </a>
+            </li>
+          </ul>
+          <div>
+            <!-- 加班离职的双模块 -->
+            <elForm> </elForm>
+            <holiday></holiday>
           </div>
         </div>
       </div>
@@ -83,6 +136,7 @@
 
 <script>
 import elForm from '@/view/Home/elForm/elForm.vue'
+import holiday from '@/view/Home/holiday/holiday.vue'
 import { mapState } from 'vuex'
 export default {
   computed: {
@@ -92,7 +146,16 @@ export default {
       },
       set(val) {
         this.$store.state.home.dialogFormVisible = val
-        console.log(val)
+        // console.log(val)
+      }
+    },
+    dialogFormVisible2: {
+      get() {
+        return this.$store.state.home.dialogFormVisible2
+      },
+      set(val) {
+        this.$store.state.home.dialogFormVisible2 = val
+        // console.log(val)
       }
     },
     form: {
@@ -103,10 +166,19 @@ export default {
         this.$store.state.home.form = val
       }
     },
+    form2: {
+      get() {
+        return this.$store.state.home.form2
+      },
+      set(val) {
+        this.$store.state.home.form2 = val
+      }
+    },
     ...mapState('home', ['username', 'company'])
   },
   components: {
-    elForm
+    elForm,
+    holiday
   }
 }
 </script>
@@ -199,6 +271,7 @@ export default {
         width: 100%;
         height: 230px;
         padding: 20px;
+        margin: 0 0 20px 0;
         .ap-title {
           color: #2c3e50;
           font-size: 24px;
@@ -225,6 +298,61 @@ export default {
               width: 100%;
               height: 100%;
               color: #777;
+            }
+          }
+        }
+      }
+      .help {
+        background-color: #fff;
+        border-radius: 5px;
+        width: 100%;
+        height: 230px;
+        padding: 20px;
+        margin: 0 0 20px 0;
+        .ap-title {
+          color: #2c3e50;
+          font-size: 24px;
+          border-bottom: 4px solid #8a97f8;
+          padding-bottom: 10px;
+        }
+        .ap-content {
+          margin-top: 40px;
+          list-style: none;
+          padding-left: 0;
+          display: flex;
+          justify-content: space-around;
+          li {
+            width: 80px;
+            height: 100px;
+            text-align: center;
+            margin: 0 15px 10px 0;
+            font-size: 16px;
+            a {
+              width: 100%;
+              height: 100%;
+              display: inline-block;
+              text-decoration: none;
+              color: #777;
+              div {
+                width: 100%;
+                height: 76px;
+                background-image: url('@/assets/common/icon.png');
+                background-position: 7px 0;
+                margin-bottom: 10px;
+              }
+              span {
+                color: #333;
+              }
+            }
+            &:nth-of-type(2) {
+              div {
+                background-position: -216px 0;
+              }
+            }
+            &:nth-of-type(3) {
+              div {
+                background-position: -460px 0;
+              }
             }
           }
         }

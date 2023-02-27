@@ -8,6 +8,8 @@ export default {
   state: {
     date: new Date(),
     dialogFormVisible: false,
+    dialogFormVisible2: false,
+    // 加班离职对应的数据表单
     form: {
       region: '加班',
       startDate1: new Date(),
@@ -18,6 +20,16 @@ export default {
       leaveDate1: new Date(),
       leaveDate2: new Date(),
       leaveReason: ''
+    },
+    // 请假调休对应的数据表单
+    form2: {
+      region2: '请假',
+      holidayDate1: new Date(),
+      holidayTime1: new Date(),
+      holidayDate2: new Date(),
+      holidayTime2: new Date(),
+      Day2: 0,
+      holidayReason: ''
     },
     // 关于用户的信息
     username: '',
@@ -36,9 +48,15 @@ export default {
       state.getStatus = val[0]
       // console.log(val[1])
       state.message = val[1]
+    },
+    // 清空状态码和状态信息的方法
+    cleanAppStatus(state) {
+      state.getStatus = ''
+      state.message = ''
     }
   },
   actions: {
+    // 获取用户信息
     async getUserData(context) {
       const res = await getUserDataAPI({
         'Content-Type': 'application/x-www-form-urlencoded'
@@ -80,6 +98,26 @@ export default {
         userId: $store.state.home.userId
       })
       console.log(res)
+      context.commit('getAppStatus', [res.data.code, res.data.message])
+    },
+    // 请假调休
+    async getHoliday(context) {
+      const res = await getApplicationAPI({
+        applyUnit: '按天',
+        duration: $store.state.home.form2.Day2,
+        endTime:
+          getDate($store.state.home.form2.holidayDate2) +
+          getTime($store.state.home.form2.holidayTime2).substring(10, 20),
+        holidayType: $store.state.home.form2.region2 === '请假' ? '1' : '0',
+        processKey: 'process_leave',
+        processName: $store.state.home.form2.region2,
+        reason: $store.state.home.form2.holidayReason,
+        startTime:
+          getDate($store.state.home.form2.holidayDate1) +
+          getTime($store.state.home.form2.holidayTime1).substring(10, 20),
+        userId: $store.state.home.userId
+      })
+      // console.log(res.data)
       context.commit('getAppStatus', [res.data.code, res.data.message])
     }
   }
