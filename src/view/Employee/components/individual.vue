@@ -4,7 +4,7 @@
       <el-form ref="form" :model="form" label-width="80px">
       <el-form-item label="姓名：" :label-width="formLabelWidth">
       <el-input v-model="form.data1" autocomplete="off" :style="{width:'300px'}"></el-input>
-    </el-form-item>
+      </el-form-item>
     </el-form>
     <el-form ref="form" :model="form" label-width="80px">
       <el-form-item label="密码：" :label-width="formLabelWidth">
