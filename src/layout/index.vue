@@ -133,6 +133,7 @@ export default {
       removeToken()
       removeTokenTime()
       this.$router.push('/login')
+      window.location.reload()
     }
   },
   mounted() {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-card class="box-card" style="width:1250px;height:600px;border-radius:10px">
+    <el-card class="box-card" style="width:1250px;height:600px;border-radius:5px">
       <div class="text item">
         <div class="nav">
           <h2>考勤导入</h2>
@@ -10,7 +10,8 @@
         </div>
         <div class="main">
           <div>
-            <button>点击上传</button>
+            <input type="button" value="点击上传" id="fileImport" @click="clickLoad">
+            <input type="file" id="files" ref="refFile" style="display: none">
             <p>（推荐下载模板文件，请填写后上传）点击查看文件上传要求</p>
           </div>
           <div>
@@ -24,7 +25,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+  methods:{
+    clickLoad(){
+      this.$refs.refFile.dispatchEvent(new MouseEvent('click'))
+    }
+  }
+};
 </script>
 
 <style lang="less" scoped>
@@ -58,7 +65,7 @@ export default {};
     }
     div:first-child {
       position: relative;
-      button {
+      input:nth-of-type(1) {
         position: absolute;
         left: 178px;
         top: 138px;
@@ -66,7 +73,11 @@ export default {};
         color: white;
         border: none;
         border-radius: 4px;
-        background-color: #409eff;
+        background-color: #3994ef;
+        cursor: pointer;
+      }
+      button:hover{
+        background-color: #218bf5bb;
       }
       p {
         width: 100%;

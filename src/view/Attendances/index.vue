@@ -1,12 +1,6 @@
 <template>
   <div>
-    <div v-if="isShow">
-      <imDocument></imDocument>
-    </div>
-    <div v-else-if="isHistory">
-      <history></history>
-    </div>
-    <div v-else>
+    <div>
       <el-row>
       <el-col :span="24">
         <div class="grid-content bg-purple-dark">
@@ -14,11 +8,11 @@
             <i class="el-icon-info" style="color:blue"></i> 有 0 条考勤审批尚未处理
           </div>
           <div>
-            <button class="el-button" @click="changePath()">导入</button>
+            <button class="el-button" @click="import1()">导入</button>
             <button class="el-button" @click="open">提醒</button>
             <button class="el-button" @click="dialogFormVisible = true">设置</button>
             <button class="el-button" @click="history()">历史归档</button>
-            <button class="el-button">3月份报表</button>
+            <button class="el-button" @click="isMonth()">3月份报表</button>
           </div>
           <div>
             <span>部门：</span>
@@ -44,16 +38,16 @@
           width="150"
           v-for="(item,index) in acttendList"
           :key="index"
-        >{{ item.username }}</el-table-column>
-        <!-- <el-table-column prop="work_number" label="工号" width="120"></el-table-column>
-        <el-table-column prop="department" label="部门" width="120"></el-table-column>
+        >{{ item.workNumber }}</el-table-column>
+       <!-- <el-table-column prop="phone" label="工号" width="120"></el-table-column> -->
+        <!-- <el-table-column prop="department" label="部门" width="120"></el-table-column>
         <el-table-column prop="phone" label="手机" width="300"></el-table-column>
 
         <el-table-column prop="No" label="序号" width="150"></el-table-column>
         <el-table-column prop="name" label="姓名" width="120"></el-table-column>
         <el-table-column prop="work_number" label="工号" width="120"></el-table-column>
         <el-table-column prop="department" label="部门" width="120"></el-table-column>
-        <el-table-column prop="phone" label="手机" width="300"></el-table-column>-->
+        <el-table-column prop="phone" label="手机" width="300"></el-table-column> -->
       </el-table>
     </div>
     <!-- 设置点击效果 -->
@@ -289,15 +283,10 @@
 </template>
 
 <script>
-import imDocument from "./imDocument.vue";
-import history from "./history.vue";
 import { mapGetters } from "vuex";
 export default {
   data() {
     return {
-      //组件切换
-      isShow:false,
-      isHistory:false,
       tableData: [
         {
           No: 1,
@@ -440,17 +429,22 @@ export default {
         this.acttendList = this.$store.getters.data;
       });
     },
-    changePath(){
-      this.isShow=true
+    import1(){
+      this.$router.push({
+        path: "/layout/imports"
+      });
       // this.$router.replace('/layout/attendances/imdocument')
     },
     history(){
-      this.isHistory=true
+      this.$router.push({
+        path: "/layout/historys"
+      });
+    },
+    isMonth(){
+      this.$router.push({
+        path: "/layout/isMonths"
+      });
     }
-  },
-  components:{
-    imDocument,
-    history
   }
 };
 </script>

@@ -137,7 +137,7 @@ export default {
   float: right;
   margin-top: 10px;
 }
-.btn {
+.btn66 {
   border: 1px solid #409eff;
   padding: 5px 15px;
   margin-top: 20px;
@@ -145,6 +145,7 @@ export default {
   font-size: 10px;
   color: #fff;
   background-color: #409eff;
+  float: left;
 }
 .cell2 {
   display: flex;

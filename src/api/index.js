@@ -15,7 +15,7 @@ export const getLoginAPI = getLogin
 import { getAttendancesList } from "@/api/attendances/attendances";
 export const getAttendancesListAPI =getAttendancesList;
 //部门接口
-import { departmentList } from "@/api/Organ"
+import { departmentList } from "@/api/organ"
 // import {getUserData} from '@/api/getUserMsg/getUserMsg'
 export const getUserDataAPI = getUserData
 export const departmentListAPI = departmentList

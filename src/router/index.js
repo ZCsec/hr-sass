@@ -14,12 +14,20 @@ import Login from '@/components/login.vue'
 import sysSet from '@/router/sysSet/sysSet'
 //考勤模块路由
 import attendances from '@/router/attendances/attendances'
+import imports from '@/router/attendances/imports'
+import historys from '@/router/attendances/historys'
+import isMonths from '@/router/attendances/isMonths'
 //工资模块路由
 import salarys from '@/router/salarys/salarys'
+import salaryset from '@/router/salarys/salaryset'
+import report from '@/router/salarys/report'
+
 import store from "@/store/index"
 // 公司设置路由
 import companySettings from '@/router/CompanySettings/CompanySettings'
 import employee from '@/router/CompanySettings/Employee'
+import imp from '@/router/CompanySettings/Imp'
+import golook from '@/router/CompanySettings/golook'
 
 Vue.use(VueRouter)
 
@@ -30,11 +38,18 @@ const routes = [
     // 在这里放你对应的模块！！！
     home,
     attendances,
+    imports,
+    historys,
+    isMonths,
     salarys,
+    salaryset,
+    report,
     companySettings,
     sysSet,
     employee,
-    organs
+    organs,
+    imp,
+    golook
   ]}
 ]
 

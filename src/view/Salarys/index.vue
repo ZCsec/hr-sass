@@ -1,14 +1,18 @@
 <template>
   <div>
-    <el-row>
+    <div v-if="isSet">
+      <salarySet></salarySet>
+    </div>
+    <div v-else>
+      <el-row>
       <el-col :span="24">
         <div class="grid-content bg-purple-dark">
           <div>
             <i class="el-icon-info" style="color:blue"></i>本月：入职 离职 调薪 未定薪
           </div>
           <div>
-            <li>设置</li>
-            <li>202003月报表</li>
+            <li @click="salarySet()">设置</li>
+            <li @click="report()">202003月报表</li>
           </div>
         </div>
       </el-col>
@@ -91,6 +95,7 @@
         </div>
       </el-dialog>
     </div>
+    </div>
   </div>
 </template>
 
@@ -99,6 +104,7 @@ import { mapGetters } from 'vuex';
 export default {
   data() {
     return {
+      isSet:false,
       tableData: [
         {
           No: 1,
@@ -211,6 +217,16 @@ export default {
       this.$store.dispatch("organ/getHomePage").then((res)=>{
         this.company=this.$store.getters.depts;
       });
+    },
+    salarySet(){
+      this.$router.push({
+        path: "/layout/salaryset"
+      });
+    },
+    report(){
+      this.$router.push({
+        path:'/layout/report'
+      })
     }
   }
 };
@@ -269,6 +285,7 @@ export default {
       list-style: none;
       float: left;
       margin-left: 20px;
+      cursor: pointer;
     }
   }
 }
