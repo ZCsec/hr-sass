@@ -3,7 +3,9 @@
     <el-row>
       <el-col :span="24">
         <div class="grid-content bg-purple-dark">
-          <div><i class="el-icon-info" style="color:blue"></i>本月：入职 离职 调薪 未定薪</div>
+          <div>
+            <i class="el-icon-info" style="color:blue"></i>本月：入职 离职 调薪 未定薪
+          </div>
           <div>
             <li>设置</li>
             <li>202003月报表</li>
@@ -28,9 +30,7 @@
           </div>
           <div>
             <span>部门：</span>
-            <el-checkbox>总裁办</el-checkbox>
-            <el-checkbox>人事部</el-checkbox>
-            <el-checkbox>行政部</el-checkbox>
+            <el-checkbox v-for="(item,index) in company" :key="index">{{item.name}}</el-checkbox>
           </div>
         </div>
       </el-col>
@@ -47,8 +47,8 @@
         <el-table-column label="工资基数" prop="salary"></el-table-column>
         <el-table-column label="津贴方案" prop="scheme"></el-table-column>
         <el-table-column label="操作" class="operate">
-          <button class="el-button">调薪</button>
-            <button class="el-button">查看</button>
+          <button class="el-button" @click="dialogFormVisible = true">调薪</button>
+          <button class="el-button">查看</button>
         </el-table-column>
       </el-table>
       <div class="block page">
@@ -62,11 +62,40 @@
           :total="100"
         ></el-pagination>
       </div>
+
+      <!-- 调薪 -->
+      <el-dialog title="收货地址" :visible.sync="dialogFormVisible">
+        <el-form :model="form">
+          <el-form-item label="当前基本工资" :label-width="formLabelWidth">
+            <el-input v-model="form.name" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="当前岗位工资" :label-width="formLabelWidth">
+            <el-input v-model="form.name" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="当前工资合计" :label-width="formLabelWidth">
+            <el-input v-model="form.name" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="转正基本工资" :label-width="formLabelWidth">
+            <el-input v-model="form.name" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="转正岗位工资" :label-width="formLabelWidth">
+            <el-input v-model="form.name" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="转正工资合计" :label-width="formLabelWidth">
+            <el-input v-model="form.name" autocomplete="off"></el-input>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogFormVisible = false">取 消</el-button>
+          <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+        </div>
+      </el-dialog>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 export default {
   data() {
     return {
@@ -141,8 +170,29 @@ export default {
       currentPage1: 5,
       currentPage2: 5,
       currentPage3: 5,
-      currentPage4: 4
+      currentPage4: 4,
+      dialogTableVisible: false,
+      dialogFormVisible: false,
+      formLabelWidth:'80px',
+      form: {
+        name: "",
+        region: "",
+        date1: "",
+        date2: "",
+        delivery: false,
+        type: [],
+        resource: "",
+        desc: ""
+      },
+      attendList:{},
+      company:{}
     };
+  },
+  computed: {
+    ...mapGetters(["depts"])
+  },
+  created() {
+    this.getDispatch()
   },
   methods: {
     handleEdit(index, row) {
@@ -156,6 +206,11 @@ export default {
     },
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
+    },
+    getDispatch() {
+      this.$store.dispatch("organ/getHomePage").then((res)=>{
+        this.company=this.$store.getters.depts;
+      });
     }
   }
 };
@@ -173,7 +228,7 @@ export default {
 }
 
 .bg-purple-dark {
-    background: #e6e6e62d;
+  background: #e6e6e62d;
 }
 .bg-purple {
   background: #c2c2c2;
@@ -241,6 +296,7 @@ export default {
     height: 60px;
     margin-left: 20px;
     line-height: 60px;
+    overflow: hidden;
     span {
       font-weight: 600;
       color: rgb(91, 91, 91);
@@ -257,33 +313,33 @@ export default {
   background-color: #ffffff;
   box-shadow: 0px 0px 8px 1px rgba(195, 195, 195, 0.573);
 }
-.page{
-    height: 40px;
-    line-height: 40px;
-    margin-top: 5px;
-    float: right;
-    margin-right: 20px;
+.page {
+  height: 40px;
+  line-height: 40px;
+  margin-top: 5px;
+  float: right;
+  margin-right: 20px;
 }
-.el-button{
-    width: 40px;
-    height:30px;
-    line-height: 30ppx;
-    border-radius:2px;
-    display: block;
-    float: left;
-    font-size: 13px;
-    color: white;
-    text-align: center;
-    padding: 0;
+.el-button {
+  width: 40px;
+  height: 30px;
+  line-height: 30ppx;
+  border-radius: 2px;
+  display: block;
+  float: left;
+  font-size: 13px;
+  color: white;
+  text-align: center;
+  padding: 0;
 }
-.el-button:nth-of-type(1){
-  background-color:#38bce1;
-    border:1px solid #9acaf9;
+.el-button:nth-of-type(1) {
+  background-color: #38bce1;
+  border: 1px solid #9acaf9;
 }
 
-.el-button:nth-of-type(2){
+.el-button:nth-of-type(2) {
   background-color: none;
-    border:1px solid #d6dee7;
-    color: black;
+  border: 1px solid #d6dee7;
+  color: black;
 }
 </style>

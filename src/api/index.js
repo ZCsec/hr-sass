@@ -11,11 +11,10 @@
 import { getLogin } from "@/api/login/login";
 export const getLoginAPI = getLogin
 
-//部门接口 考勤数据接口
-import { getDepartment,getAttendance } from "@/api/attendances/attendances";
-export const getDepartmentAPI = getDepartment;
-export const getAttendanceAPI =getAttendance;
-
+//考勤数据接口
+import { getAttendancesList } from "@/api/attendances/attendances";
+export const getAttendancesListAPI =getAttendancesList;
+//部门接口
 import { departmentList } from "@/api/Organ"
 // import {getUserData} from '@/api/getUserMsg/getUserMsg'
 export const getUserDataAPI = getUserData

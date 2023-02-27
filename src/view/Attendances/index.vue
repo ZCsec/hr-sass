@@ -1,27 +1,28 @@
 <template>
   <div>
-    <el-row>
+    <div v-if="isShow">
+      <imDocument></imDocument>
+    </div>
+    <div v-else-if="isHistory">
+      <history></history>
+    </div>
+    <div v-else>
+      <el-row>
       <el-col :span="24">
         <div class="grid-content bg-purple-dark">
           <div>
             <i class="el-icon-info" style="color:blue"></i> 有 0 条考勤审批尚未处理
           </div>
           <div>
-            <button class="el-button">导入</button>
+            <button class="el-button" @click="changePath()">导入</button>
             <button class="el-button" @click="open">提醒</button>
             <button class="el-button" @click="dialogFormVisible = true">设置</button>
-            <button class="el-button">历史归档</button>
+            <button class="el-button" @click="history()">历史归档</button>
             <button class="el-button">3月份报表</button>
           </div>
           <div>
             <span>部门：</span>
-            <el-checkbox v-for="(item,index) in detps" :key="index">{{item.name}}</el-checkbox>
-            <el-checkbox>人事部</el-checkbox>
-            <el-checkbox>行政部</el-checkbox>
-            <el-checkbox>技术部</el-checkbox>
-            <el-checkbox>运营部</el-checkbox>
-            <el-checkbox>市场部</el-checkbox>
-            <el-checkbox>薪资管理部</el-checkbox>
+            <el-checkbox v-for="(item,index) in company" :key="index">{{item.name}}</el-checkbox>
           </div>
           <div>
             <span>考勤状态：</span>
@@ -38,9 +39,13 @@
 
     <div class="table1">
       <el-table :data="tableData" border style="width: 100%">
-        <el-table-column prop="No" label="序号" width="150"></el-table-column>
-        <el-table-column prop="name" label="姓名" width="120"></el-table-column>
-        <el-table-column prop="work_number" label="工号" width="120"></el-table-column>
+        <el-table-column
+          label="工号"
+          width="150"
+          v-for="(item,index) in acttendList"
+          :key="index"
+        >{{ item.username }}</el-table-column>
+        <!-- <el-table-column prop="work_number" label="工号" width="120"></el-table-column>
         <el-table-column prop="department" label="部门" width="120"></el-table-column>
         <el-table-column prop="phone" label="手机" width="300"></el-table-column>
 
@@ -48,7 +53,7 @@
         <el-table-column prop="name" label="姓名" width="120"></el-table-column>
         <el-table-column prop="work_number" label="工号" width="120"></el-table-column>
         <el-table-column prop="department" label="部门" width="120"></el-table-column>
-        <el-table-column prop="phone" label="手机" width="300"></el-table-column>
+        <el-table-column prop="phone" label="手机" width="300"></el-table-column>-->
       </el-table>
     </div>
     <!-- 设置点击效果 -->
@@ -59,10 +64,10 @@
             <strong style="color:red">*</strong>部门：
             <el-select v-model="value" placeholder="请选择">
               <el-option
-                v-for="item in options"
+                v-for="item in company"
                 :key="item.value"
-                :label="item.label"
-                :value="item.value"
+                :label="item.name"
+                :value="item.name"
               ></el-option>
             </el-select>
           </div>
@@ -113,10 +118,10 @@
             <strong style="color:red">*</strong>部门：
             <el-select v-model="value" placeholder="请选择">
               <el-option
-                v-for="item in options"
+                v-for="item in company"
                 :key="item.value"
-                :label="item.label"
-                :value="item.value"
+                :label="item.name"
+                :value="item.name"
               ></el-option>
             </el-select>
           </div>
@@ -141,32 +146,63 @@
             <strong style="color:red">*</strong>部门：
             <el-select v-model="value" placeholder="请选择">
               <el-option
-                v-for="item in options"
+                v-for="item in company"
                 :key="item.value"
-                :label="item.label"
-                :value="item.value"
+                :label="item.name"
+                :value="item.name"
               ></el-option>
             </el-select>
           </div>
           <div class="table">
             <table>
               <tbody>
-                  <tr>
-                    <td>
-                      <!-- 迟到扣款 -->
-                        <div>
-                          迟到扣款
-                          <el-switch v-model="value1" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
-                        </div>
-                        <div>
-                          <p>迟到<= <el-input v-model="input" placeholder="" style="width:80px"></el-input>分钟</p>
-                          <p>迟到<= <el-input v-model="input" placeholder="" style="width:80px"></el-input>次</p><p>每次罚款<el-input v-model="input" placeholder="" style="width:80px"></el-input>元</p>
-                          <p>迟到><el-input v-model="input" placeholder="" style="width:80px"></el-input>次</p><p>每次罚款<el-input v-model="input" placeholder="" style="width:80px"></el-input>元</p>
-                          <p>迟到<= <el-input v-model="input" placeholder="" style="width:80px"></el-input>分钟</p>
-                          <p>迟到<= <el-input v-model="input" placeholder="" style="width:80px"></el-input>次</p><p>每次罚款<el-input v-model="input" placeholder="" style="width:80px"></el-input>元</p>
-                        </div>
-                        <!-- 早退扣款 -->
-                        <!-- <div>
+                <tr>
+                  <td>
+                    <!-- 迟到扣款 -->
+                    <div class="chidao1">
+                      迟到扣款
+                      <el-switch v-model="value2" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
+                    </div>
+                    <div class="chidao">
+                      <p>
+                        迟到<=
+                        <el-input v-model="input" placeholder style="width:80px"></el-input>分钟
+                      </p>
+                      <br />
+                      <p>
+                        迟到<=
+                        <el-input v-model="input" placeholder style="width:80px"></el-input>次
+                      </p>
+                      <p>
+                        每次罚款
+                        <el-input v-model="input" placeholder style="width:80px"></el-input>元
+                      </p>
+                      <br />
+                      <p>
+                        迟到>
+                        <el-input v-model="input" placeholder style="width:80px"></el-input>次
+                      </p>
+                      <p>
+                        每次罚款
+                        <el-input v-model="input" placeholder style="width:80px"></el-input>元
+                      </p>
+                      <br />
+                      <p>
+                        迟到<=
+                        <el-input v-model="input" placeholder style="width:80px"></el-input>分钟
+                      </p>
+                      <br />
+                      <p>
+                        迟到<=
+                        <el-input v-model="input" placeholder style="width:80px"></el-input>次
+                      </p>
+                      <p>
+                        每次罚款
+                        <el-input v-model="input" placeholder style="width:80px"></el-input>元
+                      </p>
+                    </div>
+                    <!-- 早退扣款 -->
+                    <!-- <div>
                           早退扣款
                           <el-switch v-model="value1" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
                         </div>
@@ -176,14 +212,68 @@
                           <p>迟到><el-input v-model="input" placeholder="" style="width:80px"></el-input>次</p><p>每次罚款<el-input v-model="input" placeholder="" style="width:80px"></el-input>元</p>
                           <p>迟到<= <el-input v-model="input" placeholder="" style="width:80px"></el-input>分钟</p>
                           <p>迟到<= <el-input v-model="input" placeholder="" style="width:80px"></el-input>次</p><p>每次罚款<el-input v-model="input" placeholder="" style="width:80px"></el-input>元</p>
-                        </div> -->
-                    </td>
-                  </tr>
+                    </div>-->
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
         </el-tab-pane>
-        <el-tab-pane label="加班设置" name="fourth">定时任务补偿</el-tab-pane>
+        <el-tab-pane label="加班设置" name="fourth">
+          <div>
+            <el-form ref="form" :model="form" label-width="80px">
+              <strong style="color:red">*</strong>部门：
+              <el-select v-model="value" placeholder="请选择">
+                <el-option
+                  v-for="item in company"
+                  :key="item.value"
+                  :label="item.name"
+                  :value="item.name"
+                ></el-option>
+              </el-select>
+              <el-form-item label="加班规则：">
+                <el-select v-model="form.region" placeholder="请选择活动区域">
+                  <el-option label="区域一" value="shanghai"></el-option>
+                  <el-option label="区域二" value="beijing"></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="活动时间">
+                <el-col :span="11">
+                  <el-date-picker
+                    type="date"
+                    placeholder="选择日期"
+                    v-model="form.date1"
+                    style="width: 100%;"
+                  ></el-date-picker>
+                </el-col>
+                <el-col class="line" :span="2">-</el-col>
+                <el-col :span="11">
+                  <el-time-picker placeholder="选择时间" v-model="form.date2" style="width: 100%;"></el-time-picker>
+                </el-col>
+              </el-form-item>
+              <el-form-item label="即时配送">
+                <el-switch v-model="form.delivery"></el-switch>
+              </el-form-item>
+              <el-form-item label="活动性质">
+                <el-checkbox-group v-model="form.type">
+                  <el-checkbox label="美食/餐厅线上活动" name="type"></el-checkbox>
+                  <el-checkbox label="地推活动" name="type"></el-checkbox>
+                  <el-checkbox label="线下主题活动" name="type"></el-checkbox>
+                  <el-checkbox label="单纯品牌曝光" name="type"></el-checkbox>
+                </el-checkbox-group>
+              </el-form-item>
+              <el-form-item label="特殊资源">
+                <el-radio-group v-model="form.resource">
+                  <el-radio label="线上品牌商赞助"></el-radio>
+                  <el-radio label="线下场地免费"></el-radio>
+                </el-radio-group>
+              </el-form-item>
+              <el-form-item label="活动形式">
+                <el-input type="textarea" v-model="form.desc"></el-input>
+              </el-form-item>
+            </el-form>
+          </div>
+        </el-tab-pane>
       </el-tabs>
       <!-- {{ token }} -->
       <div>
@@ -194,15 +284,20 @@
         <el-button type="primary" @click="dialogFormVisible = false">保存更新</el-button>
       </div>
     </el-dialog>
-    {{ depts }}
+    </div>
   </div>
 </template>
 
 <script>
+import imDocument from "./imDocument.vue";
+import history from "./history.vue";
 import { mapGetters } from "vuex";
 export default {
   data() {
     return {
+      //组件切换
+      isShow:false,
+      isHistory:false,
       tableData: [
         {
           No: 1,
@@ -275,45 +370,42 @@ export default {
 
       //设置选项卡片
       activeName: "first",
-      options: [
-        {
-          value: "选项1",
-          label: "总裁办"
-        },
-        {
-          value: "选项2",
-          label: "人事部"
-        },
-        {
-          value: "选项3",
-          label: "技术部"
-        },
-        {
-          value: "选项4",
-          label: "运营部"
-        },
-        {
-          value: "选项5",
-          label: "生产部"
-        }
-      ],
       value: "",
       startTime: "",
       endTime: "",
       startTime1: "",
       endTime1: "",
       value1: true,
-      input:''
+      value2: false,
+      input: "",
+      //部门集合
+      company: {},
+      //考勤集合
+      acttendList: {},
+      form: {
+        name: "",
+        region: "",
+        date1: "",
+        date2: "",
+        delivery: false,
+        type: [],
+        resource: "",
+        desc: ""
+      }
     };
   },
   computed: {
-    ...mapGetters(["depts"])
+    ...mapGetters(["depts"]),
+    ...mapGetters(["data"])
   },
-  // },
   created() {
     this.getDispatch();
+    this.getAttend();
   },
   methods: {
+    onSubmit() {
+      console.log("submit!");
+    },
     //提醒
     open() {
       this.$confirm(
@@ -339,15 +431,42 @@ export default {
         });
     },
     getDispatch() {
-      this.$store.dispatch("attendances/getDepartment");
+      this.$store.dispatch("organ/getHomePage").then(res => {
+        this.company = this.$store.getters.depts;
+      });
+    },
+    getAttend() {
+      this.$store.dispatch("attendances/getAttendance").then(res => {
+        this.acttendList = this.$store.getters.data;
+      });
+    },
+    changePath(){
+      this.isShow=true
+      // this.$router.replace('/layout/attendances/imdocument')
+    },
+    history(){
+      this.isHistory=true
     }
+  },
+  components:{
+    imDocument,
+    history
   }
 };
 </script>
 
 <style lang="less" scoped>
-.table{
-
+.table {
+}
+.chidao1 {
+  margin-top: 20px;
+}
+.chidao {
+  margin-left: 22px;
+  p {
+    float: left;
+    margin-left: 20px;
+  }
 }
 //设置模块
 .type {
@@ -470,7 +589,6 @@ export default {
     width: 100%;
     height: auto;
     margin: 0;
-    margin-top: 30px;
     margin-left: 20px;
     span {
       font-weight: 600;

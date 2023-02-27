@@ -1,26 +1,24 @@
-import {getDepartmentAPI} from '@/api/index'
+import { getAttendancesListAPI } from "@/api/index";
 
 export default{
     namespaced:true,
     state:{
-        companyId: "",
-        companyName: "",
-        companyManage: "",
-        depts: []
+        data:[],
+
     },
     mutations:{
-        updateDepartList(state,val){
-            state.companyId = val.companyId;
-            state.companyName = val.companyName;
-            state.companyManage = val.companyManage;
-            state.depts = val.depts;
-        }
+       getAttendList(state,val){
+            state.data=val.rows
+       }
     },
     actions:{
-       async getDepartment(context){
-            const res =await getDepartmentAPI();
-            console.log(res);
-            context.commit("updateDepartList",res.data.data.depts)
+       async getAttendance(context){
+        const res = await getAttendancesListAPI({
+            page:1,
+            pagesize:10
+        });
+        console.log(res.data.data.data);
+        context.commit("getAttendList",res.data.data.data);
        }
     }
 }

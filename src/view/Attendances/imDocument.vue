@@ -1,0 +1,109 @@
+<template>
+  <div>
+    <el-card class="box-card" style="width:1250px;height:600px;border-radius:10px">
+      <div class="text item">
+        <div class="nav">
+          <h2>考勤导入</h2>
+          <p>
+            <i class="el-icon-info" style="color:#E6A23C"></i> 如果某员工已有打卡记录，最新上传的不覆盖原有数据。可上传多名员工的打卡记录，同考勤日内取员工第一次和最后一次打卡时间
+          </p>
+        </div>
+        <div class="main">
+          <div>
+            <button>点击上传</button>
+            <p>（推荐下载模板文件，请填写后上传）点击查看文件上传要求</p>
+          </div>
+          <div>
+            <div></div>
+            <p>将文件拖到此处</p>
+          </div>
+        </div>
+      </div>
+    </el-card>
+  </div>
+</template>
+
+<script>
+export default {};
+</script>
+
+<style lang="less" scoped>
+.text {
+  font-size: 14px;
+  .nav {
+    width: 90%;
+    height: 120px;
+    margin: auto;
+    margin-top: 0;
+    p {
+      height: 40px;
+      line-height: 40px;
+      background-color: #fdf6ec;
+      color: #e6a23c;
+    }
+    h2 {
+      text-align: center;
+    }
+  }
+  .main {
+    width: 68%;
+    height: 320px;
+    margin: auto;
+    margin-top: 40px;
+    border: 1px rgba(119, 119, 119, 0.436) dashed;
+    div {
+      width: 50%;
+      height: 100%;
+      float: left;
+    }
+    div:first-child {
+      position: relative;
+      button {
+        position: absolute;
+        left: 178px;
+        top: 138px;
+        height: 35px;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        background-color: #409eff;
+      }
+      p {
+        width: 100%;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        margin-top: 186px;
+      }
+    }
+    div:nth-of-type(2) {
+      position: relative;
+        div {
+          width: 130px;
+          height: 100px;
+          position: absolute;
+          left: 154px;
+          top: 104px;
+          background-image: url(../../assets/svg/shangchuan.svg);
+          background-size: 100px;
+          background-repeat: no-repeat;
+        }
+        p{
+          width: 100%;
+          height: 40px;
+          line-height: 40px;
+          text-align: center;
+          margin-top: 186px;
+        }
+      }
+  }
+}
+
+.item {
+  padding: 18px 0;
+}
+
+.box-card {
+  width: 480px;
+}
+</style>
