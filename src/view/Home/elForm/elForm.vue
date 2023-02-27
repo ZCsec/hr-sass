@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-dialog title="申请" :visible.sync="dialogFormVisible">
-      <el-form ref="form" :model="form" label-width="80px">
+      <el-form ref="form" :model="form" label-width="120px">
         <el-form-item label="申请类型">
           <el-select v-model="form.region" placeholder="请选择活动区域">
             <el-option label="加班" value="加班"></el-option>
@@ -32,7 +32,7 @@ export default {
       },
       set(val) {
         this.$store.state.home.dialogFormVisible = val
-        console.log(val)
+        // console.log(val)
       }
     },
     form: {
