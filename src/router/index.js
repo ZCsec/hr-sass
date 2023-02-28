@@ -16,30 +16,38 @@ import sysSet from '@/router/sysSet/sysSet'
 import attendances from '@/router/attendances/attendances'
 //工资模块路由
 import salarys from '@/router/salarys/salarys'
-import store from "@/store/index"
+import store from '@/store/index'
 // 公司设置路由
 import companySettings from '@/router/CompanySettings/CompanySettings'
 import employee from '@/router/CompanySettings/Employee'
 import imp from '@/router/CompanySettings/Imp'
 import golook from '@/router/CompanySettings/golook'
+// 导入审批模块
+import Approval from '@/router/Approval/Approval'
 
 Vue.use(VueRouter)
 
 const routes = [
-  {path:'/',redirect:'/login'},
-  {path:'/login',component:Login},
-  {path:'/layout',component:Layout,redirect:'/layout/home',children:[
-    // 在这里放你对应的模块！！！
-    home,
-    attendances,
-    salarys,
-    companySettings,
-    sysSet,
-    employee,
-    organ,
-    imp,
-    golook
-  ]}
+  { path: '/', redirect: '/login' },
+  { path: '/login', component: Login },
+  {
+    path: '/layout',
+    component: Layout,
+    redirect: '/layout/home',
+    children: [
+      // 在这里放你对应的模块！！！
+      home,
+      attendances,
+      salarys,
+      companySettings,
+      sysSet,
+      employee,
+      organ,
+      imp,
+      golook,
+      Approval
+    ]
+  }
 ]
 
 const router = new VueRouter({
@@ -47,20 +55,17 @@ const router = new VueRouter({
   mode: 'history'
 })
 
-const arrs = ["/login", "/404"]
+const arrs = ['/login', '/404']
 router.beforeEach(async (to, from, next) => {
   if (arrs.indexOf(to.path) === -1) {
     if (store.getters.token) {
-      next();
+      next()
     } else {
-      next("/login")
+      next('/login')
     }
   } else {
-    next();
+    next()
   }
 })
-
-
-
 
 export default router

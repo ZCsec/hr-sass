@@ -4,15 +4,17 @@
 // 导入示例 import {模块A,模块B} from '@/api/模块文件夹/模块文件'
 // 导出示例 export const 模块A + 'API' = 模块A
 
-// 在模块文件中 统一导入 '@/utils/request.js' 作为axios请求包 
+// 在模块文件中 统一导入 '@/utils/request.js' 作为axios请求包
 // 文件内已经设置好接口的基础地址，调用时直接调用接口地址
 
-import { getLogin } from "@/api/login/login";
-import { departmentList } from "@/api/Organ"
-import {getUserData} from '@/api/home/getUserMsg'
+import { getLogin } from '@/api/login/login'
+import { departmentList } from '@/api/Organ'
+import { getUserData } from '@/api/home/getUserMsg'
 import { getApplication } from '@/api/home/application'
+import { getProcess } from '@/api/approval/approval'
 
 export const getLoginAPI = getLogin
 export const getUserDataAPI = getUserData
 export const departmentListAPI = departmentList
 export const getApplicationAPI = getApplication
+export const getProcessAPI = getProcess
