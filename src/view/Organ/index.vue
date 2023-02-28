@@ -36,10 +36,10 @@
                 default-expand-all
                 :expand-on-click-node="false"
               >
-                <span class="custom-tree-node" slot-scope="{ node, data }">
+                <span class="custom-tree-node" slot-scope="{ node}">
                   <span>{{ node.label }}</span>
                   <span>
-                    <el-button type="text" size="mini"
+                    <el-button type="text" size="mini">
                       <el-dropdown>
                         <span class="el-dropdown-link">
                           操作<i class="el-icon-arrow-down el-icon--right"></i>

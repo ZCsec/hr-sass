@@ -6,7 +6,7 @@ import VueRouter from 'vue-router'
 // 导入子路由规则模块
 import Layout from '@/layout/index.vue'
 // 布局路由模块
-import organ from '@/router/organ/organ'
+import organs from '@/router/organ/organ.js'
 // 主页子路由模块
 import home from '@/router/home/home'
 // 登陆主路由模块
@@ -14,11 +14,16 @@ import Login from '@/components/login.vue'
 import sysSet from '@/router/sysSet/sysSet'
 //考勤模块路由
 import attendances from '@/router/attendances/attendances'
+import imports from '@/router/attendances/imports'
+import historys from '@/router/attendances/historys'
+import isMonths from '@/router/attendances/isMonths'
 //工资模块路由
 import salarys from '@/router/salarys/salarys'
 import store from '@/store/index'
 // 公司设置路由
 import companySettings from '@/router/CompanySettings/CompanySettings'
+import salaryset from '@/router/salarys/salaryset'
+import report from '@/router/salarys/report'
 import employee from '@/router/CompanySettings/Employee'
 import imp from '@/router/CompanySettings/Imp'
 import golook from '@/router/CompanySettings/golook'
@@ -42,7 +47,10 @@ const routes = [
       companySettings,
       sysSet,
       employee,
-      organ,
+      imports,
+      historys,
+      isMonths,
+      organs,
       imp,
       golook,
       Approval

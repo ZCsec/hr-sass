@@ -5,8 +5,8 @@ import Vuex from 'vuex'
 // 在store/index.js中将你写好的模块导入，放在modules数组内
 import login from '@/store/login/login.js'
 import home from '@/store/home/home.js'
-import organ from '@/store/modules/Organ'
 import approval from '@/store/approval/approval'
+import organ from '@/store/modules/Organ'
 
 Vue.use(Vuex)
 

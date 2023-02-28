@@ -1,6 +1,6 @@
 <template>
   <div>
-     <el-button type="text" @click="dialogFormVisible = true">修改</el-button></el-button>
+     <el-button type="text" @click="dialogFormVisible = true">修改</el-button>
     <el-dialog title="角色编辑" :visible.sync="dialogFormVisible">
   <el-form :model="form">
     <el-form-item label="角色名称" :label-width="formLabelWidth">

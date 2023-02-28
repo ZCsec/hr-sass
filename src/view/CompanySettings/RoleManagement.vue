@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="app">
     <!-- 点击新增 -->
-    <el-button type="text" @click="dialogFormVisible = true" class="btn66"> + 新增角色</el-button></el-button>
+    <el-button type="text" @click="dialogFormVisible = true" class="btn"> + 新增角色</el-button>
     <el-dialog title="角色编辑" :visible.sync="dialogFormVisible" class="bianji">
   <el-form :model="form">
     <el-form-item label="角色名称" :label-width="formLabelWidth">

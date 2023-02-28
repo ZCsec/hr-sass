@@ -8,13 +8,19 @@
 // 文件内已经设置好接口的基础地址，调用时直接调用接口地址
 
 import { getLogin } from '@/api/login/login'
-import { departmentList } from '@/api/Organ'
-import { getUserData } from '@/api/home/getUserMsg'
 import { getApplication } from '@/api/home/application'
 import { getProcess } from '@/api/approval/approval'
+import { getUserData } from '@/api/home/getUserMsg'
+import { departmentList } from '@/api/Organ.js'
+import { getAttendancesList } from '@/api/attendances/attendances'
 
-export const getLoginAPI = getLogin
-export const getUserDataAPI = getUserData
+//考勤数据接口
+
+//部门接口
+export const getAttendancesListAPI = getAttendancesList
 export const departmentListAPI = departmentList
 export const getApplicationAPI = getApplication
+// LLF的接口
+export const getLoginAPI = getLogin
+export const getUserDataAPI = getUserData
 export const getProcessAPI = getProcess

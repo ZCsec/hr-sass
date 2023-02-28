@@ -18,7 +18,6 @@ export default {
     actions: {
         async getHomePage(context) {
             const res = await departmentListAPI();
-            console.log(res);
             context.commit("updatcodes", res.data.data)
 
         }
