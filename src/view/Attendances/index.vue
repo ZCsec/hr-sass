@@ -32,23 +32,13 @@
     </el-row>
 
     <div class="table1">
-      <el-table :data="tableData" border style="width: 100%">
-        <el-table-column
-          label="工号"
-          width="150"
-          v-for="(item,index) in acttendList"
-          :key="index"
-        >{{ item.workNumber }}</el-table-column>
-       <!-- <el-table-column prop="phone" label="工号" width="120"></el-table-column> -->
-        <!-- <el-table-column prop="department" label="部门" width="120"></el-table-column>
-        <el-table-column prop="phone" label="手机" width="300"></el-table-column>
-
-        <el-table-column prop="No" label="序号" width="150"></el-table-column>
-        <el-table-column prop="name" label="姓名" width="120"></el-table-column>
-        <el-table-column prop="work_number" label="工号" width="120"></el-table-column>
-        <el-table-column prop="department" label="部门" width="120"></el-table-column>
-        <el-table-column prop="phone" label="手机" width="300"></el-table-column> -->
-      </el-table>
+      <el-table :data="acttendList" type="index" border style="width: 100%">
+        <el-table-column prop="id" label="序号" width="150"></el-table-column>
+        <el-table-column prop="username" label="姓名" width="120"></el-table-column>
+        <el-table-column prop="workNumber" label="工号" width="120"></el-table-column>
+        <el-table-column prop="departmentName" label="部门" width="120"></el-table-column>
+        <el-table-column prop="mobile" label="手机" width="300"></el-table-column>
+      </el-table>  
     </div>
     <!-- 设置点击效果 -->
     <el-dialog title="设置" :visible.sync="dialogFormVisible">
@@ -392,9 +382,6 @@ export default {
     this.getAttend();
   },
   methods: {
-    onSubmit() {
-      console.log("submit!");
-    },
     //提醒
     open() {
       this.$confirm(
@@ -433,7 +420,7 @@ export default {
       this.$router.push({
         path: "/layout/imports"
       });
-      // this.$router.replace('/layout/attendances/imdocument')
+      // this.$router.replace('/layout/attendances/imdocument');
     },
     history(){
       this.$router.push({

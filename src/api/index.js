@@ -15,7 +15,6 @@ import { departmentList } from '@/api/Organ.js'
 import { getAttendancesList } from '@/api/attendances/attendances'
 
 //考勤数据接口
-
 //部门接口
 export const getAttendancesListAPI = getAttendancesList
 export const departmentListAPI = departmentList

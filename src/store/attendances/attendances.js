@@ -17,7 +17,7 @@ export default{
             page:1,
             pagesize:10
         });
-        console.log(res.data.data.data);
+        console.log(res.data);
         context.commit("getAttendList",res.data.data.data);
        }
     }

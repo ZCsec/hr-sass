@@ -13,6 +13,7 @@
           <div>
             <li @click="salarySet()">设置</li>
             <li @click="report()">202003月报表</li>
+            {{ salarysList }}
           </div>
         </div>
       </el-col>
@@ -191,14 +192,17 @@ export default {
         desc: ""
       },
       attendList:{},
-      company:{}
+      company:{},
+      salarysList:{}
     };
   },
   computed: {
-    ...mapGetters(["depts"])
+    ...mapGetters(["depts"]),
+    ...mapGetters(["list"])
   },
   created() {
-    this.getDispatch()
+    this.getDispatch();
+    this.getSalarys();
   },
   methods: {
     handleEdit(index, row) {
@@ -226,6 +230,12 @@ export default {
     report(){
       this.$router.push({
         path:'/layout/report'
+      })
+    },
+    //薪资
+    getSalarys(){
+      this.$store.dispatch("salarys/getSalarys").then(data=>{
+        this.salarysList=this.$store.getters.list
       })
     }
   }

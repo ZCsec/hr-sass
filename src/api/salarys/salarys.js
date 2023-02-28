@@ -1,8 +1,8 @@
 import request from '@/utils/request'
 
-//获取考勤数据列表
-export const getAttendancesList = params => request({
-  url:'/api/company/department',
-  method:'get',
-  params
+//获取薪资列表
+export const getSalarysList = data => request({
+  url:'/api/salarys/list',
+  method:'post',
+  data
 })

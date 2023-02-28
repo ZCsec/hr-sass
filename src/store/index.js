@@ -5,8 +5,12 @@ import Vuex from 'vuex'
 // 在store/index.js中将你写好的模块导入，放在modules数组内
 import login from '@/store/login/login.js'
 import home from '@/store/home/home.js'
+//考勤列表
+import attendances from '@/store/attendances/attendances.js'
 import approval from '@/store/approval/approval'
 import organ from '@/store/modules/Organ'
+//薪资列表
+import salarys from '@/store/salarys/salarys'
 
 Vue.use(Vuex)
 
@@ -15,12 +19,16 @@ export default new Vuex.Store({
     login,
     organ,
     home,
-    approval
+    attendances,
+    salarys,
+    approval,
+    organ
   },
   // 快捷引用
   getters: {
     token: (state) => state.login.token,
     date: (state) => state.home.date,
-    depts: (state) => state.organ.depts
+    depts: (state) => state.organ.depts,
+    data: (state) => state.attendances.data
   }
 })
