@@ -13,7 +13,6 @@
           <div>
             <li @click="salarySet()">设置</li>
             <li @click="report()">202003月报表</li>
-            {{ salarysList }}
           </div>
         </div>
       </el-col>
@@ -64,12 +63,12 @@
           :page-sizes="[10, 20, 30, 40]"
           :page-size="100"
           layout="total, sizes, prev, pager, next, jumper"
-          :total="100"
+          :total="50"
         ></el-pagination>
       </div>
 
       <!-- 调薪 -->
-      <el-dialog title="收货地址" :visible.sync="dialogFormVisible">
+      <el-dialog title="工资调整" :visible.sync="dialogFormVisible">
         <el-form :model="form">
           <el-form-item label="当前基本工资" :label-width="formLabelWidth">
             <el-input v-model="form.name" autocomplete="off"></el-input>
@@ -84,9 +83,6 @@
             <el-input v-model="form.name" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item label="转正岗位工资" :label-width="formLabelWidth">
-            <el-input v-model="form.name" autocomplete="off"></el-input>
-          </el-form-item>
-          <el-form-item label="转正工资合计" :label-width="formLabelWidth">
             <el-input v-model="form.name" autocomplete="off"></el-input>
           </el-form-item>
         </el-form>
@@ -248,6 +244,10 @@ export default {
   &:last-child {
     margin-bottom: 0;
   }
+.el-dialog__footer{
+  margin-top: -50px;
+  margin-left: 50px;
+}
 }
 .el-col {
   border-radius: 4px;
