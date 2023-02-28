@@ -6,6 +6,7 @@ import organ from "@/store/modules/Organ";
 // 在store/index.js中将你写好的模块导入，放在modules数组内
 import login from '@/store/login/login.js'
 import home from '@/store/home/home.js'
+import SysSet from "@/store/SysSet/SysSet"
 
 Vue.use(Vuex)
 
@@ -13,13 +14,15 @@ export default new Vuex.Store({
   modules: {
     login,
     organ, 
-    home
+    home,
+    SysSet
 
   },
   // 快捷引用
   getters: {
     token: state => state.login.token,
     date: state => state.home.date,
-    depts: state => state.organ.depts
+    depts: state => state.organ.depts,
+    powerLists: state => state.SysSet.powerLists,
   }
 })

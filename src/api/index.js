@@ -8,13 +8,22 @@
 // 文件内已经设置好接口的基础地址，调用时直接调用接口地址
 
 import { getLogin } from "@/api/login/login";
-import { getPermissionList } from "@/api/permission/permission"
 
-export const getLoginAPI = getLogin;
-export const getPermissionListAPI = getPermissionList;
-
+import { getPermissionList,delPermission,addPermission,updatePermission,getPermissionDetail } from "@/api/permission/permission"
+import { getSocialList,getSettings } from "@/api/social/social"
 import { departmentList } from "@/api/Organ"
 import {getUserData} from '@/api/getUserMsg/getUserMsg'
-// export const getLoginAPI = getLogin
+
+export const getLoginAPI = getLogin;
+
+export const getSocialListAPI = getSocialList;
+export const getSettingsAPI = getSettings;
 export const getUserDataAPI = getUserData
 export const departmentListAPI = departmentList
+
+// 权限
+export const getPermissionListAPI = getPermissionList;
+export const delPermissionAPI = delPermission;  //删除
+export const addPermissionAPI = addPermission;  //添加
+export const updatePermissionAPI = updatePermission;  //更改
+export const getPermissionDetailAPI = getPermissionDetail;  //获取权限详情

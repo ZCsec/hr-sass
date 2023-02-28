@@ -4,7 +4,7 @@
       <el-col :span="24">
         <div class="grid-content bg-purple-dark">
           <el-tag>
-            <i class="el-icon-info" style="color:rgb(64,158,255)"></i>
+            <i class="el-icon-info" style="color: rgb(64, 158, 255)"></i>
             本月：社保在缴 公积金在缴 增员 减员 入职 离职
           </el-tag>
           <div>
@@ -26,19 +26,71 @@
     <el-row class="bottom">
       <el-col :span="24">
         <div class="grid-content1 bg-purple-dark">
-          <el-table :data="tableData" style="width: 100%">
-            <el-table-column prop="id" label="序号" width="120"></el-table-column>
-            <el-table-column prop="name" label="姓名" width="120" ></el-table-column>
-            <el-table-column prop="phone" label="手机" width="120" ></el-table-column>
-            <el-table-column prop="card" label="工号" width="120"> </el-table-column>
-            <el-table-column prop="class" label="部门" width="120"></el-table-column>
-            <el-table-column prop="entry_time" label="入职时间" width="120" ></el-table-column>
-            <el-table-column prop="leavedate" label="离职时间" width="120" ></el-table-column>
-            <el-table-column prop="social_insurance" label="社保城市" width="120"> </el-table-column>
-            <el-table-column prop="public_reserve_funds" label="公积金城市" width="120" ></el-table-column>
-            <el-table-column prop="radix" label="社保基数" width="120" ></el-table-column>
-            <el-table-column prop="base" label="公积金基数" width="120"> </el-table-column>
+          <el-table id="item" :data="list" style="width: 100%">
+            <el-table-column
+              prop="id"
+              label="序号"
+              width="120"
+            ></el-table-column>
+            <el-table-column
+              prop="username"
+              label="姓名"
+              width="120"
+            ></el-table-column>
+            <el-table-column
+              prop="mobile"
+              label="手机"
+              width="120"
+            ></el-table-column>
+            <el-table-column prop="workNumber" label="工号" width="120">
+            </el-table-column>
+            <el-table-column
+              prop="departmentName"
+              label="部门"
+              width="120"
+            ></el-table-column>
+            <el-table-column
+              prop="timeOfEntry"
+              label="入职时间"
+              width="120"
+            ></el-table-column>
+            <el-table-column
+              prop="leaveTime"
+              label="离职时间"
+              width="120"
+            ></el-table-column>
+            <el-table-column
+              prop="participatingInTheCity"
+              label="社保城市"
+              width="120"
+            >
+            </el-table-column>
+            <el-table-column
+              prop="providentFundCity"
+              label="公积金城市"
+              width="120"
+            ></el-table-column>
+            <el-table-column
+              prop="socialSecurityBase"
+              label="社保基数"
+              width="120"
+            ></el-table-column>
+            <el-table-column prop="providentFundBase" label="公积金基数" width="120">
+            </el-table-column>
           </el-table>
+          <!-- 分页 -->
+          <div class="block">
+            <el-pagination
+              @size-change="handleSizeChange"
+              @current-change="handleCurrentChange"
+              :current-page="currentPage"
+              :page-sizes="[10, 20, 30, 40]"
+              :page-size="100"
+              layout="total, sizes, prev, pager, next, jumper"
+              :total="10"
+            >
+            </el-pagination>
+          </div>
         </div>
       </el-col>
     </el-row>
@@ -46,10 +98,12 @@
 </template>
 
 <script>
+import {getSocialListAPI,getSettingsAPI} from "@/api/index"
 export default {
   data() {
     return {
-        tableData: [
+      currentPage: 1,
+      tableData: [
         {
           id: "1",
           name: "dw",
@@ -63,8 +117,47 @@ export default {
           radix: "1000",
           base: "1000",
         },
-        ],
+      ],
+      list: [],
+      yearMonth: '',
+      page: {
+        page: 1,
+        pageSize: 10,
+        total: 0
+      },
     };
+  },
+  created() {
+    // 获取社保列表
+    this.getSocialList() // 获取列表数据
+    this.getSettings()
+ },
+  methods: {
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
+    },
+    async getSettings() {
+      const { dataMonth } = await getSettingsAPI()
+      this.yearMonth = dataMonth
+    },
+    async  getSocialList() {
+      try {
+        const { rows, total } = await getSocialListAPI({ ...this.page, ...this.selectParams })
+        this.list = rows // 列表数据
+        this.page.total = total // 总数
+      } catch (error) {
+        console.log(error)
+      } finally {
+        this.loading = false
+      }
+    },
+    pageChange(page) {
+      this.page.page = page // 当前
+      this.getSocialList() // 获取列表数据
+    },
   },
 };
 </script>
@@ -101,5 +194,10 @@ export default {
   width: 100px;
   margin-left: 20px;
   margin-bottom: 8px;
+}
+.block {
+  position: absolute;
+  left: 550px;
+  top: 450px;
 }
 </style>

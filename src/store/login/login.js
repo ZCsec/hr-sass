@@ -1,6 +1,6 @@
 import { getLoginAPI } from '@/api/index'
 import {getToken,setToken,removeToken,getTokenTime,setTokenTime,removeTokenTime} from '@/utils/cookie'
-
+import $router from '@/router'
 
 export default{
   namespaced:true,
