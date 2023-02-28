@@ -14,6 +14,9 @@ export const getLoginAPI = getLogin
 //考勤数据接口
 import { getAttendancesList } from "@/api/attendances/attendances";
 export const getAttendancesListAPI =getAttendancesList;
+//薪资列表接口
+import {getSalarysList} from "@/api/salarys/salarys";
+export const getSalarysListAPI=getSalarysList
 //部门接口
 import { departmentList } from "@/api/organ"
 // import {getUserData} from '@/api/getUserMsg/getUserMsg'

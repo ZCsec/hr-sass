@@ -8,7 +8,8 @@ import login from '@/store/login/login.js'
 import home  from '@/store/home/home.js'
 //考勤列表
 import attendances from '@/store/attendances/attendances.js'
-
+//薪资列表
+import salarys from "@/store/salarys/salarys";
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -16,13 +17,15 @@ export default new Vuex.Store({
     login,
     home,
     attendances,
+    salarys,
     organ
   },
   // 快捷引用
-  getters: {
+  getters:{
     token: state => state.login.token,
     date: state => state.home.date,
     depts: state => state.organ.depts,
-    data: state=>state.attendances.data
+    data: state=>state.attendances.data,
+    list:state=>state.salarys.list
   }
 })
