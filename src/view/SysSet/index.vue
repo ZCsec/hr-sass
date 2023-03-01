@@ -28,16 +28,16 @@
             ></el-table-column>
             <el-table-column label="操作" width="250">
               <template v-slot="{ row }">
-                <el-button @click="addPermission(2,row.id)" v-if="row.type === 1" type="text">添加</el-button>
-                <el-button @click="editPermission(row.id)" type="text">编辑</el-button>
-                <el-button type="text" @click="delPermission(row.id)">删除</el-button>
+                <el-button @click="addPermission(2,row.id)" v-if="row.type === 1" type="text">添加权限点</el-button>
+                <el-button @click="editPermission(row.id)" type="text">查看权限点</el-button>
+                <el-button @click="delPermission(row.id)" type="text" >删除</el-button>
               </template>
             </el-table-column>
           </el-table>
         </div>
 
         <!-- 新增编辑弹层 -->
-        <el-dialog :visible.sync="showDialog" :title="showText" @close="btnCancel">
+        <el-dialog :visible.sync="showDialog" :title="showText">
           <!-- 表单 -->
           <el-form ref="permForm" :model="formData" :rules="rules" label-width="120px">
             <el-form-item label="名称" prop="name">
@@ -62,7 +62,7 @@
           <!-- 顶部确定取消 -->
           <el-row type="flex" justify="center" slot="footer">
             <el-col :span="6">
-              <el-button type="primary" size="small" @click="enterFn">确定</el-button>
+              <el-button type="primary" size="small" @click="btnFn">确定</el-button>
               <el-button size="small" @click="cancelFn">取消</el-button>
             </el-col>
           </el-row>
@@ -100,7 +100,7 @@ export default {
         description: "",
         type: "",
         pid: "",
-        enVisible: "0",
+        enVisible: "0"
       },
       rules:{
         name:[{required:true,message:"权限名称不能为空",trigger:"blur"}],
@@ -121,12 +121,8 @@ export default {
       //为了让pid为0的对象，在数组的第一层
       this.powerLists = tranListToTreeData(res.data.data,"0");
     },
-    //dialog关闭事件
-    btnCancel(){
-
-    },
     //确定按钮点击事件
-    enterFn(){
+    btnFn(){
       this.$refs.permForm.validate().then(()=>{
         if(this.formData.id){
           return updatePermissionAPI(this.formData)
@@ -170,7 +166,9 @@ export default {
     },
     //编辑
     async editPermission(id){
-      this.formData = await getPermissionDetailAPI(id)
+      const res = await getPermissionDetailAPI(id);
+      // console.log(res);
+      this.formData = res.data.data
       this.showDialog = true;
     }
   },

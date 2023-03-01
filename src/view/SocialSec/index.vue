@@ -7,18 +7,24 @@
             <i class="el-icon-info" style="color: rgb(64, 158, 255)"></i>
             本月：社保在缴 公积金在缴 增员 减员 入职 离职
           </el-tag>
-          <div>
+          <template>
+            <el-button class="btn" @click="monthlyReport()">2020.01月报表</el-button>
+            <el-button class="btn" @click="socialHistorical()">历史归档</el-button>
+          </template>
+
+          <el-row>
             <span class="leftName">部门：</span>
             <el-checkbox>总裁办</el-checkbox>
-          </div>
-          <div>
+          </el-row>
+          <el-row>
             <span class="leftName">社保城市：</span>
             <el-checkbox>北京</el-checkbox>
-          </div>
-          <div>
+          </el-row>
+          <el-row>
             <span class="leftName">公积金城市：</span>
             <el-checkbox>北京</el-checkbox>
-          </div>
+          </el-row>
+          
         </div>
       </el-col>
     </el-row>
@@ -26,80 +32,45 @@
     <el-row class="bottom">
       <el-col :span="24">
         <div class="grid-content1 bg-purple-dark">
-          <el-table id="item" :data="list" style="width: 100%">
-            <el-table-column
-              prop="id"
-              label="序号"
-              width="120"
-            ></el-table-column>
-            <el-table-column
-              prop="username"
-              label="姓名"
-              width="120"
-            ></el-table-column>
-            <el-table-column
-              prop="mobile"
-              label="手机"
-              width="120"
-            ></el-table-column>
-            <el-table-column prop="workNumber" label="工号" width="120">
-            </el-table-column>
-            <el-table-column
-              prop="departmentName"
-              label="部门"
-              width="120"
-            ></el-table-column>
-            <el-table-column
-              prop="timeOfEntry"
-              label="入职时间"
-              width="120"
-            ></el-table-column>
-            <el-table-column
-              prop="leaveTime"
-              label="离职时间"
-              width="120"
-            ></el-table-column>
-            <el-table-column
-              prop="participatingInTheCity"
-              label="社保城市"
-              width="120"
-            >
-            </el-table-column>
-            <el-table-column
-              prop="providentFundCity"
-              label="公积金城市"
-              width="120"
-            ></el-table-column>
-            <el-table-column
-              prop="socialSecurityBase"
-              label="社保基数"
-              width="120"
-            ></el-table-column>
-            <el-table-column prop="providentFundBase" label="公积金基数" width="120">
-            </el-table-column>
+          <el-table id="item" :data="SocialLists" style="width: 100%">
+            <el-table-column prop="id" label="序号" width="120"></el-table-column>
+            <el-table-column prop="username" label="姓名" width="120"></el-table-column>
+            <el-table-column prop="mobile" label="手机" width="120"></el-table-column>
+            <el-table-column prop="workNumber" label="工号" width="120"></el-table-column>
+            <el-table-column prop="departmentName" label="部门" width="120"></el-table-column>
+            <el-table-column prop="timeOfEntry" label="入职时间" width="120"></el-table-column>
+            <el-table-column prop="leaveTime" label="离职时间" width="120"></el-table-column>
+            <el-table-column prop="participatingInTheCity" label="社保城市" width="120"></el-table-column>
+            <el-table-column prop="providentFundCity" label="公积金城市" width="120"></el-table-column>
+            <el-table-column prop="socialSecurityBase" label="社保基数" width="120"></el-table-column>
+            <el-table-column prop="providentFundBase" label="公积金基数" width="120"></el-table-column>
           </el-table>
-          <!-- 分页 -->
-          <div class="block">
-            <el-pagination
-              @size-change="handleSizeChange"
-              @current-change="handleCurrentChange"
-              :current-page="currentPage"
-              :page-sizes="[10, 20, 30, 40]"
-              :page-size="100"
-              layout="total, sizes, prev, pager, next, jumper"
-              :total="10"
-            >
-            </el-pagination>
-          </div>
         </div>
       </el-col>
     </el-row>
+    <!-- 分页 -->
+    <div class="block">
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="currentPage"
+        :page-sizes="[10, 20, 30, 40]"
+        :page-size="100"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="10"
+      >
+      </el-pagination>
+    </div>
   </div>
 </template>
 
 <script>
-import {getSocialListAPI,getSettingsAPI} from "@/api/index"
+import { getSocialListAPI, getSettingsAPI } from "@/api/index";
+import elForm from '../Home/elForm/elForm.vue';
+// import { mapGetters } from "vuex";
+
 export default {
+  components: { elForm },
   data() {
     return {
       currentPage: 1,
@@ -118,20 +89,26 @@ export default {
           base: "1000",
         },
       ],
-      list: [],
-      yearMonth: '',
+      SocialLists: [],
+      city:[],
+      yearMonth: "",
       page: {
         page: 1,
         pageSize: 10,
-        total: 0
+        total: 0,
       },
     };
   },
-  created() {
-    // 获取社保列表
-    this.getSocialList() // 获取列表数据
-    this.getSettings()
- },
+  // created() {
+  //   this.getSocialList();
+  // },
+  async mounted() {
+    // 获取社保下方界面
+    const res = await getSocialListAPI({});
+    this.SocialLists = res.data.data.rows;
+    console.log(res.data.data.rows);
+    //获取社保上方部门 城市
+  },
   methods: {
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
@@ -139,25 +116,19 @@ export default {
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
     },
-    async getSettings() {
-      const { dataMonth } = await getSettingsAPI()
-      this.yearMonth = dataMonth
+    socialHistorical(){
+      this.$router.push({
+        path: "/layout/socialHistorical"
+      });
     },
-    async  getSocialList() {
-      try {
-        const { rows, total } = await getSocialListAPI({ ...this.page, ...this.selectParams })
-        this.list = rows // 列表数据
-        this.page.total = total // 总数
-      } catch (error) {
-        console.log(error)
-      } finally {
-        this.loading = false
-      }
+    monthlyReport(){
+      this.$router.push({
+        path: "/layout/monthlyReport"
+      });
     },
-    pageChange(page) {
-      this.page.page = page // 当前
-      this.getSocialList() // 获取列表数据
-    },
+  },
+  computed: {
+    // ...mapGetters(["SocialLists"]),
   },
 };
 </script>
@@ -180,6 +151,10 @@ export default {
   min-height: 200px;
   box-shadow: 2px 4px 4px 2px rgba(195, 195, 195, 0.692);
 }
+.grid-content .btn{
+  float: right;
+  margin: 10px;
+}
 .grid-content1 {
   border-radius: 5px;
   min-height: 500px;
@@ -194,10 +169,13 @@ export default {
   width: 100px;
   margin-left: 20px;
   margin-bottom: 8px;
+  font-size: 16px;
 }
 .block {
-  position: absolute;
-  left: 550px;
-  top: 450px;
+  float: right;
+}
+.history {
+  float: right;
+  margin: 15px;
 }
 </style>

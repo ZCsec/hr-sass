@@ -20,7 +20,7 @@ export function addPermission(data) {
 // 更新权限
 export function updatePermission(data) {
   return request({
-    url: '/api/sys/permission/${data.id}',
+    url: `/api/sys/permission/${data.id}`,
     method: 'put',
     data
   })
@@ -29,14 +29,15 @@ export function updatePermission(data) {
 // 删除权限
 export function delPermission(id) {
   return request({
-    url: '/api/sys/permission/${id}',
+    url: `/api/sys/permission/${id}`,
     method: 'delete'
   })
 }
 // 获取权限详情
 export function getPermissionDetail(id) {
   return request({
-    url: '/api/sys/permission/${id}'
+    url: `/api/sys/permission/${id}`,
+    method:"get"
   })
 }
 

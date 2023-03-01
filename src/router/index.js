@@ -6,7 +6,7 @@ import VueRouter from 'vue-router'
 // 导入子路由规则模块
 import Layout from '@/layout/index.vue'
 // 布局路由模块
-import organ from '@/router/organ/organ'
+import organs from '@/router/organ/organ'
 // 主页子路由模块
 import home from '@/router/home/home'
 // 登陆主路由模块
@@ -16,15 +16,25 @@ import Login from '@/components/login.vue'
 import sysSet from '@/router/sysSet/sysSet'
 //导入社保路由
 import socialSec from './socialSec/socialSec'
+import socialHistorical from "@/router/socialSec/socialHistorical"  //历史归档
+import monthlyReport from "@/router/socialSec/monthlyReport"
 
 //考勤模块路由
 import attendances from '@/router/attendances/attendances'
+import imports from '@/router/attendances/imports'
+import historys from '@/router/attendances/historys'
+import isMonths from '@/router/attendances/isMonths'
 //工资模块路由
 import salarys from '@/router/salarys/salarys'
+import salaryset from '@/router/salarys/salaryset'
+import report from '@/router/salarys/report'
+
 import store from "@/store/index"
 // 公司设置路由
 import companySettings from '@/router/CompanySettings/CompanySettings'
 import employee from '@/router/CompanySettings/Employee'
+import imp from '@/router/CompanySettings/Imp'
+import golook from '@/router/CompanySettings/golook'
 
 Vue.use(VueRouter)
 
@@ -35,12 +45,21 @@ const routes = [
     // 在这里放你对应的模块！！！
     home,
     attendances,
+    imports,
+    historys,
+    isMonths,
     salarys,
+    salaryset,
+    report,
     companySettings,
     sysSet,
     socialSec,
     employee,
-    organ
+    organs,
+    imp,
+    golook,
+    socialHistorical,
+    monthlyReport
   ]}
 ]
 

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-button type="text" @click="dialogVisible = true">分配权限</el-button></el-button>
+    <el-button type="text" @click="dialogVisible = true">分配权限</el-button>
     <el-dialog
   title="为【人事经理】分配权限"
   :visible.sync="dialogVisible"

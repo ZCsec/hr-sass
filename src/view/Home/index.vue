@@ -4,8 +4,8 @@
     <div class="header">
       <img class="userImg" src="@/assets/common/head.jpg" alt="" />
       <div class="hint">
-        <p class="userName">早安，管理员，祝你开心每一天！</p>
-        <p>管理员|传智播客-总裁办</p>
+        <p class="userName">早安，{{ username }}，祝你开心每一天！</p>
+        <p>{{ username }}|{{ company }}</p>
       </div>
     </div>
     <div class="main">
@@ -59,7 +59,7 @@
               >
             </li>
             <li>
-              <el-button type="text" @click="dialogFormVisible = true"
+              <el-button type="text" @click="dialogFormVisible2 = true"
                 >请假调休</el-button
               >
             </li>
@@ -70,62 +70,64 @@
               <a href="#">我的信息</a>
             </li>
           </ul>
-          <el-dialog title="申请" :visible.sync="dialogFormVisible">
-            <el-form ref="form" :model="form" label-width="80px">
-              <el-form-item label="申请类型">
-                <el-select v-model="form.region" placeholder="请选择活动区域">
-                  <el-option label="加班" value="加班"></el-option>
-                  <el-option label="离职" value="离职"></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item label="开始时间">
-                <el-col :span="11">
-                  <el-date-picker
-                    type="date"
-                    placeholder="选择日期时间"
-                    v-model="form.startDate1"
-                    style="width: 100%"
-                  ></el-date-picker
-                  ><el-col class="line" :span="2">-</el-col>
-                  <el-col :span="11">
-                    <el-time-picker
-                      placeholder="选择时间"
-                      v-model="form.startDate2"
-                      style="width: 100%"
-                    ></el-time-picker>
-                  </el-col>
-                </el-col>
-              </el-form-item>
-              <el-form-item label="结束时间">
-                <el-col :span="11">
-                  <el-date-picker
-                    type="date"
-                    placeholder="选择日期时间"
-                    v-model="form.endDate1"
-                    style="width: 100%"
-                  ></el-date-picker>
-                  <el-col class="line" :span="2">-</el-col>
-                  <el-col :span="11">
-                    <el-time-picker
-                      placeholder="选择时间"
-                      v-model="form.endDate2"
-                      style="width: 100%"
-                    ></el-time-picker>
-                  </el-col>
-                </el-col>
-              </el-form-item>
-              <el-form-item label="补偿方式">
-                <p class="tiaoxiu">调休</p>
-              </el-form-item>
-              <el-form-item label="活动形式">
-                <el-input type="textarea" v-model="form.desc"></el-input>
-              </el-form-item>
-              <el-form-item>
-                <el-button type="primary" @click="submitForm">提交</el-button>
-                <el-button>取消</el-button>
-              </el-form-item>
-            </el-form>
-          </el-dialog>
+          <div>
+            <!-- 加班离职的双模块 -->
+            <elForm> </elForm>
+            <holiday></holiday>
+          </div>
+        </div>
+        <div class="application">
+          <span class="ap-title">快速开始/便捷导航</span>
+          <ul class="ap-content">
+            <li>
+              <a href="#">人事月报</a>
+            </li>
+            <li>
+              <a href="#">考勤查询</a>
+            </li>
+            <li>
+              <a href="#">考勤统计</a>
+            </li>
+            <li>
+              <a href="#">员工审核</a>
+            </li>
+            <li>
+              <a href="#">组织架构</a>
+            </li>
+          </ul>
+          <div>
+            <!-- 加班离职的双模块 -->
+            <elForm> </elForm>
+            <holiday></holiday>
+          </div>
+        </div>
+        <div class="help">
+          <span class="ap-title">帮助链接</span>
+          <ul class="ap-content">
+            <li>
+              <a href="#">
+                <div class="bg-icon"></div>
+                <span>入门指南</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <div class="bg-icon"></div>
+                <span>入门指南</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <div class="bg-icon"></div>
+                <span>入门指南</span>
+              </a>
+            </li>
+          </ul>
+          <div>
+            <!-- 加班离职的双模块 -->
+            <elForm> </elForm>
+            <holiday></holiday>
+          </div>
         </div>
       </div>
     </div>
@@ -133,22 +135,27 @@
 </template>
 
 <script>
-import { getDate, getTime } from '@/utils/getDate'
+import elForm from '@/view/Home/elForm/elForm.vue'
+import holiday from '@/view/Home/holiday/holiday.vue'
+import { mapState } from 'vuex'
 export default {
   computed: {
-    date: {
-      get() {
-        return this.$store.state.home.date
-      },
-      set() {}
-    },
     dialogFormVisible: {
       get() {
         return this.$store.state.home.dialogFormVisible
       },
       set(val) {
         this.$store.state.home.dialogFormVisible = val
-        console.log(val)
+        // console.log(val)
+      }
+    },
+    dialogFormVisible2: {
+      get() {
+        return this.$store.state.home.dialogFormVisible2
+      },
+      set(val) {
+        this.$store.state.home.dialogFormVisible2 = val
+        // console.log(val)
       }
     },
     form: {
@@ -158,35 +165,20 @@ export default {
       set(val) {
         this.$store.state.home.form = val
       }
-    }
-  },
-  data() {
-    return {}
-  },
-  methods: {
-    submitForm() {
-      //       startDate1: '',
-      // startDate2: '',
-      // endDate1:'',
-      // endDate2:'',
-      console.log(this.$store.state.home.form.region)
-      console.log(this.$store.state.home.form.startDate1)
-      console.log(this.$store.state.home.form.startDate2.slice(11, 19))
-      console.log(this.$store.state.home.form.endDate1)
-      console.log(this.$store.state.home.form.endDate2.slice(11, 19))
-      console.log(this.$store.state.home.form.desc)
-    }
-  },
-  watch: {
-    form: {
-      deep: true,
-      handler(oldVal, newVal) {
-        newVal.startDate1 = getDate(newVal.startDate1)
-        newVal.startDate2 = getTime(newVal.startDate2)
-        newVal.endDate1 = getDate(newVal.endDate1)
-        newVal.endDate2 = getTime(newVal.endDate2)
+    },
+    form2: {
+      get() {
+        return this.$store.state.home.form2
+      },
+      set(val) {
+        this.$store.state.home.form2 = val
       }
-    }
+    },
+    ...mapState('home', ['username', 'company'])
+  },
+  components: {
+    elForm,
+    holiday
   }
 }
 </script>
@@ -279,6 +271,7 @@ export default {
         width: 100%;
         height: 230px;
         padding: 20px;
+        margin: 0 0 20px 0;
         .ap-title {
           color: #2c3e50;
           font-size: 24px;
@@ -305,6 +298,61 @@ export default {
               width: 100%;
               height: 100%;
               color: #777;
+            }
+          }
+        }
+      }
+      .help {
+        background-color: #fff;
+        border-radius: 5px;
+        width: 100%;
+        height: 230px;
+        padding: 20px;
+        margin: 0 0 20px 0;
+        .ap-title {
+          color: #2c3e50;
+          font-size: 24px;
+          border-bottom: 4px solid #8a97f8;
+          padding-bottom: 10px;
+        }
+        .ap-content {
+          margin-top: 40px;
+          list-style: none;
+          padding-left: 0;
+          display: flex;
+          justify-content: space-around;
+          li {
+            width: 80px;
+            height: 100px;
+            text-align: center;
+            margin: 0 15px 10px 0;
+            font-size: 16px;
+            a {
+              width: 100%;
+              height: 100%;
+              display: inline-block;
+              text-decoration: none;
+              color: #777;
+              div {
+                width: 100%;
+                height: 76px;
+                background-image: url('@/assets/common/icon.png');
+                background-position: 7px 0;
+                margin-bottom: 10px;
+              }
+              span {
+                color: #333;
+              }
+            }
+            &:nth-of-type(2) {
+              div {
+                background-position: -216px 0;
+              }
+            }
+            &:nth-of-type(3) {
+              div {
+                background-position: -460px 0;
+              }
             }
           }
         }
