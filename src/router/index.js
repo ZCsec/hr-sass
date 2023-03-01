@@ -21,6 +21,7 @@ import isMonths from '@/router/attendances/isMonths'
 import salarys from '@/router/salarys/salarys'
 import salaryset from '@/router/salarys/salaryset'
 import report from '@/router/salarys/report'
+import details from '@/router/salarys/details'
 
 import store from "@/store/index"
 // 公司设置路由
@@ -44,6 +45,7 @@ const routes = [
     salarys,
     salaryset,
     report,
+    details,
     companySettings,
     sysSet,
     employee,
