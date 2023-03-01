@@ -89,6 +89,9 @@
 
 <script>
 import { getEmployeeListAPI } from '@/api/index'
+
+
+
 export default {
   name: 'HrSassMainTop',
 
@@ -136,8 +139,9 @@ async mounted (){
         path:'/layout/golook'
       })
     },
-  tall(index) {
-    console.log(index);
+  tall() {
+    console.log(this);
+    console.log(this.$store.state.employee.list)
    }
   },
  open() {
