@@ -36,27 +36,6 @@ import leaveApproval from '@/router/Approval/leaveApproval'
 Vue.use(VueRouter)
 
 const routes = [
-
-  {path:'/',redirect:'/login'},
-  {path:'/login',component:Login},
-  {path:'/layout',component:Layout,redirect:'/layout/home',children:[
-    // 在这里放你对应的模块！！！
-    home,
-    attendances,
-    imports,
-    historys,
-    isMonths,
-    salarys,
-    salaryset,
-    report,
-    details,
-    companySettings,
-    sysSet,
-    employee,
-    organs,
-    imp,
-    golook
-  ]},
   { path: '/', redirect: '/login' },
   { path: '/login', component: Login },
   {

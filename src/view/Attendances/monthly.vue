@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-card class="box-card" style="width:1250px;height:auto;border-radius:5px">
+    <el-card class="box-card" style="width:1250px;height:1000px;border-radius:5px">
       <div class="text item">
         <div class="nav">
           <h2>月人事报表</h2>
@@ -10,50 +10,17 @@
                 <button>导出</button>
               </div>
               <div class="main">
-                <el-table
-                  :data="List"
-                  border
-                  style="width: 100%">
-                  <el-table-column
-                    prop="name"
-                    label="姓名"
-                    width="150">
-                  </el-table-column>
-                  <el-table-column
-                    prop="workNumber"
-                    label="工号"
-                    width="120">
-                  </el-table-column>
-                  <el-table-column
-                    prop="mobile"
-                    label="手机号"
-                    width="120">
-                  </el-table-column>
-                  <el-table-column
-                    prop="department"
-                    label="部门"
-                    width="120">
-                  </el-table-column>
-                  <el-table-column
-                    prop="address"
-                    label="事假"
-                    width="300">
-                  </el-table-column>
-                  <el-table-column
-                    prop="zip"
-                    label="调休"
-                    width="120">
-                  </el-table-column>
-                  <el-table-column
-                    prop="zip"
-                    label="调休"
-                    width="正常">
-                  </el-table-column>
-                  <el-table-column
-                    prop="zip"
-                    label="迟到次数"
-                    width="120">
-                  </el-table-column>
+              <el-table :data="List" style="width: 100%" max-height="750">
+                  <el-table-column prop="name" label="姓名" width="150"></el-table-column>
+                  <el-table-column prop="workNumber" label="工号" width="120"></el-table-column>
+                  <el-table-column prop="mobile" label="手机号" width="120"></el-table-column>
+                  <el-table-column prop="department" label="部门" width="120"></el-table-column>
+                  <el-table-column prop="dayOffLeaveDays" label="事假" width="300"></el-table-column>
+                  <el-table-column prop="leaveDays" label="调休" width="120"></el-table-column>
+                  <el-table-column prop="normalDays" label="正常" width="120"></el-table-column>
+                  <el-table-column prop="laterTimers" label="迟到次数" width="300"></el-table-column>
+                  <el-table-column prop="earlyTimes" label="早退次数" width="120"></el-table-column>
+                  <el-table-column prop="actualAtteOfficialDays" label="日均时长" width="120"></el-table-column>
                 </el-table>
               </div>
             </el-tab-pane>
@@ -65,23 +32,16 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 export default {
   data() {
     return {
       activeName: "first",
-      list:[{
-        name:1,
-        age:18
-      }],
-      List: {}
+      List: [],
+      day:0
     };
   },
-  computed: {
-    ...mapGetters(["yearList"])
-  },
   created() {
-    this.getYearList();
+     this.getYearList();
   },
   methods: {
     getYearList() {
@@ -119,7 +79,7 @@ export default {
       margin-top: 30px;
     }
   }
-  .main{
+  .main {
     width: 100%;
     height: auto;
   }

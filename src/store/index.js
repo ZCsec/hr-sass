@@ -30,6 +30,7 @@ export default new Vuex.Store({
     date: (state) => state.home.date,
     depts: (state) => state.organ.depts,
     data: (state) => state.attendances.data,
-    yearList: (state) => state.attendances.yearList
+    yearList: (state) => state.attendances.yearList,
+    list:(state)=>state.salarys.list
   }
 })

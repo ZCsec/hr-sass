@@ -465,7 +465,6 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -514,7 +513,7 @@ export default {
       //部门集合
       company: {},
       //考勤集合
-      acttendList: {},
+      acttendList: [],
       form: {
         name: "",
         region: "",
@@ -527,12 +526,8 @@ export default {
       }
     };
   },
-  computed: {
-    ...mapGetters(["depts"]),
-    ...mapGetters(["data"])
-  },
   created() {
-    this.getDispatch();
+    // this.getDispatch();
     this.getAttend();
   },
   methods: {
@@ -581,10 +576,11 @@ export default {
         path: "/layout/historys"
       });
     },
+    //跳转月份表格
     isMonth() {
-      this.$router.push({
-        path: "/layout/isMonths"
-      });
+        this.$router.push({
+          path: "/layout/isMonths"
+        });
     }
   },
   watch: {
