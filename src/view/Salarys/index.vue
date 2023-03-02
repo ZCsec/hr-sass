@@ -5,103 +5,120 @@
     </div>
     <div v-else>
       <el-row>
-      <el-col :span="24">
-        <div class="grid-content bg-purple-dark">
-          <div>
-            <i class="el-icon-info" style="color:blue"></i>本月：入职 离职 调薪 未定薪
-          </div>
-          <div>
-            <li @click="salarySet()">设置</li>
-            <li @click="report()">202003月报表</li>
-          </div>
-        </div>
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="24">
-        <div class="grid-content1 bg-purple-dark">
-          <div>
+        <el-col :span="24">
+          <div class="grid-content bg-purple-dark">
             <div>
-              <span>聘用形式：</span>
-              <el-checkbox>正式</el-checkbox>
-              <el-checkbox>非正式</el-checkbox>
+              <i class="el-icon-info" style="color:blue"></i>本月：入职 离职 调薪 未定薪
             </div>
             <div>
-              <span>员工状态：</span>
-              <el-checkbox>在职</el-checkbox>
-              <el-checkbox>离职</el-checkbox>
+              <li @click="salarySet()">设置</li>
+              <li @click="report()">202003月报表</li>
             </div>
           </div>
-          <div>
-            <span>部门：</span>
-            <el-checkbox v-for="(item,index) in company" :key="index">{{item.name}}</el-checkbox>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="24">
+          <div class="grid-content1 bg-purple-dark">
+            <div>
+              <div>
+                <span>聘用形式：</span>
+                <el-checkbox>正式</el-checkbox>
+                <el-checkbox>非正式</el-checkbox>
+              </div>
+              <div>
+                <span>员工状态：</span>
+                <el-checkbox>在职</el-checkbox>
+                <el-checkbox>离职</el-checkbox>
+              </div>
+            </div>
+            <div>
+              <span>部门：</span>
+              <el-checkbox v-for="(item,index) in company" :key="index">{{item.name}}</el-checkbox>
+            </div>
           </div>
+        </el-col>
+      </el-row>
+      <div class="table1">
+        <el-table :data="tableData" style="width: 100%">
+          <el-table-column label="序号" prop="No"></el-table-column>
+          <el-table-column label="姓名" prop="name"></el-table-column>
+          <el-table-column label="手机" prop="phone"></el-table-column>
+          <el-table-column label="工号" prop="work_number"></el-table-column>
+          <el-table-column label="聘用形式" prop="style"></el-table-column>
+          <el-table-column label="部门" prop="department"></el-table-column>
+          <el-table-column label="入职时间" prop="date"></el-table-column>
+          <el-table-column label="工资基数" prop="salary"></el-table-column>
+          <el-table-column label="津贴方案" prop="scheme"></el-table-column>
+          <el-table-column label="操作" class="operate">
+            <button class="el-button" @click="dialogVisible = true">调薪</button>
+            <button class="el-button" @click="detailsSet()">查看</button>
+          </el-table-column>
+        </el-table>
+        <div class="block page">
+          <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="currentPage4"
+            :page-sizes="[10, 20, 30, 40]"
+            :page-size="100"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="50"
+          ></el-pagination>
         </div>
-      </el-col>
-    </el-row>
-    <div class="table1">
-      <el-table :data="tableData" style="width: 100%">
-        <el-table-column label="序号" prop="No"></el-table-column>
-        <el-table-column label="姓名" prop="name"></el-table-column>
-        <el-table-column label="手机" prop="phone"></el-table-column>
-        <el-table-column label="工号" prop="work_number"></el-table-column>
-        <el-table-column label="聘用形式" prop="style"></el-table-column>
-        <el-table-column label="部门" prop="department"></el-table-column>
-        <el-table-column label="入职时间" prop="date"></el-table-column>
-        <el-table-column label="工资基数" prop="salary"></el-table-column>
-        <el-table-column label="津贴方案" prop="scheme"></el-table-column>
-        <el-table-column label="操作" class="operate">
-          <button class="el-button" @click="dialogFormVisible = true">调薪</button>
-          <button class="el-button">查看</button>
-        </el-table-column>
-      </el-table>
-      <div class="block page">
-        <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="currentPage4"
-          :page-sizes="[10, 20, 30, 40]"
-          :page-size="100"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="50"
-        ></el-pagination>
-      </div>
 
-      <!-- 调薪 -->
-      <el-dialog title="工资调整" :visible.sync="dialogFormVisible">
-        <el-form :model="form">
-          <el-form-item label="当前基本工资" :label-width="formLabelWidth">
-            <el-input v-model="form.name" autocomplete="off"></el-input>
-          </el-form-item>
-          <el-form-item label="当前岗位工资" :label-width="formLabelWidth">
-            <el-input v-model="form.name" autocomplete="off"></el-input>
-          </el-form-item>
-          <el-form-item label="当前工资合计" :label-width="formLabelWidth">
-            <el-input v-model="form.name" autocomplete="off"></el-input>
-          </el-form-item>
-          <el-form-item label="转正基本工资" :label-width="formLabelWidth">
-            <el-input v-model="form.name" autocomplete="off"></el-input>
-          </el-form-item>
-          <el-form-item label="转正岗位工资" :label-width="formLabelWidth">
-            <el-input v-model="form.name" autocomplete="off"></el-input>
-          </el-form-item>
-        </el-form>
-        <div slot="footer" class="dialog-footer">
-          <el-button @click="dialogFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
-        </div>
-      </el-dialog>
-    </div>
+        <!-- 调薪 -->
+        <el-dialog class="top" title="调薪" :visible.sync="dialogVisible" width="50%" :before-close="handleClose">
+          <div class="salary">
+            <div>
+              <img src alt />
+            </div>
+            <div>
+              <li>管理员</li>
+              <li>部门：总裁办</li>
+              <li>入职时间：2018-10-12</li>
+            </div>
+          </div>
+          <div class="salary1">
+            <div>
+              <li>调整基本工资</li>
+              <li><el-input placeholder="555" :disabled="true" style="width:220px"></el-input> -> <el-input v-model="input" placeholder="请输入调整后基本工资" style="width:220px"></el-input></li>
+            </div>
+          </div>
+          <div class="salary1">
+            <div>
+              <li>调整岗位工资</li>
+              <li><el-input placeholder="555" :disabled="true" style="width:220px"></el-input> -> <el-input v-model="input1" placeholder="请输入调整后基本工资" style="width:220px"></el-input></li>
+            </div>
+          </div>
+          <div class="salary1">
+            <div>
+              <li>工资合计</li>
+              <li><el-input placeholder="1110" :disabled="true" style="width:220px"></el-input> -> <el-input placeholder="0" :disabled="true" style="width:220px"></el-input></li>
+            </div>
+          </div>
+          <div class="salary1">
+            <div>
+              <li>调整幅度</li>
+              <li><el-input placeholder="-1110" :disabled="true" style="width:220px"></el-input></li>
+            </div>
+          </div>
+          <div class="choose">
+            <input type="button" value="保存" @click="dialogVisible=false">
+            <input type="button" value="关闭" @click="dialogVisible=false">
+          </div>
+        </el-dialog>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
-      isSet:false,
+      isSet: false,
       tableData: [
         {
           No: 1,
@@ -175,21 +192,13 @@ export default {
       currentPage3: 5,
       currentPage4: 4,
       dialogTableVisible: false,
-      dialogFormVisible: false,
-      formLabelWidth:'80px',
-      form: {
-        name: "",
-        region: "",
-        date1: "",
-        date2: "",
-        delivery: false,
-        type: [],
-        resource: "",
-        desc: ""
-      },
-      attendList:{},
-      company:{},
-      salarysList:{}
+      formLabelWidth: "80px",
+      dialogVisible: false,
+      attendList: {},
+      company: {},
+      salarysList: {},
+      input:'',
+      input1:''
     };
   },
   computed: {
@@ -214,40 +223,118 @@ export default {
       console.log(`当前页: ${val}`);
     },
     getDispatch() {
-      this.$store.dispatch("organ/getHomePage").then((res)=>{
-        this.company=this.$store.getters.depts;
+      this.$store.dispatch("organ/getHomePage").then(res => {
+        this.company = this.$store.getters.depts;
       });
     },
-    salarySet(){
+    salarySet() {
       this.$router.push({
         path: "/layout/salaryset"
       });
     },
-    report(){
+    detailsSet(){
       this.$router.push({
-        path:'/layout/report'
+        path:'/layout/details'
       })
     },
+    report() {
+      this.$router.push({
+        path: "/layout/report"
+      });
+    },
+    handleClose(done) {
+      this.$confirm("确认关闭？")
+        .then(_ => {
+          done();
+        })
+        .catch(_ => {});
+    },
     //薪资
-    getSalarys(){
-      this.$store.dispatch("salarys/getSalarys").then(data=>{
-        this.salarysList=this.$store.getters.list
-      })
+    getSalarys() {
+      this.$store.dispatch("salarys/getSalarys").then(data => {
+        this.salarysList = this.$store.getters.list;
+      });
     }
   }
 };
 </script>
 
 <style lang="less" scoped>
+.salary{
+  width: 100%;
+  height: 150px;
+  // background-color: #38bce1;
+  border-bottom: 2px rgba(128, 128, 128, 0.367) solid;
+  div{
+    float: left;
+  }
+  div:nth-of-type(1){
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-image: url(../../assets/svg/1.jpeg);
+    background-size: 120px;
+  }
+  div:nth-of-type(2){
+    width: 28%;
+    height: 120px;
+    margin-left: 20px;
+    li{
+      list-style: none;
+      height: 40px;
+      line-height: 40px;
+      font-size: 16px;
+    }
+  }
+}
+.salary1{
+  width: 100%;
+  height: 50px;
+  margin-top: 20px;
+  div{
+    width: 100%;
+    height: 50px;
+    li{
+      width: 580px;
+      height: 50px;
+      line-height: 50px;
+      list-style: none;
+      float: left;
+    }
+    li:nth-of-type(1){
+      width: 120px;
+      text-align: right;
+      padding-right: 15px;
+    }
+  }
+}
+.choose{
+  width: 100%;
+  height: 40px;
+  margin-top: 20px;
+  input{
+    width: 80px;
+    height: 40px;
+    margin: auto;
+    margin-left: 50px;
+    border: none;
+    background-color:#409EFF;
+    color: white;
+    border-radius: 5px;
+  }
+  input:nth-of-type(1){
+    margin-left: 250px;
+  }
+}
 .el-row {
   margin-bottom: 20px;
   &:last-child {
     margin-bottom: 0;
   }
-.el-dialog__footer{
-  margin-top: -50px;
-  margin-left: 50px;
-}
+  .el-dialog__footer {
+    margin-top: -50px;
+    margin-left: 50px;
+  }
 }
 .el-col {
   border-radius: 4px;
