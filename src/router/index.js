@@ -19,15 +19,8 @@ import historys from '@/router/attendances/historys'
 import isMonths from '@/router/attendances/isMonths'
 //工资模块路由
 import salarys from '@/router/salarys/salarys'
-<<<<<<< HEAD
-import salaryset from '@/router/salarys/salaryset'
-import report from '@/router/salarys/report'
 import details from '@/router/salarys/details'
-
-import store from "@/store/index"
-=======
 import store from '@/store/index'
->>>>>>> 188e034d5da35e3a6fb435255da504428ba20115
 // 公司设置路由
 import companySettings from '@/router/CompanySettings/CompanySettings'
 import salaryset from '@/router/salarys/salaryset'
@@ -42,28 +35,6 @@ import leaveApproval from '@/router/Approval/leaveApproval'
 Vue.use(VueRouter)
 
 const routes = [
-<<<<<<< HEAD
-  {path:'/',redirect:'/login'},
-  {path:'/login',component:Login},
-  {path:'/layout',component:Layout,redirect:'/layout/home',children:[
-    // 在这里放你对应的模块！！！
-    home,
-    attendances,
-    imports,
-    historys,
-    isMonths,
-    salarys,
-    salaryset,
-    report,
-    details,
-    companySettings,
-    sysSet,
-    employee,
-    organs,
-    imp,
-    golook
-  ]}
-=======
   { path: '/', redirect: '/login' },
   { path: '/login', component: Login },
   {
@@ -75,12 +46,15 @@ const routes = [
       home,
       attendances,
       salarys,
+      salaryset,
       companySettings,
       sysSet,
       employee,
       imports,
       historys,
       isMonths,
+      report,
+      details,
       organs,
       imp,
       golook,
@@ -88,7 +62,6 @@ const routes = [
       leaveApproval
     ]
   }
->>>>>>> 188e034d5da35e3a6fb435255da504428ba20115
 ]
 
 const router = new VueRouter({
