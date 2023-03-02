@@ -6,3 +6,10 @@ export const getAttendancesList = params => request({
   method:'get',
   params
 })
+
+//获取月份报表数据
+export const getRepotsList =params=>request({
+  url:'/api/attendances/reports?atteDate=202303',
+  methods:'get',
+  params
+})

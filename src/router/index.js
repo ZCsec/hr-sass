@@ -6,7 +6,7 @@ import VueRouter from 'vue-router'
 // 导入子路由规则模块
 import Layout from '@/layout/index.vue'
 // 布局路由模块
-import organs from '@/router/organ/organ.js'
+import organs from '@/router/organ/organ'
 // 主页子路由模块
 import home from '@/router/home/home'
 // 登陆主路由模块
@@ -19,19 +19,13 @@ import historys from '@/router/attendances/historys'
 import isMonths from '@/router/attendances/isMonths'
 //工资模块路由
 import salarys from '@/router/salarys/salarys'
-<<<<<<< HEAD
 import salaryset from '@/router/salarys/salaryset'
 import report from '@/router/salarys/report'
 import details from '@/router/salarys/details'
 
 import store from "@/store/index"
-=======
-import store from '@/store/index'
->>>>>>> 188e034d5da35e3a6fb435255da504428ba20115
 // 公司设置路由
 import companySettings from '@/router/CompanySettings/CompanySettings'
-import salaryset from '@/router/salarys/salaryset'
-import report from '@/router/salarys/report'
 import employee from '@/router/CompanySettings/Employee'
 import imp from '@/router/CompanySettings/Imp'
 import golook from '@/router/CompanySettings/golook'
@@ -41,7 +35,7 @@ import Approval from '@/router/Approval/Approval'
 Vue.use(VueRouter)
 
 const routes = [
-<<<<<<< HEAD
+
   {path:'/',redirect:'/login'},
   {path:'/login',component:Login},
   {path:'/layout',component:Layout,redirect:'/layout/home',children:[
@@ -61,10 +55,7 @@ const routes = [
     organs,
     imp,
     golook
-  ]}
-=======
-  { path: '/', redirect: '/login' },
-  { path: '/login', component: Login },
+  ]},
   {
     path: '/layout',
     component: Layout,
@@ -86,7 +77,6 @@ const routes = [
       Approval
     ]
   }
->>>>>>> 188e034d5da35e3a6fb435255da504428ba20115
 ]
 
 const router = new VueRouter({

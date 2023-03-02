@@ -11,10 +11,11 @@ import { getLogin } from '@/api/login/login'
 import { getApplication } from '@/api/home/application'
 import { getProcess } from '@/api/approval/approval'
 import { getUserData } from '@/api/home/getUserMsg'
-import { departmentList } from '@/api/Organ.js'
-import { getAttendancesList } from '@/api/attendances/attendances'
+import { departmentList } from '@/api/organ'
+import { getAttendancesList,getRepotsList } from '@/api/attendances/attendances'
 
-//考勤数据接口
+//月份报表数据接口
+export const getRepotsListAPI=getRepotsList
 //部门接口
 export const getAttendancesListAPI = getAttendancesList
 export const departmentListAPI = departmentList
