@@ -33,7 +33,7 @@
       <el-col :span="24">
         <div class="grid-content1 bg-purple-dark">
           <el-table id="item" :data="SocialLists" style="width: 100%">
-            <el-table-column prop="id" label="序号" width="120"></el-table-column>
+            <el-table-column type="index" label="序号" width="120"></el-table-column>
             <el-table-column prop="username" label="姓名" width="120"></el-table-column>
             <el-table-column prop="mobile" label="手机" width="120"></el-table-column>
             <el-table-column prop="workNumber" label="工号" width="120"></el-table-column>
@@ -44,6 +44,9 @@
             <el-table-column prop="providentFundCity" label="公积金城市" width="120"></el-table-column>
             <el-table-column prop="socialSecurityBase" label="社保基数" width="120"></el-table-column>
             <el-table-column prop="providentFundBase" label="公积金基数" width="120"></el-table-column>
+            <el-table-column label="操作">
+              <el-button class="btn" @click="userSocial()">查看</el-button>
+            </el-table-column>
           </el-table>
         </div>
       </el-col>
@@ -124,6 +127,11 @@ export default {
     monthlyReport(){
       this.$router.push({
         path: "/layout/monthlyReport"
+      });
+    },
+    userSocial(){
+      this.$router.push({
+        path: "/layout/userSocial"
       });
     },
   },

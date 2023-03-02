@@ -5,6 +5,7 @@
         <span>全公司</span>
         <div class="yearChange">
           <el-date-picker
+            v-model="yearVal"
             value-format="yyyy"
             type="year"
             size="mini"
@@ -17,8 +18,8 @@
     </div>
     <!-- 社保报表 -->
     <div class="historicalTable">
-      <div class="itemes" >
-        <div class="itemTopLab" v-for="( item, index) in tableData" :key="index">
+      <div class="itemes" v-for="( item, index) in tableData" :key="index">
+        <div class="itemTopLab">
           <div class="lab">></div>
           <div>
             <p class="title">{{item.yearsMonth}}社保报表 <span>{{ item.creationTime }}</span></p>
@@ -138,7 +139,7 @@ export default {
   },
   mounted() {
     this.getArchivingList();
-    this.getYearsMonth();
+    // this.getYearsMonth();
     // const res = await getArchivingListAPI({});
     // this.tableData = res;
     // console.log(res);
@@ -147,13 +148,13 @@ export default {
     async getArchivingList() {
       const res = await getArchivingListAPI({ year: this.yearVal })
       this.tableData = res.data.data;
-      // console.log(this.tableData);
+      console.log(this.tableData);
     },
-    async getYearsMonth() {
-      const res = await getYearsMonthAPI({ })
-      this.yearsMonth = res;
-      console.log(res);
-    },
+    // async getYearsMonth() {
+    //   const res = await getYearsMonthAPI({  })
+    //   this.yearsMonth = res;
+    //   console.log(res);
+    // },
     changeYear() {
       this.getArchivingList()
     }

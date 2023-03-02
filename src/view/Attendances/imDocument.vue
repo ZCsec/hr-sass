@@ -10,14 +10,24 @@
         </div>
         <div class="main">
           <div>
-            <input type="button" value="点击上传" id="fileImport" @click="clickLoad">
-            <input type="file" id="files" ref="refFile" style="display: none">
+            <input type="button" value="点击上传" id="fileImport" @click="clickLoad" />
+            <input type="file" id="files" ref="refFile" style="display: none" />
             <p>（推荐下载模板文件，请填写后上传）点击查看文件上传要求</p>
           </div>
-          <div>
-            <div></div>
-            <p>将文件拖到此处</p>
-          </div>
+            <el-upload
+              class="upload-demo"
+              drag
+              action="https://jsonplaceholder.typicode.com/posts/"
+              multiple
+              style="border:none;margin-top:80px"
+            >
+              <i class="el-icon-upload" style="margin-left:-340px;margin-top:50px"></i>
+              <div class="el-upload__text" style="width:320px;margin-left:12px;
+              margin-top:120px">
+                将文件拖到此处，或
+                <em>点击上传</em>
+              </div>
+            </el-upload>
         </div>
       </div>
     </el-card>
@@ -26,9 +36,9 @@
 
 <script>
 export default {
-  methods:{
-    clickLoad(){
-      this.$refs.refFile.dispatchEvent(new MouseEvent('click'))
+  methods: {
+    clickLoad() {
+      this.$refs.refFile.dispatchEvent(new MouseEvent("click"));
     }
   }
 };
@@ -76,7 +86,7 @@ export default {
         background-color: #3994ef;
         cursor: pointer;
       }
-      button:hover{
+      button:hover {
         background-color: #218bf5bb;
       }
       p {
@@ -87,29 +97,8 @@ export default {
         margin-top: 186px;
       }
     }
-    div:nth-of-type(2) {
-      position: relative;
-        div {
-          width: 130px;
-          height: 100px;
-          position: absolute;
-          left: 154px;
-          top: 104px;
-          background-image: url(../../assets/svg/shangchuan.svg);
-          background-size: 100px;
-          background-repeat: no-repeat;
-        }
-        p{
-          width: 100%;
-          height: 40px;
-          line-height: 40px;
-          text-align: center;
-          margin-top: 186px;
-        }
-      }
   }
 }
-
 .item {
   padding: 18px 0;
 }

@@ -1,4 +1,4 @@
-import Vue from "vue";
+import Vue from 'vue'
 import Vuex from 'vuex'
 import organ from "@/store/modules/Organ";
 // 在store文件夹下创建对应的store(vuex)模块 store/模块文件夹/模块文件
@@ -12,6 +12,9 @@ import SocialSec from "@/store/SocialSec/SocialSec";
 
 //考勤列表
 import attendances from '@/store/attendances/attendances.js'
+import approval from '@/store/approval/approval'
+//薪资列表
+import salarys from '@/store/salarys/salarys'
 
 Vue.use(Vuex)
 
@@ -22,7 +25,9 @@ export default new Vuex.Store({
     home,
     attendances,
     organ,
-    SocialSec
+    SocialSec,
+    salarys,
+    approval,
   },
   // 快捷引用
   getters: {
@@ -32,5 +37,6 @@ export default new Vuex.Store({
     powerLists: state => state.SysSet.powerLists,
     data: state=>state.attendances.data,
     SocialLists: state=>state.SocialSec.SocialLists,
-  }
+    
+  },
 })

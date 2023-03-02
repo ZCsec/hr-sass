@@ -21,7 +21,7 @@
           <el-menu-item index="/layout/socialSec"> 社保 </el-menu-item>
           <el-menu-item index="/layout/attendances"> 考勤 </el-menu-item>
           <el-menu-item index="/layout/salarys"> 工资 </el-menu-item>
-          <el-menu-item index="/layout/home"> 审批 </el-menu-item>
+          <el-menu-item index="/layout/Approval"> 审批 </el-menu-item>
         </el-menu>
         <div class="left-bottom-bg"></div>
       </el-aside>

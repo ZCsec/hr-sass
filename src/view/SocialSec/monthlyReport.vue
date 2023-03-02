@@ -94,28 +94,27 @@
 </template>
 
 <script>
-import { getYearsMonthAPI } from "@/api/index";
+import { getArchivingContAPI } from "@/api/index";
 export default {
   name: "HistoricalArchiving",
   data() {
     return {
       yearsMonth:[],
+      yearVal: this.$route.query.yearMonth,
     }
   },
-  mounted() {
-    // this.getArchivingList();
-    this.getYearsMonth();
-
-    // const res = await getArchivingListAPI({});
-    // this.tableData = res;
-    // console.log(res);
+  async mounted() {
+    // this.getArchivingCont();
+    const res = await getArchivingContAPI({ month: this.yearVal })
+    this.yearsMonth = res.data.data;
+    console.log(res);
   },
   methods:{
-    async getYearsMonth() {
-      const res = await getYearsMonthAPI({ })
-      this.yearsMonth = res;
-      console.log(res);
-    },
+    // async getArchivingCont() {
+    //   const res = await getArchivingContAPI({ month: this.yearVal })
+    //   this.yearsMonth = res;
+    //   console.log(res);
+    // },
   }
 };
 </script>
