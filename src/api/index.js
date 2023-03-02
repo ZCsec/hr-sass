@@ -9,9 +9,19 @@
 
 import { getLogin } from '@/api/login/login'
 import { getApplication } from '@/api/home/application'
-import { getProcess } from '@/api/approval/approval'
-import { getUserData } from '@/api/home/getUserMsg'
-import { departmentList } from '@/api/Organ.js'
+import {
+  getProcess,
+  getProcessDetail,
+  getProcessRate
+} from '@/api/approval/approval'
+import { getUserData, getUserMsg } from '@/api/home/getUserMsg'
+import {
+  departmentList,
+  addDepartment,
+  updateDepartment,
+  deleteDepartment,
+  checkDepartment
+} from '@/api/organ/Organ.js'
 import { getAttendancesList } from '@/api/attendances/attendances'
 
 //考勤数据接口
@@ -19,7 +29,13 @@ import { getAttendancesList } from '@/api/attendances/attendances'
 export const getAttendancesListAPI = getAttendancesList
 export const departmentListAPI = departmentList
 export const getApplicationAPI = getApplication
-// LLF的接口
 export const getLoginAPI = getLogin
 export const getUserDataAPI = getUserData
 export const getProcessAPI = getProcess
+export const addDepartmentAPI = addDepartment
+export const updateDepartmentAPI = updateDepartment
+export const deleteDepartmentAPI = deleteDepartment
+export const checkDepartmentAPI = checkDepartment
+export const getUserMsgAPI = getUserMsg
+export const getProcessDetailAPI = getProcessDetail
+export const getProcessRateAPI = getProcessRate

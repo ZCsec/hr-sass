@@ -29,6 +29,7 @@ import imp from '@/router/CompanySettings/Imp'
 import golook from '@/router/CompanySettings/golook'
 // 导入审批模块
 import Approval from '@/router/Approval/Approval'
+import leaveApproval from '@/router/Approval/leaveApproval'
 
 Vue.use(VueRouter)
 
@@ -53,7 +54,8 @@ const routes = [
       organs,
       imp,
       golook,
-      Approval
+      Approval,
+      leaveApproval
     ]
   }
 ]

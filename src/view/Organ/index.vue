@@ -17,9 +17,12 @@
                   操作<i class="el-icon-arrow-down el-icon--right"></i>
                 </span>
                 <el-dropdown-menu slot="dropdown">
-               
-                  <el-button type="text" @click="dialogFormVisible = true" class="luhbut_zhunt">添加子部门</el-button>
-                   
+                  <el-button
+                    type="text"
+                    @click="dialogFormVisible = true"
+                    class="luhbut_zhunt"
+                    >添加子部门</el-button
+                  >
                 </el-dropdown-menu>
               </el-dropdown></span
             >
@@ -35,9 +38,11 @@
                 node-key="id"
                 default-expand-all
                 :expand-on-click-node="false"
+                :props="props"
               >
-                <span class="custom-tree-node" slot-scope="{ node}">
+                <span class="custom-tree-node" slot-scope="{ node, data }">
                   <span>{{ node.label }}</span>
+                  <span>{{ data.manager }}</span>
                   <span>
                     <el-button type="text" size="mini">
                       <el-dropdown>
@@ -46,38 +51,73 @@
                         </span>
                         <!--  @click="() => remove(node, data)"> -->
                         <el-dropdown-menu slot="dropdown" class="luhbut">
-                            <el-button type="text" @click="dialogFormVisible = true" class="luhbut_zhunt">添加子部门</el-button>
-                                <el-button type="text" @click="dialogFormVisible = true" class="luhbut_zhunt">查看部门</el-button>
-                                  <el-button type="text" @click="open" class="luhbut_zhunt">删除部门</el-button>
+                          <el-button
+                            type="text"
+                            @click="changeState(data.pid, data.id, '添加')"
+                            class="luhbut_zhunt"
+                            >添加子部门</el-button
+                          >
+                          <el-button
+                            type="text"
+                            @click="changeState(data.pid, data.id, '编辑')"
+                            class="luhbut_zhunt"
+                            >编辑部门</el-button
+                          >
+                          <el-button
+                            type="text"
+                            @click="open(data.id)"
+                            class="luhbut_zhunt"
+                            >删除部门</el-button
+                          >
                         </el-dropdown-menu>
                       </el-dropdown>
                     </el-button>
                   </span>
                 </span>
               </el-tree>
-<el-dialog title="编辑部门" :visible.sync="dialogFormVisible">
-  <el-form :model="form">
-    <el-form-item label="部门名称" :label-width="formLabelWidth">
-      <el-input v-model="form.name" autocomplete="off"></el-input>
-    </el-form-item>
-      <el-form-item label="部门编码" :label-width="formLabelWidth">
-      <el-input v-model="form.name" autocomplete="off"></el-input>
-    </el-form-item>
-    <el-form-item label="部门负责人" :label-width="formLabelWidth">
-      <el-select v-model="form.region">
-        <el-option label="区域一" value="shanghai"></el-option>
-        <el-option label="区域二" value="beijing"></el-option>
-      </el-select>
-    </el-form-item>
-            <el-form-item label="部门介绍" :label-width="formLabelWidth">
-      <el-input v-model="form.name" autocomplete="off"></el-input>
-    </el-form-item>
-  </el-form>
-  <div slot="footer" class="dialog-footer">
-    <el-button @click="dialogFormVisible = false">取 消</el-button>
-    <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
-  </div>
-</el-dialog>
+              <el-dialog title="编辑部门" :visible.sync="dialogFormVisible">
+                <el-form :model="form">
+                  <el-form-item label="部门名称" :label-width="formLabelWidth">
+                    <el-input
+                      v-model="form.dName"
+                      autocomplete="off"
+                    ></el-input>
+                  </el-form-item>
+                  <el-form-item label="部门编码" :label-width="formLabelWidth">
+                    <el-input
+                      v-model="form.dCode"
+                      autocomplete="off"
+                    ></el-input>
+                  </el-form-item>
+                  <el-form-item
+                    label="部门负责人"
+                    :label-width="formLabelWidth"
+                  >
+                    <el-select v-model="form.dManager">
+                      <el-option
+                        v-for="item in deptList"
+                        :key="item.id"
+                        :label="item.manager"
+                        :value="item.manager"
+                      ></el-option>
+                    </el-select>
+                  </el-form-item>
+                  <el-form-item label="部门介绍" :label-width="formLabelWidth">
+                    <el-input
+                      v-model="form.dIntro"
+                      autocomplete="off"
+                    ></el-input>
+                  </el-form-item>
+                </el-form>
+                <div slot="footer" class="dialog-footer">
+                  <el-button @click="dialogFormVisible = false"
+                    >取 消</el-button
+                  >
+                  <el-button type="primary" @click="addChildren()"
+                    >确 定</el-button
+                  >
+                </div>
+              </el-dialog>
             </div>
           </div>
         </div>
@@ -87,219 +127,159 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import organ from "@/utils/organ"
-let id = 1000;
+import { mapGetters } from 'vuex'
+import { tranListToTreeData } from '@/utils/organ'
 export default {
   data() {
-    const data = [
-      {
-        id: 1,
-        label: "总裁办",
-        children: [
-          {
-            id: 4,
-            label: "二级 1-1",
-            children: [
-              {
-                id: 9,
-                label: "三级 1-1-1",
-              },
-              {
-                id: 10,
-                label: "三级 1-1-2",
-              },
-            ],
-          },
-        ],
-      },
-      {
-        id: 2,
-        label: "行政部",
-        children: [
-          {
-            id: 5,
-            label: "二级 2-1",
-          },
-          {
-            id: 6,
-            label: "二级 2-2",
-          },
-        ],
-      },
-      {
-        id: 3,
-        label: "人事部",
-        children: [
-          {
-            id: 7,
-            label: "二级 3-1",
-          },
-          {
-            id: 8,
-            label: "二级 3-2",
-          },
-        ],
-      },
-      {
-        id: 4,
-        label: "财务部",
-        children: [
-          {
-            id: 9,
-            label: "二级 3-1",
-          },
-          {
-            id: 10,
-            label: "二级 3-2",
-          },
-        ],
-      },
-      {
-        id: 5,
-        label: "技术部",
-        children: [
-          {
-            id: 11,
-            label: "二级 3-1",
-          },
-          {
-            id: 12,
-            label: "二级 3-2",
-          },
-        ],
-      },
-      {
-        id: 6,
-        label: "运营部",
-        children: [
-          {
-            id: 13,
-            label: "二级 3-1",
-          },
-          {
-            id: 14,
-            label: "二级 3-2",
-          },
-        ],
-      },
-      {
-        id: 7,
-        label: "市场部",
-        children: [
-          {
-            id: 15,
-            label: "二级 3-1",
-          },
-          {
-            id: 16,
-            label: "二级 3-2",
-          },
-        ],
-      },
-    ];
     return {
-      deptList:[],
-      data: JSON.parse(JSON.stringify(data)),
-      data: JSON.parse(JSON.stringify(data)),
-        dialogTableVisible: false,
-        dialogFormVisible: false,
-        form: {
-          name: '',
-          region: '',
-          date1: '',
-          date2: '',
-          delivery: false,
-          type: [],
-          resource: '',
-          desc: ''
-        },
-         formLabelWidth: '120px'
-    };
+      deptList: [],
+      dialogTableVisible: false,
+      dialogFormVisible: false,
+
+      props: {
+        label: 'name'
+      },
+      formLabelWidth: '120px'
+    }
   },
-
   methods: {
-    append(data) {
-      const newChild = { id: id++, label: "testtest", children: [] };
-      if (!data.children) {
-        this.$set(data, "children", []);
+    changeState(pid, id, type) {
+      this.dialogFormVisible = true
+      // console.log(pid)
+      this.form.nowPid = pid
+      this.form.id = id
+      this.form.type = type
+      this.checkDepartment(id)
+    },
+    addChildren() {
+      this.dialogFormVisible = false
+      // console.log(this.form.type)
+      // console.log(this.form.id)
+      // 根据 type 类型的不同 选择调用不同的接口
+      // console.log(pid)
+      if (this.form.type === '添加') {
+        // return
+        this.$store.dispatch('organ/addDepartment', this.form).then(() => {
+          if (this.$store.state.organ.status === 10000) {
+            this.$message({
+              message: this.$store.state.organ.message,
+              type: 'success'
+            })
+          } else if (this.$store.state.organ.status === 99999) {
+            this.$message({
+              message: this.$store.state.organ.message,
+              type: 'error'
+            })
+          }
+          this.$store.state.organ.status = ''
+          this.$store.state.organ.message = ''
+          // window.location.reload()
+          this.getDispatch()
+        })
+      } else if (this.form.type === '编辑') {
+        // console.log('调用查看接口')
+        this.$store.dispatch('organ/updateDepartment', this.form).then(() => {
+          if (this.$store.state.organ.status === 10000) {
+            this.$message({
+              message: this.$store.state.organ.message,
+              type: 'success'
+            })
+            this.getDispatch()
+          } else if (this.$store.state.organ.status === 99999) {
+            this.$message({
+              message: this.$store.state.organ.message,
+              type: 'error'
+            })
+            this.$store.state.organ.status = ''
+            this.$store.state.organ.message = ''
+          }
+        })
       }
-      data.children.push(newChild);
     },
-
-    remove(node, data) {
-      const parent = node.parent;
-      const children = parent.data.children || parent.data;
-      const index = children.findIndex((d) => d.id === data.id);
-      children.splice(index, 1);
-    },
-
-    renderContent(h, { node, data, store }) {
-      return (
-        <span class="custom-tree-node">
-          <span>{node.label}</span>
-          <span>
-            <el-button size="mini" type="text" on-click={() => this.append(data)}>
-              Append
-            </el-button>
-            <el-button size="mini" type="text" on-click={() => this.remove(node, data)}>
-              Delete
-            </el-button>
-          </span>
-        </span>
-      );
-    },
-     open() {
-        this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning',
-          center: true
-        }).then(() => {
-          this.$message({
-            type: 'success',
-            message: '删除成功!'
-          });
-        }).catch(() => {
-          this.$message({
+    open(id) {
+      // console.log(id)
+      let that = this
+      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+        center: true
+      })
+        .then(() => {
+          console.log(id)
+          this.$store.dispatch('organ/deleteDepartment', id).then(() => {
+            // console.log(this.$store.state.organ.status)
+            if (this.$store.state.organ.status === 10000) {
+              that.$message({
+                type: 'success',
+                message: this.$store.state.organ.message
+              })
+            } else {
+              that.$message({
+                type: 'error',
+                message: this.$store.state.organ.message
+              })
+            }
+            this.$store.state.organ.status = ''
+            this.$store.state.organ.message = ''
+            this.getDispatch()
+          })
+        })
+        .catch(() => {
+          that.$message({
             type: 'info',
             message: '已取消删除'
-          });
-        });
-      }
-    
-  },
-
-  computed: {
-    ...mapGetters(["depts"]),
-  },
-  created() {
-    this.getDispatch();
-   
-  },
-  methods:{
-    getDispatch(){
-         this.$store.dispatch("organ/getHomePage");
-        //  this.deptList = organ.tranListToTreeData(this.$store.getters.depts);
+          })
+        })
+    },
+    async getDispatch() {
+      await this.$store.dispatch('organ/getHomePage').then(() => {
+        this.deptList = tranListToTreeData(this.$store.state.organ.depts, '')
+        // console.log(this.deptList)
+      })
+    },
+    checkDepartment(id) {
+      this.$store.dispatch('organ/checkDepartment', id)
+      // console.log(id)
     }
+  },
+  computed: {
+    ...mapGetters(['depts']),
+    form: {
+      get() {
+        return this.$store.state.organ.form
+      },
+      set(val) {
+        this.$store.state.organ.form = val
+      }
+    },
+    form2: {
+      get() {
+        return this.$store.state.organ.form
+      },
+      set(val) {
+        this.$store.state.organ.form = val
+      }
+    }
+  },
+  mounted() {
+    this.getDispatch()
   }
-};
+}
 </script>
 
 <style scoped lang="less">
-.luhbut{
-  .luhbut_zhunt{
+.luhbut {
+  .luhbut_zhunt {
     width: auto;
-     display:block;
-     text-align:center;
-    color:rgb(75,124,251);
-  
+    display: block;
+    text-align: center;
+    color: rgb(75, 124, 251);
   }
-  
 }
 .el-dropdown-link {
   cursor: pointer;
-    color:#000;
+  color: #000;
 }
 .el-icon-arrow-down {
   font-size: 12px;
@@ -319,7 +299,6 @@ export default {
 }
 .cunt {
   width: 100%;
-  
 
   background-color: rgb(240, 242, 245);
   border: 1px solid white;
