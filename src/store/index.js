@@ -13,6 +13,7 @@ import SocialSec from "@/store/SocialSec/SocialSec";
 //考勤列表
 import attendances from '@/store/attendances/attendances.js'
 import approval from '@/store/approval/approval'
+
 //薪资列表
 import salarys from '@/store/salarys/salarys'
 
@@ -39,4 +40,6 @@ export default new Vuex.Store({
     SocialLists: state=>state.SocialSec.SocialLists,
     
   },
+    
+  
 })

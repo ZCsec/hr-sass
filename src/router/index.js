@@ -6,7 +6,7 @@ import VueRouter from 'vue-router'
 // 导入子路由规则模块
 import Layout from '@/layout/index.vue'
 // 布局路由模块
-import organs from '@/router/organ/organ.js'
+import organs from '@/router/organ/organ'
 // 主页子路由模块
 import home from '@/router/home/home'
 // 登陆主路由模块
@@ -39,10 +39,12 @@ import imp from '@/router/CompanySettings/Imp'
 import golook from '@/router/CompanySettings/golook'
 // 导入审批模块
 import Approval from '@/router/Approval/Approval'
+import leaveApproval from '@/router/Approval/leaveApproval'
 
 Vue.use(VueRouter)
 
 const routes = [
+ 
   {path:'/',redirect:'/login'},
   {path:'/login',component:Login},
   {path:'/layout',component:Layout,redirect:'/layout/home',children:[
