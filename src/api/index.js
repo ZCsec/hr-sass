@@ -9,30 +9,14 @@
 
 import { getLogin } from '@/api/login/login'
 import { getApplication } from '@/api/home/application'
-<<<<<<< HEAD
-import { getProcess } from '@/api/approval/approval'
-import { getUserData } from '@/api/home/getUserMsg'
-import { departmentList } from '@/api/organ'
-import { getAttendancesList,getRepotsList } from '@/api/attendances/attendances'
-=======
-import {
-  getProcess,
-  getProcessDetail,
-  getProcessRate
-} from '@/api/approval/approval'
+import { getAttendancesList, getRepotsList } from '@/api/attendances/attendances'
+import {getProcess,getProcessDetail,getProcessRate} from '@/api/approval/approval'
 import { getUserData, getUserMsg } from '@/api/home/getUserMsg'
-import {
-  departmentList,
-  addDepartment,
-  updateDepartment,
-  deleteDepartment,
-  checkDepartment
-} from '@/api/organ/Organ.js'
-import { getAttendancesList } from '@/api/attendances/attendances'
->>>>>>> a6e4022d55d0858b76f0961adbeed8953c2dc789
+import {departmentList,addDepartment,updateDepartment,deleteDepartment,checkDepartment} from '@/api/organ/organ.js'
+import {getSalarysList} from '@/api/salarys/salarys'
 
 //月份报表数据接口
-export const getRepotsListAPI=getRepotsList
+export const getRepotsListAPI = getRepotsList
 //部门接口
 export const getAttendancesListAPI = getAttendancesList
 export const departmentListAPI = departmentList
@@ -47,3 +31,4 @@ export const checkDepartmentAPI = checkDepartment
 export const getUserMsgAPI = getUserMsg
 export const getProcessDetailAPI = getProcessDetail
 export const getProcessRateAPI = getProcessRate
+export const getSalarysListAPI =getSalarysList

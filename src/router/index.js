@@ -19,16 +19,11 @@ import historys from '@/router/attendances/historys'
 import isMonths from '@/router/attendances/isMonths'
 //工资模块路由
 import salarys from '@/router/salarys/salarys'
-<<<<<<< HEAD
 import salaryset from '@/router/salarys/salaryset'
 import report from '@/router/salarys/report'
 import details from '@/router/salarys/details'
 
 import store from "@/store/index"
-=======
-import details from '@/router/salarys/details'
-import store from '@/store/index'
->>>>>>> a6e4022d55d0858b76f0961adbeed8953c2dc789
 // 公司设置路由
 import companySettings from '@/router/CompanySettings/CompanySettings'
 import employee from '@/router/CompanySettings/Employee'
@@ -41,7 +36,6 @@ import leaveApproval from '@/router/Approval/leaveApproval'
 Vue.use(VueRouter)
 
 const routes = [
-<<<<<<< HEAD
 
   {path:'/',redirect:'/login'},
   {path:'/login',component:Login},
@@ -63,10 +57,8 @@ const routes = [
     imp,
     golook
   ]},
-=======
   { path: '/', redirect: '/login' },
   { path: '/login', component: Login },
->>>>>>> a6e4022d55d0858b76f0961adbeed8953c2dc789
   {
     path: '/layout',
     component: Layout,
