@@ -1,5 +1,5 @@
 // 导入getUserData方法 在路由守卫中获取用户的信息
-import { getUserDataAPI, getApplicationAPI } from '@/api/index'
+import { getUserDataAPI, getApplicationAPI, getUserMsgAPI } from '@/api/index'
 import { getDate, getTime } from '@/utils/getDate'
 import $store from '@/store'
 
@@ -68,6 +68,9 @@ export default {
         res.data.data.userId,
         res.data.data.company
       ])
+      // 获取带有用户头像的详情
+      // const res2 = await getUserMsgAPI(res.data.data.userId)
+      // console.log(res2)
     },
     // 加班申请
     async getApplication(context) {

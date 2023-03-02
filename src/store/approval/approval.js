@@ -1,16 +1,27 @@
-import { getProcessAPI } from '@/api'
+import { getProcessAPI, getProcessDetailAPI, getProcessRateAPI } from '@/api'
 
 export default {
   namespaced: true,
-  state: {},
-  mutations: {},
+  state: {
+    list: [],
+    total: ''
+  },
+  mutations: {
+    getList(state, val) {
+      // console.log(val)
+      state.list = val.rows
+      state.total = val.total
+    }
+  },
   actions: {
+    // 获取全部的审批列表
     async getProcessData(context) {
       const res = await getProcessAPI({
         page: 1,
-        size: 10
+        pageSize: 10
       })
-      console.log(res)
+      // console.log(res)
+      context.commit('getList', res.data.data)
     }
   }
 }
