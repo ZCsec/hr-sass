@@ -9,18 +9,30 @@
 
 import { getLogin } from '@/api/login/login'
 import { getApplication } from '@/api/home/application'
-import { getAttendancesList, getRepotsList } from '@/api/attendances/attendances'
-import {getProcess,getProcessDetail,getProcessRate} from '@/api/approval/approval'
+import {
+  getAttendancesList,
+  getRepotsList
+} from '@/api/attendances/attendances'
+import {
+  getProcess,
+  getProcessDetail,
+  getProcessRate
+} from '@/api/approval/approval'
 import { getUserData, getUserMsg } from '@/api/home/getUserMsg'
 import {departmentList,addDepartment,updateDepartment,deleteDepartment,checkDepartment} from '@/api/organ/organ.js'
 import {getSalarysList,getSalaryDetail,importEmployee} from '@/api/salarys/salarys'
 
 //月份报表数据接口
-export const getRepotsListAPI = getRepotsList
 //导入
 export const importEmployeeAPI =importEmployee
+import { getDefinition, getSuspend } from '@/api/approval/securitySetting'
+import { getInfo, saveInfo } from '@/api/approval/myInfo'
+//考勤数据接口
+
+//月份报表数据接口
 //部门接口
 export const getAttendancesListAPI = getAttendancesList
+export const getRepotsListAPI = getRepotsList
 export const departmentListAPI = departmentList
 export const getApplicationAPI = getApplication
 export const getLoginAPI = getLogin
@@ -35,3 +47,7 @@ export const getProcessDetailAPI = getProcessDetail
 export const getProcessRateAPI = getProcessRate
 export const getSalarysListAPI =getSalarysList
 export const getSalaryDetailAPI =getSalaryDetail    //调薪
+export const getDefinitionAPI = getDefinition
+export const getSuspendAPI = getSuspend
+export const getInfoAPI = getInfo
+export const saveInfoAPI = saveInfo

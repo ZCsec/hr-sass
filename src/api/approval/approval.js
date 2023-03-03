@@ -11,12 +11,13 @@ export const getProcess = (data) =>
 // 查询审批单的详情数据
 export const getProcessDetail = (data) =>
   request({
-    url: `/api/user/process/instance/${data.id}`,
+    url: `/prod-api/user/process/instance/${data.id}`,
     method: 'GET'
   })
 
 // 查询审批单审批明细
-export const getProcessRate = (data) => request({
-  url:`/prod-api/user/process/instance/tasks/${data.id}`,
-  method:'GET'
-})
+export const getProcessRate = (data) =>
+  request({
+    url: `/prod-api/user/process/instance/tasks/${data.id}`,
+    method: 'GET'
+  })
