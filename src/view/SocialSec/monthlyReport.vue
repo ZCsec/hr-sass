@@ -19,7 +19,7 @@
             <div class="rightLabBox"><div>导出</div></div>
           </div>
           <!-- 报表详情 -->
-          <el-table :data="yearsMonth" id="item" height="300" border style="width: 100%;text-align: center">
+          <el-table v-loading="loading" :data="yearsMonth" id="item" border style="width: 100%;text-align: center">
             <el-table-column type="index" label="序号" center width="50" />
             <el-table-column prop="username" label="姓名" width="150px" />
             <el-table-column prop="timeOfEntry" label="入职时间" width="150px" />
@@ -88,33 +88,48 @@
         </div>
 
       </div>
+      <!-- 归档-新建报表，取消按钮 -->
+      <el-row type="flex" justify="center" align="middle" style="height:60px">
+      <el-col :span="12">
+        <el-button size="small" type="primary" @click="archive">归档{{ yearVal ? yearVal.substr(4) : '' }}报表</el-button>
+        <el-button size="small" type="primary" >新建报表</el-button>
+        <el-button size="small" @click="$router.back()">取消</el-button>
+      </el-col>
+    </el-row>
     </div>
 
   </div>
 </template>
 
 <script>
-import { getArchivingContAPI } from "@/api/index";
+import { getArchivingContAPI,getArchivingArchiveAPI } from "@/api/index";
 export default {
   name: "HistoricalArchiving",
   data() {
     return {
       yearsMonth:[],
       yearVal: this.$route.query.yearMonth,
+      loading: false
     }
   },
   async mounted() {
     // this.getArchivingCont();
-    const res = await getArchivingContAPI({ month: this.yearVal })
+    this.loading = true
+    const res = await getArchivingContAPI({ month: this.yearVal, opType: 1 })
     this.yearsMonth = res.data.data;
+    this.loading = false
     console.log(res);
   },
   methods:{
-    // async getArchivingCont() {
-    //   const res = await getArchivingContAPI({ month: this.yearVal })
-    //   this.yearsMonth = res;
-    //   console.log(res);
-    // },
+    archive() {
+      this.$confirm(`您确定要归档${this.yearVal}报表？报表归档将覆盖上一次归档记录，无法恢复。`).then(async() => {
+        await getArchivingArchiveAPI({ yearMonth: this.yearVal })
+        this.$message({
+          type: 'success',
+          message: '操作成功!'
+        })
+      })
+    },
   }
 };
 </script>

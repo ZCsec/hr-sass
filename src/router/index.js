@@ -44,7 +44,6 @@ import leaveApproval from '@/router/Approval/leaveApproval'
 Vue.use(VueRouter)
 
 const routes = [
- 
   {path:'/',redirect:'/login'},
   {path:'/login',component:Login},
   {path:'/layout',component:Layout,redirect:'/layout/home',children:[
@@ -68,7 +67,8 @@ const routes = [
     socialHistorical,
     monthlyReport,
     Approval,
-    userSocial
+    userSocial,
+    leaveApproval
   ]},    
 ]
 

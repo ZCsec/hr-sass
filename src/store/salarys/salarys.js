@@ -6,14 +6,16 @@ export default {
   },
   mutations: {
     getSalarysList(state, val) {
-      state.list = val
+      state.list = val.rows
     }
   },
   actions: {
     async getSalarys(context) {
-      const res = await getSalarysListAPI()
-      console.log(res)
-      context.commit('getSalarysList', res.data)
+      const res = await getSalarysListAPI(
+        {"total":0,"page":1,"pageSize":10,"approvalsTypeChecks":[],"approvalsStateChecks":[],"departmentChecks":[]}
+      )
+      console.log(res.data.data.rows)
+      context.commit('getSalarysList', res.data.data)
     }
   }
 }

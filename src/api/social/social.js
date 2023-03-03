@@ -24,7 +24,6 @@ export function getArchivingList(data) {
     })
 }
 
-//2020.01 -->社保报表
 export function getArchivingCont(params) {
     return request({
         url: `/api/social_securitys/historys/${params.month}`,
@@ -41,4 +40,11 @@ export function getYearsMonth(yearMonth) {
     })
 }
 
-
+//社保数据归档
+export function getArchivingArchive(data){
+    return request({
+        url:`/api/social_securitys/historys/${data.yearMonth}/archive`,
+        method:"post",
+        data
+    })
+}

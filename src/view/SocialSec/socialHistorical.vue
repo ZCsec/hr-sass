@@ -17,30 +17,30 @@
       </div>
     </div>
     <!-- 社保报表 -->
-    <div class="historicalTable">
-      <div class="itemes" v-for="( item, index) in tableData" :key="index">
-        <div class="itemTopLab">
-          <div class="lab">></div>
+    <div v-loading="loading" class="historicalTable">
+      <div class="itemes" v-for="( itemes, index) in tableData" :key="index">
+        <div class="itemTopLab" :class="{act: itemes.act}">
+          <div class="lab" @click="openTable(itemes,index)">></div>
           <div>
-            <p class="title">{{item.yearsMonth}}社保报表 <span>{{ item.creationTime }}</span></p>
-            <p class="labTit">社保报表</p>
+            <p class="title">{{itemes.yearsMonth}}社保报表 <span>{{ itemes.creationTime }}</span></p>
+            <p class="labTit" @click="openTable(itemes,index)">社保报表</p>
           </div>
           <div>
             <p class="itemTit"><span>企业缴纳</span></p>
-            <p class="itemNum">{{ item.enterprisePayment }}</p>
+            <p class="itemNum">{{ itemes.enterprisePayment }}</p>
           </div>
           <div>
             <p class="itemTit"><span>个人缴纳</span></p>
-            <p class="itemNum">{{ item.personalPayment }}</p>
+            <p class="itemNum">{{ itemes.personalPayment }}</p>
           </div>
           <div>
             <p class="itemTit"><span>合计</span></p>
-            <p class="itemNum">{{ item.total }}</p>
+            <p class="itemNum">{{ itemes.total }}</p>
           </div>
         </div>
 
         <!-- 部门分级 导出 -->
-        <div class="itemDropDown">
+        <div v-show="itemes.act"  class="itemDropDown">
           <div class="topLab">
             <div><span style="background-color: #cfeffe" />已离职</div>
             <div><span style="background-color: #a8f8bb" />再入职</div>
@@ -50,7 +50,7 @@
             <div class="rightLabBox"><div>导出</div></div>
           </div>
           <!-- 报表详情 -->
-          <el-table :data="yearsMonth" id="item" height="300" border style="width: 100%;text-align: center">
+          <el-table :data="itemes.contentData" id="item" height="300" border style="width: 100%;text-align: center">
             <el-table-column type="index" label="序号" center width="50" />
             <el-table-column prop="username" label="姓名" width="150px" />
             <el-table-column prop="timeOfEntry" label="入职时间" width="150px" />
@@ -118,7 +118,6 @@
           </el-table>
         </div>
 
-
       </div>
     </div>
 
@@ -127,34 +126,41 @@
 </template>
 
 <script>
-import { getArchivingListAPI, getArchivingContAPI,getYearsMonthAPI } from "@/api/index";
+import { getArchivingListAPI, getArchivingContAPI } from "@/api/index";
 export default {
   name: "HistoricalArchiving",
   data() {
     return {
+      loading:false,
+      num:0,
       tableData: [],
-      yearsMonth:[],
+      contentData:[],
       yearVal: '2020',
     };
   },
   mounted() {
     this.getArchivingList();
-    // this.getYearsMonth();
-    // const res = await getArchivingListAPI({});
-    // this.tableData = res;
-    // console.log(res);
   },
   methods:{
     async getArchivingList() {
+      this.loading = true;
       const res = await getArchivingListAPI({ year: this.yearVal })
       this.tableData = res.data.data;
-      console.log(this.tableData);
+      this.loading = false;
+      // console.log(this.tableData);
     },
-    // async getYearsMonth() {
-    //   const res = await getYearsMonthAPI({  })
-    //   this.yearsMonth = res;
-    //   console.log(res);
-    // },
+    async openTable(obj, index) {
+      if (!obj.act) {
+        const data = await getArchivingContAPI({ month: obj.yearsMonth, year: this.yearVal, opType: 2 })
+        console.log(data);
+        // this.contentData = data.data.data;
+        this.$set(this.tableData[index], 'contentData', data.data.data)
+        this.loading = false
+        this.$set(this.tableData[index], 'act', true)
+      } else {
+        this.$set(this.tableData[index], 'act', false)
+      }
+    },
     changeYear() {
       this.getArchivingList()
     }
@@ -191,6 +197,15 @@ export default {
 .historicalTable {
   background: #fff;
 }
+// .historicalTable .itemes .act{
+//   border-bottom:solid 3px greenyellow;
+// }
+// .historicalTable .itemes .act .lab{
+//   border-bottom:solid 3px greenyellow;
+// }
+// .historicalTable .itemes .act .lab .labTit{
+//   border-bottom:solid 3px greenyellow;
+// }
 .historicalTable .itemes .itemTopLab {
   border-top: solid 1px #f0f0f0;
   border-bottom: solid 2px rgb(65, 166, 255);
