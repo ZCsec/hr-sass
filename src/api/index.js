@@ -45,12 +45,7 @@ import { getInfo, saveInfo } from '@/api/approval/myInfo'
 //考勤数据接口
 import { getSalarysList } from '@/api/salarys/salarys'
 
-//月份报表数据接口
-//部门接口
-// import { departmentList } from "@/api/Organ"
-// import {getUserData} from '@/api/getUserMsg/getUserMsg'
-// import {getUserData} from '@/api/home/getUserMsg'
-// import { getApplication } from '@/api/home/application'
+
 
 export const getAttendancesListAPI = getAttendancesList
 export const getRepotsListAPI = getRepotsList

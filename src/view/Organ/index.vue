@@ -127,39 +127,21 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import organ from "@/utils/organ";
-let id = 1000;
+import { mapGetters } from 'vuex'
 import { tranListToTreeData } from '@/utils/organ'
 export default {
   data() {
     return {
       deptList: [],
-      data: JSON.parse(JSON.stringify(data)),
       dialogTableVisible: false,
       dialogFormVisible: false,
-      form: {
-        name: "",
-        region: "",
-        date1: "",
-        date2: "",
-        delivery: false,
-        type: [],
-        resource: "",
-        desc: "",
-      },
-      formLabelWidth: "120px",
-    };
-  },
-  //     dialogTableVisible: false,
-  //     dialogFormVisible: false,
 
-  //     props: {
-  //       label: 'name'
-  //     },
-  //     formLabelWidth: '120px'
-  //   }
-  // },
+      props: {
+        label: 'name'
+      },
+      formLabelWidth: '120px'
+    }
+  },
   methods: {
     changeState(pid, id, type) {
       this.dialogFormVisible = true
@@ -168,50 +150,6 @@ export default {
       this.form.id = id
       this.form.type = type
       this.checkDepartment(id)
-    },
-
-    renderContent(h, { node, data, store }) {
-      return (
-        <span class="custom-tree-node">
-          <span>{node.label}</span>
-          <span>
-            <el-button
-              size="mini"
-              type="text"
-              on-click={() => this.append(data)}
-            >
-              Append
-            </el-button>
-            <el-button
-              size="mini"
-              type="text"
-              on-click={() => this.remove(node, data)}
-            >
-              Delete
-            </el-button>
-          </span>
-        </span>
-      );
-    },
-    open() {
-      this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning",
-        center: true,
-      })
-        .then(() => {
-          this.$message({
-            type: "success",
-            message: "删除成功!",
-          });
-        })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "已取消删除",
-          });
-        });
     },
     addChildren() {
       this.dialogFormVisible = false
@@ -306,41 +244,28 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["depts"]),
-  },
-  created() {
-    this.getDispatch();
-  },
-  methods: {
-    getDispatch() {
-      this.$store.dispatch("organ/getHomePage");
-      //  this.deptList = organ.tranListToTreeData(this.$store.getters.depts);
+    ...mapGetters(['depts']),
+    form: {
+      get() {
+        return this.$store.state.organ.form
+      },
+      set(val) {
+        this.$store.state.organ.form = val
+      }
     },
+    form2: {
+      get() {
+        return this.$store.state.organ.form
+      },
+      set(val) {
+        this.$store.state.organ.form = val
+      }
+    }
   },
-};
-
-    // ...mapGetters(['depts']),
-//     form: {
-//       get() {
-//         return this.$store.state.organ.form
-//       },
-//       set(val) {
-//         this.$store.state.organ.form = val
-//       }
-//     },
-//     form2: {
-//       get() {
-//         return this.$store.state.organ.form
-//       },
-//       set(val) {
-//         this.$store.state.organ.form = val
-//       }
-//     }
-//   },
-//   mounted() {
-//     this.getDispatch()
-//   }
-// }
+  mounted() {
+    this.getDispatch()
+  }
+}
 </script>
 
 <style scoped lang="less">
