@@ -40,6 +40,9 @@ import golook from '@/router/CompanySettings/golook'
 // 导入审批模块
 import Approval from '@/router/Approval/Approval'
 import leaveApproval from '@/router/Approval/leaveApproval'
+import securitySetting from '@/router/Approval/securitySetting'
+import myInfo from '@/router/Approval/myInfo'
+import Approvals from '@/router/Approval/Approvals'
 
 Vue.use(VueRouter)
 
@@ -68,7 +71,10 @@ const routes = [
     monthlyReport,
     Approval,
     userSocial,
-    leaveApproval
+    leaveApproval,
+    securitySetting,
+    myInfo,
+    Approvals
   ]},    
 ]
 

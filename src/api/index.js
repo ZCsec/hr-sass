@@ -29,14 +29,23 @@ export const getPermissionDetailAPI = getPermissionDetail;  //获取权限详情
 
 
 import { getApplication } from '@/api/home/application'
-import { getAttendancesList, getRepotsList } from '@/api/attendances/attendances'
-import {getProcess,getProcessDetail,getProcessRate} from '@/api/approval/approval'
+import {
+  getAttendancesList,
+  getRepotsList
+} from '@/api/attendances/attendances'
+import {
+  getProcess,
+  getProcessDetail,
+  getProcessRate
+} from '@/api/approval/approval'
 import { getUserData, getUserMsg } from '@/api/home/getUserMsg'
 import {departmentList,addDepartment,updateDepartment,deleteDepartment,checkDepartment} from '@/api/organ/Organ.js'
-import {getSalarysList} from '@/api/salarys/salarys'
+import { getDefinition, getSuspend } from '@/api/approval/securitySetting'
+import { getInfo, saveInfo } from '@/api/approval/myInfo'
+//考勤数据接口
+import { getSalarysList } from '@/api/salarys/salarys'
 
 //月份报表数据接口
-export const getRepotsListAPI = getRepotsList
 //部门接口
 // import { departmentList } from "@/api/Organ"
 // import {getUserData} from '@/api/getUserMsg/getUserMsg'
@@ -44,6 +53,7 @@ export const getRepotsListAPI = getRepotsList
 // import { getApplication } from '@/api/home/application'
 
 export const getAttendancesListAPI = getAttendancesList
+export const getRepotsListAPI = getRepotsList
 export const departmentListAPI = departmentList
 export const getApplicationAPI = getApplication
 export const getLoginAPI = getLogin
@@ -56,4 +66,8 @@ export const checkDepartmentAPI = checkDepartment
 export const getUserMsgAPI = getUserMsg
 export const getProcessDetailAPI = getProcessDetail
 export const getProcessRateAPI = getProcessRate
-export const getSalarysListAPI =getSalarysList
+export const getDefinitionAPI = getDefinition
+export const getSuspendAPI = getSuspend
+export const getInfoAPI = getInfo
+export const saveInfoAPI = saveInfo
+export const getSalarysListAPI = getSalarysList
