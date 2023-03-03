@@ -1,6 +1,7 @@
 <template>
   <div>
     <div>
+      {{ this.$store.getters.userId }}
       <el-row>
         <el-col :span="24">
           <div class="grid-content bg-purple-dark">
@@ -44,12 +45,21 @@
           <el-table-column label="工号" prop="work_number"></el-table-column>
           <el-table-column label="聘用形式" prop="formOfEmployment"></el-table-column>
           <el-table-column label="部门" prop="departmentName"></el-table-column>
-          <el-table-column label="入职时间" prop="timeOfEntry"></el-table-column>
+          <el-table-column label="入职时间" :formatter="formatter"></el-table-column>
           <el-table-column label="工资基数" prop="currentBasicSalary"></el-table-column>
           <el-table-column label="津贴方案" prop="scheme"></el-table-column>
           <el-table-column label="操作" class="operate">
-            <button class="el-button" @click="dialogVisible = true">调薪</button>
-            <button class="el-button" @click="detailsSet()">查看</button>
+            //使用scope绑定行属性
+            <template slot-scope="scope" style>
+              <el-button
+                size="mini"
+                type="primary"
+                @click="changeSalary(scope.row.id)"
+              >调薪</el-button>
+              <el-button type="text" size="mini">
+                <router-link :to="{'path': '/salarys/details/'+scope.row.id}">查看</router-link>
+              </el-button>
+            </template>
           </el-table-column>
         </el-table>
         <div class="block page">
@@ -65,7 +75,13 @@
         </div>
 
         <!-- 调薪 -->
-        <el-dialog class="top" title="调薪" :visible.sync="dialogVisible" width="50%" :before-close="handleClose">
+        <el-dialog
+          class="top"
+          title="调薪"
+          :visible.sync="dialogVisible"
+          width="50%"
+          :before-close="handleClose"
+        >
           <div class="salary">
             <div>
               <img src alt />
@@ -79,30 +95,41 @@
           <div class="salary1">
             <div>
               <li>调整基本工资</li>
-              <li><el-input placeholder="555" :disabled="true" style="width:220px"></el-input> -> <el-input v-model="input" placeholder="请输入调整后基本工资" style="width:220px"></el-input></li>
+              <li>
+                <el-input placeholder="555" :disabled="true" style="width:220px"></el-input>->
+                <el-input v-model="BaseSalary" placeholder="请输入调整后基本工资" style="width:220px"></el-input>
+              </li>
             </div>
           </div>
           <div class="salary1">
             <div>
               <li>调整岗位工资</li>
-              <li><el-input placeholder="555" :disabled="true" style="width:220px"></el-input> -> <el-input v-model="input1" placeholder="请输入调整后基本工资" style="width:220px"></el-input></li>
+              <li>
+                <el-input placeholder="555" :disabled="true" style="width:220px"></el-input>->
+                <el-input v-model="JobSalary" placeholder="请输入调整后岗位工资" style="width:220px"></el-input>
+              </li>
             </div>
           </div>
           <div class="salary1">
             <div>
               <li>工资合计</li>
-              <li><el-input placeholder="1110" :disabled="true" style="width:220px"></el-input> -> <el-input placeholder="0" :disabled="true" style="width:220px"></el-input></li>
+              <li>
+                <el-input placeholder="1110" :disabled="true" style="width:220px"></el-input>->
+                <el-input placeholder="0" :disabled="true" style="width:220px"></el-input>
+              </li>
             </div>
           </div>
           <div class="salary1">
             <div>
               <li>调整幅度</li>
-              <li><el-input placeholder="-1110" :disabled="true" style="width:220px"></el-input></li>
+              <li>
+                <el-input placeholder="-1110" :disabled="true" style="width:220px"></el-input>
+              </li>
             </div>
           </div>
           <div class="choose">
-            <input type="button" value="保存" @click="dialogVisible=false">
-            <input type="button" value="关闭" @click="dialogVisible=false">
+            <input type="button" value="保存" @click="dialogVisible=false" />
+            <input type="button" value="关闭" @click="dialogVisible=false" />
           </div>
         </el-dialog>
       </div>
@@ -111,6 +138,8 @@
 </template>
 
 <script>
+import { getDate } from "@/utils/getDate";
+import { getSalaryDetailAPI } from "@/api/index";
 export default {
   data() {
     return {
@@ -192,13 +221,21 @@ export default {
       attendList: {},
       company: {},
       salarysList: [],
-      input:'',
-      input1:''
+      //基本工资
+      BaseSalary: "",
+      //岗位工资
+      JobSalary: "",
+      //返回工资数值
+      salaryDetail: {},
+      selectUserId: null,
+      currentComponent: '',
+      topLabel: '转正',
     };
   },
   created() {
     this.getDispatch();
     this.getSalarys();
+    // this.getSalaryDetail();
   },
   methods: {
     handleEdit(index, row) {
@@ -218,15 +255,18 @@ export default {
         this.company = this.$store.getters.depts;
       });
     },
+    // getSalaryDetail(){
+    //   this.$store.dispatch('salarys/getSalaryDetail')
+    // },
     salarySet() {
       this.$router.push({
         path: "/layout/salaryset"
       });
     },
-    detailsSet(){
+    detailsSet() {
       this.$router.push({
-        path:'/layout/details'
-      })
+        path: "/layout/details"
+      });
     },
     report() {
       this.$router.push({
@@ -245,32 +285,55 @@ export default {
       this.$store.dispatch("salarys/getSalarys").then(res => {
         this.salarysList = this.$store.getters.list;
       });
-    }
+    },
+    formatter(row) {
+      return getDate(row.timeOfEntry);
+    },
+    //调薪
+    // async changeSalary(userId) {
+    //   // this.dialogVisible = true;
+    //   // // var userId=Number(userId);
+    //   // this.salaryDetail = 
+    //   await getSalaryDetailAPI(userId);
+    //   // (
+    //   //   {
+    //   //   currentBasicSalary: 'this.BaseSalary',
+    //   //   currentPostWage: 'this.JobSalary',
+    //   //   userId:'userId'
+    //   // })//
+    //   console.log(userId);
+    //   console.log(res);
+    // }
+    async changeSalary(userId) {
+      this.dialogVisible = true
+      await getSalaryDetailAPI(userId);
+      console.log(userId);
+    },
   }
 };
 </script>
 
 <style lang="less" scoped>
-.salary{
+.salary {
   width: 100%;
   height: 150px;
   // background-color: #38bce1;
   border-bottom: 2px rgba(128, 128, 128, 0.367) solid;
-  div{
+  div {
     float: left;
   }
-  div:nth-of-type(1){
+  div:nth-of-type(1) {
     width: 120px;
     height: 120px;
     border-radius: 50%;
     background-image: url(../../assets/svg/1.jpeg);
     background-size: 120px;
   }
-  div:nth-of-type(2){
+  div:nth-of-type(2) {
     width: 28%;
     height: 120px;
     margin-left: 20px;
-    li{
+    li {
       list-style: none;
       height: 40px;
       line-height: 40px;
@@ -278,42 +341,42 @@ export default {
     }
   }
 }
-.salary1{
+.salary1 {
   width: 100%;
   height: 50px;
   margin-top: 20px;
-  div{
+  div {
     width: 100%;
     height: 50px;
-    li{
+    li {
       width: 580px;
       height: 50px;
       line-height: 50px;
       list-style: none;
       float: left;
     }
-    li:nth-of-type(1){
+    li:nth-of-type(1) {
       width: 120px;
       text-align: right;
       padding-right: 15px;
     }
   }
 }
-.choose{
+.choose {
   width: 100%;
   height: 40px;
   margin-top: 20px;
-  input{
+  input {
     width: 80px;
     height: 40px;
     margin: auto;
     margin-left: 50px;
     border: none;
-    background-color:#409EFF;
+    background-color: #409eff;
     color: white;
     border-radius: 5px;
   }
-  input:nth-of-type(1){
+  input:nth-of-type(1) {
     margin-left: 250px;
   }
 }

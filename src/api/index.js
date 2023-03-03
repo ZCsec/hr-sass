@@ -13,10 +13,12 @@ import { getAttendancesList, getRepotsList } from '@/api/attendances/attendances
 import {getProcess,getProcessDetail,getProcessRate} from '@/api/approval/approval'
 import { getUserData, getUserMsg } from '@/api/home/getUserMsg'
 import {departmentList,addDepartment,updateDepartment,deleteDepartment,checkDepartment} from '@/api/organ/organ.js'
-import {getSalarysList} from '@/api/salarys/salarys'
+import {getSalarysList,getSalaryDetail,importEmployee} from '@/api/salarys/salarys'
 
 //月份报表数据接口
 export const getRepotsListAPI = getRepotsList
+//导入
+export const importEmployeeAPI =importEmployee
 //部门接口
 export const getAttendancesListAPI = getAttendancesList
 export const departmentListAPI = departmentList
@@ -32,3 +34,4 @@ export const getUserMsgAPI = getUserMsg
 export const getProcessDetailAPI = getProcessDetail
 export const getProcessRateAPI = getProcessRate
 export const getSalarysListAPI =getSalarysList
+export const getSalaryDetailAPI =getSalaryDetail    //调薪
