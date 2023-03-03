@@ -26,7 +26,6 @@ import {
   deleteDepartment,
   checkDepartment
 } from '@/api/organ/Organ.js'
-import { getAttendancesList } from '@/api/attendances/attendances'
 import { getDefinition, getSuspend } from '@/api/approval/securitySetting'
 import { getInfo, saveInfo } from '@/api/approval/myInfo'
 //考勤数据接口
@@ -52,4 +51,4 @@ export const getDefinitionAPI = getDefinition
 export const getSuspendAPI = getSuspend
 export const getInfoAPI = getInfo
 export const saveInfoAPI = saveInfo
-export const getSalarysListAPI =getSalarysList
+export const getSalarysListAPI = getSalarysList
