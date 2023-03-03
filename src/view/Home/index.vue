@@ -2,7 +2,10 @@
   <div class="container">
     <!-- 头部提示栏 -->
     <div class="header">
-      <img class="userImg" src="@/assets/common/head.jpg" alt="" />
+      <!-- <img class="userImg" :src="userImg" alt="" /> -->
+      <div class="block">
+        <el-avatar class="userImg" :size="100" :src="userImg"></el-avatar>
+      </div>
       <div class="hint">
         <p class="userName">早安，{{ username }}，祝你开心每一天！</p>
         <p>{{ username }}|{{ company }}</p>
@@ -64,10 +67,13 @@
               >
             </li>
             <li>
-              <a href="#">审批列表</a>
+              <router-link to="/layout/Approval/Approvals"
+                >审批列表</router-link
+              >
             </li>
             <li>
-              <a href="#">我的信息</a>
+              <router-link to="/layout/Approval/myInfo">我的信息</router-link>
+              <!-- <a href="#">我的信息</a> -->
             </li>
           </ul>
           <div>
@@ -76,7 +82,7 @@
             <holiday></holiday>
           </div>
         </div>
-        <div class="application">
+        <!-- <div class="application">
           <span class="ap-title">快速开始/便捷导航</span>
           <ul class="ap-content">
             <li>
@@ -94,13 +100,13 @@
             <li>
               <a href="#">组织架构</a>
             </li>
-          </ul>
-          <div>
-            <!-- 加班离职的双模块 -->
-            <elForm> </elForm>
-            <holiday></holiday>
-          </div>
-        </div>
+          </ul> -->
+        <!-- <div> -->
+        <!-- 加班离职的双模块 -->
+        <!-- <elForm> </elForm>
+            <holiday></holiday> -->
+        <!-- </div> -->
+        <!-- </div> -->
         <div class="help">
           <span class="ap-title">帮助链接</span>
           <ul class="ap-content">
@@ -174,7 +180,7 @@ export default {
         this.$store.state.home.form2 = val
       }
     },
-    ...mapState('home', ['username', 'company'])
+    ...mapState('home', ['username', 'company', 'userImg'])
   },
   components: {
     elForm,

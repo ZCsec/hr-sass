@@ -2,10 +2,12 @@
   <div>
     <div class="header">
       <div class="header-tit">
-        当前审批中 <span>0</span> 本月审批通过 <span>1</span> 本月审批驳回
-        <span>0</span>
+        当前审批中 <span>{{ getStateTotal(1) }}</span> 本月审批通过
+        <span>{{ getStateTotal(2) }}</span> 本月审批驳回
+        <span>{{ getStateTotal(4) }}</span>
       </div>
-      <a href="#">流程设置</a>
+      <!-- <a href="#">流程设置</a> -->
+      <router-link to="/layout/Approval/securitySetting">流程设置</router-link>
     </div>
     <div class="main">
       <el-table
@@ -36,7 +38,7 @@
         </el-table-column>
         <el-table-column :formatter="formatter" sortable label="审批发起时间">
         </el-table-column>
-        <el-table-column prop="processState" sortable label="审批状态">
+        <el-table-column :formatter="timeSet" sortable label="审批状态">
         </el-table-column>
         <el-table-column label="操作" prop="processId">
           <template slot-scope="data">
@@ -98,14 +100,68 @@ export default {
     },
     formatter(row, column) {
       return getDate(row.timeOfEntry)
+    },
+    timeSet(row) {
+      // console.log(row.processState)
+      switch (true) {
+        case row.processState == 1:
+          return '审批中'
+        case row.processState == 2:
+          return '审批通过'
+        case row.processState == 3:
+          return '审批不通过'
+        case row.processState == 4:
+          return '撤销'
+        default:
+          break
+      }
+      // if (row.processState == 1) {
+      //   return '审批中'
+      // } else if (row.processState == 2) {
+      //   return '审批通过'
+      // } else if (row.processState == 3) {
+      //   return '审批不通过'
+      // } else if (row.processState == 4) {
+      //   return '撤销'
+      // }
+    },
+    getStateTotal(index) {
+      return this.list.reduce((sum, item) => {
+        // console.log(sum)
+        return (sum += item.processState == index)
+      }, 0)
     }
   },
   created() {
-    this.$store.dispatch('approval/getProcessData')
-    // console.log(this.list)
+    this.$store.dispatch('approval/getProcessData').then(() => {
+      // console.log(this.list)
+    })
   },
   computed: {
     ...mapState('approval', ['list', 'total'])
+    // getStateTotal() {
+    //   return this.list.reduce((sum, item) => {
+    //     // console.log(sum)
+    //     return (sum += item.processState == 2)
+    //   }, 0)
+    // }
+  },
+  filters: {
+    getState(value) {
+      // console.log(value)
+      switch (true) {
+        case value == 1:
+          return '审批中'
+        case value == 2:
+          return '审批通过'
+        case value == 3:
+          return '审批不通过'
+        case value == 4:
+          return '撤销'
+        default:
+          break
+      }
+    }
   }
 }
 </script>
@@ -129,6 +185,9 @@ export default {
     background: #e6f7ff;
     font-size: 14px;
     color: #555;
+    span {
+      font-weight: bold;
+    }
   }
   a {
     padding: 7px 15px;

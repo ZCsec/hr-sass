@@ -36,7 +36,8 @@ export default {
     userId: '',
     company: '',
     getStatus: '',
-    message: ''
+    message: '',
+    userImg: ''
   },
   mutations: {
     getUserName(state, val) {
@@ -53,6 +54,10 @@ export default {
     cleanAppStatus(state) {
       state.getStatus = ''
       state.message = ''
+    },
+    // 获取用户头像
+    getUserImg(state, val) {
+      state.userImg = val
     }
   },
   actions: {
@@ -68,9 +73,11 @@ export default {
         res.data.data.userId,
         res.data.data.company
       ])
+      window.sessionStorage.setItem('userId', res.data.data.userId)
       // 获取带有用户头像的详情
-      // const res2 = await getUserMsgAPI(res.data.data.userId)
+      const res2 = await getUserMsgAPI(res.data.data.userId)
       // console.log(res2)
+      context.commit('getUserImg', res2.data.data.staffPhoto)
     },
     // 加班申请
     async getApplication(context) {

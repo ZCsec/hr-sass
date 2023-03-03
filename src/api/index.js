@@ -23,7 +23,8 @@ import {
   checkDepartment
 } from '@/api/organ/Organ.js'
 import { getAttendancesList } from '@/api/attendances/attendances'
-
+import { getDefinition, getSuspend } from '@/api/approval/securitySetting'
+import { getInfo, saveInfo } from '@/api/approval/myInfo'
 //考勤数据接口
 //部门接口
 export const getAttendancesListAPI = getAttendancesList
@@ -39,3 +40,7 @@ export const checkDepartmentAPI = checkDepartment
 export const getUserMsgAPI = getUserMsg
 export const getProcessDetailAPI = getProcessDetail
 export const getProcessRateAPI = getProcessRate
+export const getDefinitionAPI = getDefinition
+export const getSuspendAPI = getSuspend
+export const getInfoAPI = getInfo
+export const saveInfoAPI = saveInfo

@@ -2,7 +2,7 @@ import Cookie from 'js-cookie'
 
 // 独一无二的token
 const token = 'token'
-// 时间搓token
+// 时间戳token
 const tokenTime = 'tokenTime'
 
 export function getToken(){
