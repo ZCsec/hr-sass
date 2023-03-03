@@ -40,10 +40,14 @@ import {
 } from '@/api/approval/approval'
 import { getUserData, getUserMsg } from '@/api/home/getUserMsg'
 import {departmentList,addDepartment,updateDepartment,deleteDepartment,checkDepartment} from '@/api/organ/Organ.js'
+import {getSalarysList,getSalaryDetail,importEmployee} from '@/api/salarys/salarys'
+
+//月份报表数据接口
+//导入
+export const importEmployeeAPI = importEmployee
 import { getDefinition, getSuspend } from '@/api/approval/securitySetting'
 import { getInfo, saveInfo } from '@/api/approval/myInfo'
 //考勤数据接口
-import { getSalarysList } from '@/api/salarys/salarys'
 
 
 
@@ -61,8 +65,9 @@ export const checkDepartmentAPI = checkDepartment
 export const getUserMsgAPI = getUserMsg
 export const getProcessDetailAPI = getProcessDetail
 export const getProcessRateAPI = getProcessRate
+export const getSalarysListAPI =getSalarysList
+export const getSalaryDetailAPI =getSalaryDetail    //调薪
 export const getDefinitionAPI = getDefinition
 export const getSuspendAPI = getSuspend
 export const getInfoAPI = getInfo
 export const saveInfoAPI = saveInfo
-export const getSalarysListAPI = getSalarysList

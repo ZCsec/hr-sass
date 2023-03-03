@@ -38,6 +38,7 @@ export default new Vuex.Store({
     data: state=>state.attendances.data,
     SocialLists: state=>state.SocialSec.SocialLists,
     yearList: (state) => state.attendances.yearList,
-    list: (state) => state.salarys.list
+    list:(state)=>state.salarys.list,
+    userId:(state)=>state.home.userId
   }
 })
