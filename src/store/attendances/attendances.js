@@ -1,14 +1,17 @@
-import { getAttendancesListAPI } from "@/api/index";
+import { getAttendancesListAPI,getRepotsListAPI } from "@/api/index";
 
 export default{
     namespaced:true,
     state:{
         data:[],
-
+        yearList:{},
     },
     mutations:{
        getAttendList(state,val){
             state.data=val.rows
+       },
+       getYearList(state,val){
+            state.yearList=val
        }
     },
     actions:{
@@ -17,8 +20,12 @@ export default{
             page:1,
             pagesize:10
         });
-        console.log(res.data);
         context.commit("getAttendList",res.data.data.data);
+       },
+       async getyearList(context){
+        const res=await getRepotsListAPI();
+        console.log(res.data.data);
+        context.commit("getYearList",res.data.data);
        }
     }
 }

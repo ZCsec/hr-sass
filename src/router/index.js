@@ -6,7 +6,7 @@ import VueRouter from 'vue-router'
 // 导入子路由规则模块
 import Layout from '@/layout/index.vue'
 // 布局路由模块
-import organs from '@/router/organ/organ.js'
+import organs from '@/router/organ/organ'
 // 主页子路由模块
 import home from '@/router/home/home'
 // 登陆主路由模块
@@ -19,12 +19,13 @@ import historys from '@/router/attendances/historys'
 import isMonths from '@/router/attendances/isMonths'
 //工资模块路由
 import salarys from '@/router/salarys/salarys'
-import details from '@/router/salarys/details'
-import store from '@/store/index'
-// 公司设置路由
-import companySettings from '@/router/CompanySettings/CompanySettings'
 import salaryset from '@/router/salarys/salaryset'
 import report from '@/router/salarys/report'
+import details from '@/router/salarys/details'
+
+import store from "@/store/index"
+// 公司设置路由
+import companySettings from '@/router/CompanySettings/CompanySettings'
 import employee from '@/router/CompanySettings/Employee'
 import imp from '@/router/CompanySettings/Imp'
 import golook from '@/router/CompanySettings/golook'

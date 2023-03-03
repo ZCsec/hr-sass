@@ -8,7 +8,7 @@ import home from '@/store/home/home.js'
 //考勤列表
 import attendances from '@/store/attendances/attendances.js'
 import approval from '@/store/approval/approval'
-import organ from '@/store/modules/Organ'
+import organ from '@/store/modules/organ'
 //薪资列表
 import salarys from '@/store/salarys/salarys'
 
@@ -29,6 +29,8 @@ export default new Vuex.Store({
     token: (state) => state.login.token,
     date: (state) => state.home.date,
     depts: (state) => state.organ.depts,
-    data: (state) => state.attendances.data
+    data: (state) => state.attendances.data,
+    yearList: (state) => state.attendances.yearList,
+    list:(state)=>state.salarys.list
   }
 })

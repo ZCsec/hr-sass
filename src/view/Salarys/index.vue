@@ -1,9 +1,6 @@
 <template>
   <div>
-    <div v-if="isSet">
-      <salarySet></salarySet>
-    </div>
-    <div v-else>
+    <div>
       <el-row>
         <el-col :span="24">
           <div class="grid-content bg-purple-dark">
@@ -40,15 +37,15 @@
         </el-col>
       </el-row>
       <div class="table1">
-        <el-table :data="tableData" style="width: 100%">
-          <el-table-column label="序号" prop="No"></el-table-column>
-          <el-table-column label="姓名" prop="name"></el-table-column>
-          <el-table-column label="手机" prop="phone"></el-table-column>
+        <el-table :data="salarysList" style="width: 100%">
+          <el-table-column label="序号" prop="id"></el-table-column>
+          <el-table-column label="姓名" prop="username"></el-table-column>
+          <el-table-column label="手机" prop="mobile"></el-table-column>
           <el-table-column label="工号" prop="work_number"></el-table-column>
-          <el-table-column label="聘用形式" prop="style"></el-table-column>
-          <el-table-column label="部门" prop="department"></el-table-column>
-          <el-table-column label="入职时间" prop="date"></el-table-column>
-          <el-table-column label="工资基数" prop="salary"></el-table-column>
+          <el-table-column label="聘用形式" prop="formOfEmployment"></el-table-column>
+          <el-table-column label="部门" prop="departmentName"></el-table-column>
+          <el-table-column label="入职时间" prop="timeOfEntry"></el-table-column>
+          <el-table-column label="工资基数" prop="currentBasicSalary"></el-table-column>
           <el-table-column label="津贴方案" prop="scheme"></el-table-column>
           <el-table-column label="操作" class="operate">
             <button class="el-button" @click="dialogVisible = true">调薪</button>
@@ -114,11 +111,9 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 export default {
   data() {
     return {
-      isSet: false,
       tableData: [
         {
           No: 1,
@@ -196,14 +191,10 @@ export default {
       dialogVisible: false,
       attendList: {},
       company: {},
-      salarysList: {},
+      salarysList: [],
       input:'',
       input1:''
     };
-  },
-  computed: {
-    ...mapGetters(["depts"]),
-    ...mapGetters(["list"])
   },
   created() {
     this.getDispatch();
@@ -251,7 +242,7 @@ export default {
     },
     //薪资
     getSalarys() {
-      this.$store.dispatch("salarys/getSalarys").then(data => {
+      this.$store.dispatch("salarys/getSalarys").then(res => {
         this.salarysList = this.$store.getters.list;
       });
     }

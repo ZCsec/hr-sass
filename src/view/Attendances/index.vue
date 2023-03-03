@@ -133,80 +133,154 @@
           </el-tab-pane>
           <el-tab-pane label="扣款设置" name="third">
             <div class="main1">
-              <strong style="color:red">*</strong>部门：
-              <el-select v-model="value" placeholder="请选择">
-                <el-option
-                  v-for="item in company"
-                  :key="item.value"
-                  :label="item.name"
-                  :value="item.name"
-                ></el-option>
-              </el-select>
-            </div>
-            <div class="table">
-              <table>
-                <tbody>
+              <div>
+                <strong style="color:red">*</strong>部门：
+                <el-select v-model="value" placeholder="请选择">
+                  <el-option
+                    v-for="item in company"
+                    :key="item.value"
+                    :label="item.name"
+                    :value="item.name"
+                  ></el-option>
+                </el-select>
+              </div>
+              <div>
+                <div class="monny">
+                  迟到扣款
+                  <el-switch v-model="value3" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
+                </div>
+                <div class="attentInfo">
+                  <p>
+                    迟到≤
+                    <el-input class="inputInfo" value="30" style="width:50px;" />分钟
+                  </p>
+                  <div class="deductionInfo">
+                    <p>
+                      迟到≤
+                      <el-input
+                        v-model="text"
+                        class="inputInfo"
+                        @input.native="handleInput($event)"
+                      />次，每次扣款
+                      <el-input
+                        v-model="text1"
+                        class="inputInfo"
+                        @input.native="handleInput($event)"
+                      />元
+                    </p>
+                    <p>
+                      迟到>
+                      <el-input class="inputInfo" disabled @input.native="handleInput($event)" />次，每次扣款
+                      <el-input
+                        v-model="text2"
+                        class="inputInfo"
+                        @input.native="handleInput($event)"
+                      />元
+                    </p>
+                  </div>
+                  <p>
+                    迟到>
+                    <el-input class="inputInfo" disabled />分钟
+                  </p>
+                  <div class="deductionInfo">
+                    <p>
+                      迟到>
+                      <el-input class="inputInfo" disabled />次，每次矿工
+                      <el-input
+                        v-model="text3"
+                        class="inputInfo"
+                        @input.native="handleInputPoint($event)"
+                      />天
+                    </p>
+                  </div>
+                </div>
+                <div>
+                  早退扣款
+                  <el-switch v-model="value3" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
+                </div>
+                <div class="attentInfo">
+                  <p>
+                    早退≤
+                    <el-input
+                      v-model="text4"
+                      class="inputInfo"
+                      value="30"
+                      @input.native="handleInput($event)"
+                    />分钟
+                  </p>
+                  <div class="deductionInfo">
+                    <p>
+                      早退≤
+                      <el-input
+                        v-model="text9"
+                        class="inputInfo"
+                        @input.native="handleInput($event)"
+                      />次，每次扣款
+                      <el-input
+                        v-model="text5"
+                        class="inputInfo"
+                        @input.native="handleInput($event)"
+                      />元
+                    </p>
+                    <p>
+                      早退>
+                      <el-input class="inputInfo" disabled />次，每次扣款
+                      <el-input
+                        v-model="text6"
+                        class="inputInfo"
+                        @input.native="handleInput($event)"
+                      />元
+                    </p>
+                  </div>
+                  <p>
+                    早退>
+                    <el-input class="inputInfo" disabled />分钟
+                  </p>
+                  <div>
+                    <p>
+                      早退>
+                      <el-input class="inputInfo" disabled />次，每次矿工
+                      <el-input
+                        v-model="text7"
+                        class="inputInfo"
+                        @input.native="handleInputPoint($event)"
+                      />天
+                    </p>
+                  </div>
+                </div>
+                <div>
+                  旷工扣款
+                  <el-switch v-model="value3" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
+                </div>
+                <div class="attentInfo">
+                  <p>
+                    矿工按
+                    <el-input
+                      v-model="text8"
+                      class="inputInfo"
+                      @input.native="handleInput($event)"
+                    />倍工资处罚
+                  </p>
+                </div>
+                <!-- <table>
                   <tr>
                     <td>
-                      <!-- 迟到扣款 -->
-                      <div class="chidao1">
+                      <div>
                         迟到扣款
-                        <el-switch v-model="value2" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
-                      </div>
-                      <div class="chidao">
-                        <p>
-                          迟到<=
-                          <el-input v-model="input" placeholder style="width:80px"></el-input>分钟
-                        </p>
-                        <br />
-                        <p>
-                          迟到<=
-                          <el-input v-model="input" placeholder style="width:80px"></el-input>次
-                        </p>
-                        <p>
-                          每次罚款
-                          <el-input v-model="input" placeholder style="width:80px"></el-input>元
-                        </p>
-                        <br />
-                        <p>
-                          迟到>
-                          <el-input v-model="input" placeholder style="width:80px"></el-input>次
-                        </p>
-                        <p>
-                          每次罚款
-                          <el-input v-model="input" placeholder style="width:80px"></el-input>元
-                        </p>
-                        <br />
-                        <p>
-                          迟到<=
-                          <el-input v-model="input" placeholder style="width:80px"></el-input>分钟
-                        </p>
-                        <br />
-                        <p>
-                          迟到<=
-                          <el-input v-model="input" placeholder style="width:80px"></el-input>次
-                        </p>
-                        <p>
-                          每次罚款
-                          <el-input v-model="input" placeholder style="width:80px"></el-input>元
-                        </p>
-                      </div>
-                      <!-- 早退扣款 -->
-                      <!-- <div>
-                          早退扣款
-                          <el-switch v-model="value1" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
-                        </div>
                         <div>
-                          <p>迟到<= <el-input v-model="input" placeholder="" style="width:80px"></el-input>分钟</p>
-                          <p>迟到<= <el-input v-model="input" placeholder="" style="width:80px"></el-input>次</p><p>每次罚款<el-input v-model="input" placeholder="" style="width:80px"></el-input>元</p>
-                          <p>迟到><el-input v-model="input" placeholder="" style="width:80px"></el-input>次</p><p>每次罚款<el-input v-model="input" placeholder="" style="width:80px"></el-input>元</p>
-                          <p>迟到<= <el-input v-model="input" placeholder="" style="width:80px"></el-input>分钟</p>
-                          <p>迟到<= <el-input v-model="input" placeholder="" style="width:80px"></el-input>次</p><p>每次罚款<el-input v-model="input" placeholder="" style="width:80px"></el-input>元</p>
-                      </div>-->
+                          <el-switch
+                            v-model="value"
+                            active-color="#13ce66"
+                            inactive-color="#ff4949"
+                          ></el-switch>
+                        </div>
+                      </div>
                     </td>
                   </tr>
-                </tbody>
-              </table>
+                  <tr></tr>
+                  <tr></tr>
+                </table>-->
+              </div>
             </div>
           </el-tab-pane>
           <el-tab-pane label="加班设置" name="fourth">
@@ -221,44 +295,157 @@
                     :value="item.name"
                   ></el-option>
                 </el-select>
-                <div class="choose">
-                  <div>
-                    <el-form-item label="加班规则 :" style="width:620px">
-                      <el-switch v-model="value3" active-color="#13ce66" inactive-color="#ff4949"></el-switch> 休息日可申请加班
-                    </el-form-item>
-                  </div>
-                  <div>
-                    <el-form-item label="" style="width:620px">
-                      <el-switch v-model="value3" active-color="#13ce66" inactive-color="#ff4949"></el-switch> 法定节假日可申请加班
-                    </el-form-item>
-                  </div>
-                  <div>
-                    <el-form-item label="" style="width:620px">
-                      <el-switch v-model="value3" active-color="#13ce66" inactive-color="#ff4949"></el-switch> 工作日可申请加班
-                    </el-form-item>
-                  </div>
-                  <div class="overtime">
-                    <el-checkbox>调休假</el-checkbox>&nbsp;
-                    <el-time-select
-                      placeholder="起始时间"
-                      v-model="startTime"
-                      :picker-options="{
-                      start: '08:30',
-                      step: '00:15',
-                      end: '18:30'
-                    }"
-                    ></el-time-select>
-                    <el-time-select
-                      placeholder="结束时间"
-                      v-model="endTime"
-                      :picker-options="{
-                      start: '08:30',
-                      step: '00:15',
-                      end: '18:30',
-                      minTime: startTime
-                    }"
-                    ></el-time-select>
-                  </div>
+                <div class="rule">
+                  <el-form-item label="加班规则">
+                    <div class="ruleInfo">
+                      <el-row>
+                        <el-col :span="8">
+                          <div class>
+                            <el-switch
+                              v-model="value5"
+                              active-color="#13ce66"
+                              inactive-color="#ff4949"
+                            ></el-switch>&nbsp;&nbsp;
+                            工作日可申请加班
+                          </div>
+                        </el-col>
+                        <el-col :span="16">
+                          <div class>
+                            <span class="pad">
+                              <el-checkbox>调休假</el-checkbox>&nbsp;
+                            </span>
+                            <template>
+                              <el-time-select
+                                v-model="furlough"
+                                :picker-options="{
+                            start: '01:00',
+                            step: '00:15',
+                            end: '23:59'
+                          }"
+                                style="width:100px;"
+                              />&nbsp;
+                              <el-time-select
+                                v-model="furlough1"
+                                :picker-options="{
+                            start: '01:00',
+                            step: '00:15',
+                            end: '23:59'
+                          }"
+                                style="width:100px;"
+                              />
+                            </template>
+                          </div>
+                        </el-col>
+                      </el-row>
+                    </div>
+                    <div class="ruleInfo">
+                      <el-row>
+                        <el-col :span="8">
+                          <div class>
+                            <el-switch
+                              v-model="value6"
+                              active-color="#13ce66"
+                              inactive-color="#ff4949"
+                            ></el-switch>&nbsp;&nbsp;
+                            休息日可申请加班
+                          </div>
+                        </el-col>
+                        <el-col :span="16">
+                          <div class>
+                            <span class="pad">
+                              <el-checkbox>调休假</el-checkbox>&nbsp;
+                            </span>
+                            <template>
+                              <el-time-select
+                                v-model="furlough2"
+                                :picker-options="{
+                            start: '01:00',
+                            step: '00:15',
+                            end: '23:59'
+                          }"
+                                style="width:100px;"
+                              />&nbsp;
+                              <el-time-select
+                                v-model="furlough3"
+                                :picker-options="{
+                            start: '01:00',
+                            step: '00:15',
+                            end: '23:59'
+                          }"
+                                style="width:100px;"
+                              />
+                            </template>
+                          </div>
+                        </el-col>
+                      </el-row>
+                    </div>
+                    <div class="ruleInfo">
+                      <el-row>
+                        <el-col :span="8">
+                          <div class>
+                            <el-switch
+                              v-model="value7"
+                              active-color="#13ce66"
+                              inactive-color="#ff4949"
+                            ></el-switch>&nbsp;&nbsp;
+                            法定节假日可申请加班
+                          </div>
+                        </el-col>
+                        <el-col :span="16">
+                          <div class>
+                            <span class="pad">
+                              <el-checkbox>调休假</el-checkbox>&nbsp;
+                            </span>
+                            <template>
+                              <el-time-select
+                                v-model="furlough4"
+                                :picker-options="{
+                            start: '01:00',
+                            step: '00:15',
+                            end: '23:59'
+                          }"
+                                style="width:100px;"
+                              />&nbsp;
+                              <el-time-select
+                                v-model="furlough5"
+                                :picker-options="{
+                            start: '01:00',
+                            step: '00:15',
+                            end: '23:59'
+                          }"
+                                style="width:100px;"
+                              />
+                            </template>
+                          </div>
+                        </el-col>
+                      </el-row>
+                    </div>
+                  </el-form-item>
+                  <el-form-item label="打卡验证:" prop="isClock">
+                    <el-switch v-model="value4" active-color="#13ce66" inactive-color="#ff4949"></el-switch>&nbsp;&nbsp;加班需要有打卡记录
+                  </el-form-item>
+                  <el-form-item label="开启补偿:" prop="isCompensationint">
+                    <el-switch v-model="value8" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
+                  </el-form-item>
+                  <el-form-item label="调休设置:" prop="latestEffectDate">
+                    <div class="ruleInfo">
+                      最晚有效期： 次年
+                      <el-date-picker
+                        type="date"
+                        v-model="time"
+                        placeholder="选择日期"
+                        style="width:150px;"
+                      />
+                    </div>
+                  </el-form-item>
+                  <el-form-item label prop="unit">
+                    <div class="ruleInfo">
+                      <p>
+                        请假最小单位
+                        <el-input style="width:50px" />天
+                      </p>
+                    </div>
+                  </el-form-item>
                 </div>
               </el-form>
             </div>
@@ -278,7 +465,6 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -287,23 +473,47 @@ export default {
       //时间集合
       dateList: [],
       //设置按钮状态
-      dialogFormVisible: true,
+      dialogFormVisible: false,
 
       //设置选项卡片
-      activeName: "fourth",
+      activeName: "first",
       value: "",
+      time: "",
       startTime: "",
       endTime: "",
       startTime1: "",
       endTime1: "",
       value1: true,
       value2: false,
-      value3: "",
+      value3: false,
+      value4: false,
+      value5: false,
+      value6: false,
+      value7: false,
+      value8: false,
       input: "",
+      //扣款
+      text: "",
+      text1: "",
+      text2: "",
+      text3: "",
+      text4: "",
+      text5: "",
+      text6: "",
+      text7: "",
+      text8: "",
+      text9: "",
+      //调休
+      furlough: "",
+      furlough1: "",
+      furlough2: "",
+      furlough3: "",
+      furlough4: "",
+      furlough5: "",
       //部门集合
       company: {},
       //考勤集合
-      acttendList: {},
+      acttendList: [],
       form: {
         name: "",
         region: "",
@@ -316,12 +526,8 @@ export default {
       }
     };
   },
-  computed: {
-    ...mapGetters(["depts"]),
-    ...mapGetters(["data"])
-  },
   created() {
-    this.getDispatch();
+    // this.getDispatch();
     this.getAttend();
   },
   methods: {
@@ -370,10 +576,11 @@ export default {
         path: "/layout/historys"
       });
     },
+    //跳转月份表格
     isMonth() {
-      this.$router.push({
-        path: "/layout/isMonths"
-      });
+        this.$router.push({
+          path: "/layout/isMonths"
+        });
     }
   },
   watch: {
@@ -553,13 +760,43 @@ export default {
 .el-dialog__header {
   background-color: #409eff;
 }
-.choose{
-  div{
-    height: 40px;
+.overtime {
+  width: 100%;
+  height: 40px;
+}
+.attentInfo {
+  p {
+    padding: 3px 0;
+  }
+  .el-input--medium {
+    .el-input__inner {
+      height: 24px;
+      line-height: 24px;
+    }
   }
 }
-.overtime{
-  width:100%;
-  height: 40px;
+.rule {
+  width: 100%;
+  margin-top: 20px;
+}
+.attentInfo {
+  padding: 5px 15px 15px 62px;
+}
+.inputInfo {
+  width: 50px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.monny {
+  margin-top: 20px;
+}
+.ruleInfo {
+  .el-input--medium .el-input__inner {
+    height: 30px;
+    line-height: 30px;
+  }
+}
+.el-form-item__content {
+  margin-left: 0px !important;
 }
 </style>

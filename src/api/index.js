@@ -10,6 +10,10 @@
 import { getLogin } from '@/api/login/login'
 import { getApplication } from '@/api/home/application'
 import {
+  getAttendancesList,
+  getRepotsList
+} from '@/api/attendances/attendances'
+import {
   getProcess,
   getProcessDetail,
   getProcessRate
@@ -26,8 +30,12 @@ import { getAttendancesList } from '@/api/attendances/attendances'
 import { getDefinition, getSuspend } from '@/api/approval/securitySetting'
 import { getInfo, saveInfo } from '@/api/approval/myInfo'
 //考勤数据接口
+import { getSalarysList } from '@/api/salarys/salarys'
+
+//月份报表数据接口
 //部门接口
 export const getAttendancesListAPI = getAttendancesList
+export const getRepotsListAPI = getRepotsList
 export const departmentListAPI = departmentList
 export const getApplicationAPI = getApplication
 export const getLoginAPI = getLogin
@@ -44,3 +52,4 @@ export const getDefinitionAPI = getDefinition
 export const getSuspendAPI = getSuspend
 export const getInfoAPI = getInfo
 export const saveInfoAPI = saveInfo
+export const getSalarysListAPI =getSalarysList
