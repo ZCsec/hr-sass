@@ -1,7 +1,6 @@
 <template>
   <div>
     <div>
-      {{ this.$store.getters.userId }}
       <el-row>
         <el-col :span="24">
           <div class="grid-content bg-purple-dark">
@@ -128,7 +127,7 @@
             </div>
           </div>
           <div class="choose">
-            <input type="button" value="保存" @click="dialogVisible=false" />
+            <input type="button" value="保存" @click="onCommit()" />
             <input type="button" value="关闭" @click="dialogVisible=false" />
           </div>
         </el-dialog>
@@ -230,6 +229,8 @@ export default {
       selectUserId: null,
       currentComponent: '',
       topLabel: '转正',
+      //员工id
+      employeeId:''
     };
   },
   created() {
@@ -306,9 +307,14 @@ export default {
     // }
     async changeSalary(userId) {
       this.dialogVisible = true
-      await getSalaryDetailAPI(userId);
-      console.log(userId);
+      await getSalaryDetailAPI({
+        
+        userId
+      });
+      this.employeeId=userId;
+      console.log(this.employeeId);
     },
+
   }
 };
 </script>
