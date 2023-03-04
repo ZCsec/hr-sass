@@ -61,7 +61,8 @@ export default {
         })
         return newInfo
       })
-      await importEmployeeAPI(newArr)
+      await importEmployeeAPI(newArr);
+      console.log(newArr);
     },
     // 转化excel的日期格式
     formatDate(numb, format) {
@@ -84,6 +85,10 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.upload-excel{
+  margin-left: 200px;
+  margin-top: 80px;
+}
 .text {
   font-size: 14px;
   .nav {

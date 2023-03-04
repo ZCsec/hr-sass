@@ -7,22 +7,31 @@ export const getSalarysList = data => request({
   data
 })
 
-
 //获取员工薪资  //调薪
-export function getSalaryDetail(userId) {
+export function getSalaryDetail(params) {
   return request({
-    url: `/api/salarys/modify/${userId}`
-  })
-}
-export function changeSalary(data) {
-  return request({
-    url: `/api/salarys/modify/${data.userId}`,
-    method: 'post',
-    data
+    url: `/api/salarys/modify/${params.userId}`,
+    method:'get',
+    params
   })
 }
 
+//定薪
+export function setSalarys(userId){
+  request({
+    url:`/api/salarys/init/${userId}`,
+    method:'post'
+  })
+}
 
+//员工详情
+export const getEmployeetDetail =params=>({
+  url: `/api/sys/user/${params.id}`,
+  method:'get',
+  params
+})
+
+//导入
 export function importEmployee(data) {
   return request({
     url: '/api/sys/user/batch',
