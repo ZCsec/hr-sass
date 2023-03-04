@@ -14,7 +14,6 @@ import { getUserData } from '@/api/home/getUserMsg'
 import { departmentList } from '@/api/Organ.js'
 import { getAttendancesList } from '@/api/attendances/attendances'
 
-import {getEmployeeList} from '@/api/employee/employee'
 //考勤数据接口
 //部门接口
 export const getAttendancesListAPI = getAttendancesList
@@ -25,4 +24,3 @@ export const getLoginAPI = getLogin
 export const getUserDataAPI = getUserData
 export const getProcessAPI = getProcess
 
-export const getEmployeeListAPI = getEmployeeList

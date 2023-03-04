@@ -1,6 +1,9 @@
 export default {
-  path:'golook',
-  component:() =>import('@/view/Employee/components/Index.vue'),
-  name:'golook',
+  path:'detail/:id',
+  component:() =>import('@/view/Employee/detail.vue'),
+  name:'detail',
   // redirect:'Employee/index',
+  children:[
+
+  ]
 }

@@ -26,7 +26,7 @@ import salaryset from '@/router/salarys/salaryset'
 import report from '@/router/salarys/report'
 import employee from '@/router/CompanySettings/Employee'
 import imp from '@/router/CompanySettings/Imp'
-import golook from '@/router/CompanySettings/golook'
+import detail from '@/router/CompanySettings/golook'
 // 导入审批模块
 import Approval from '@/router/Approval/Approval'
 
@@ -52,7 +52,7 @@ const routes = [
       isMonths,
       organs,
       imp,
-      golook,
+      detail,
       Approval
     ]
   }

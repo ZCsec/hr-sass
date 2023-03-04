@@ -6,7 +6,7 @@
     border
     style="width: 100%">
     <el-table-column
-      prop="list.id"
+      prop=""
       type="index"
       label="序号"
       width="150">
@@ -48,13 +48,13 @@
       width="300">
     </el-table-column>
     <el-table-column
-      prop="inServiceStatus"
+      prop="enableState"
        sortable
       label="是否在职"
       width="300">
     </el-table-column>
     <el-table-column
-      prop="enableState"
+      prop="inServiceStatus"
        sortable
       label="状态"
       width="120">
@@ -63,20 +63,20 @@
       fixed="right"
       label="操作"
       width="230">
-      <template slot-scope="scope">
-        <el-button @click="golook" type="text" size="small">查看</el-button>
-        <el-button type="text" size="small" @click="tall()">转正</el-button>
-        <el-button type="text" size="small">调岗</el-button>
+      <template slot-scope=" { row } ">
+        <el-button @click="detail(row.id)" type="text" size="small">查看</el-button>
+        <el-button type="text" size="small" @click="tall()" >转正</el-button>
+        <el-button type="text" size="small" @click="Transfers" >调岗</el-button>
         <el-button type="text" size="small">离职</el-button>
-        <el-button type="text" size="small">角色</el-button>
-        <el-button type="text" size="small" @click="open">删除</el-button>
+        <el-button type="text" size="small" >角色</el-button>
+        <el-button type="text" size="small" @click="delEmployee(row.id)" >删除</el-button>
       </template>
     </el-table-column>
   </el-table>
   <div class="block">
     <el-pagination
       @size-change=""
-      @current-change=""
+      @current-change="changepage"
       :current-page.sync="page.page"
       :page-size="page.size"
       layout="total, prev, pager, next"
@@ -88,16 +88,18 @@
 </template>
 
 <script>
-import { getEmployeeListAPI } from '@/api/index'
 
 
+import { getEmployeeList } from '@/api/employee/employee'
+import { delEmployee } from '@/api/employee/employee'
+import bus from '@/view/Employee/eventBus'
 
 export default {
   name: 'HrSassMainTop',
 
   data() {
     return {
-      tableData: [{
+          tableData: [{
           id: 1,
           name: '王小虎',
           phone: '19897630403',
@@ -112,7 +114,7 @@ export default {
         page:{
           page:1,
           size:10,
-          total:'',
+          total:0,
         }
     };
   },
@@ -125,36 +127,82 @@ export default {
   //   console.log(res.data)
   // },
 
-async mounted (){
-   // 获取社保下方界面
-   const res = await getEmployeeListAPI({});
-   this.list = res.data.data.rows
-   console.log(this.list);
-   this.page.total = this.list.length
-},
+
+// async getEmployeeList(){
+//    // 获取社保下方界面
+//    const res = await getEmployeeList(this.page);
+//   //  this.list = res.data.data.rows
+   
+//    this.page.total = res.data.data.total
+//    this.list = res.data.data.rows
+//    console.log(this.list);
+// },
+  // computed:{
+  //  list() {
+  //   // this.list = this.$store.state.employee.list
+  //   console.log('1');
+  //  }
+  // },
+mounted() {
+
+  },
+  watch:{
+     
+  },
 
   methods: {
-    golook() {
+    detail(id) {
+      console.log(bus);
+      bus.$emit("userID", id);
       this.$router.push({
-        path:'/layout/golook'
+        path:`/layout/detail/${id}`
       })
     },
   tall() {
-    console.log(this);
-    console.log(this.$store.state.employee.list)
-   }
+    this.$message({
+            type: 'success',
+            message: '以为正式工无需转正'
+          })
+   },
+
+
+async getEmployeeList() {
+      const { total,rows } = await getEmployeeList(this.page);
+      this.page.total = total;
+      this.list = rows;
+      console.log(this.list);
   },
- open() {
-  this.$alert('这是一段内容', '标题名称', {
-    confirmButtonText: '确定',
-      callback: action => {
+
+      async delEmployee(id) {
+        try {
+          await this.$confirm('确定删除该员工？')
+          await delEmployee(id)
+          this.$message.success('删除员工成功')
+          this.getEmployeeList()
+        }catch (error) {
+          console.log(error);
+        }
+      },
+
+    Transfers() {
         this.$message({
-          type: 'info',
-          message: `action: ${ action }`
-        });
-      }
-    });
-  }
+            type: 'info',
+            message: '暂无可调岗位'
+          });  
+      },
+
+      changepage(newpage) {
+        this.page.page = newpage
+        this.getEmployeeList()
+      },
+  },
+  created() {
+    bus.$on('parent',function(msg) {
+    getEmployeeList()
+  })
+this.getEmployeeList()
+},
+
 };
 </script>
 
