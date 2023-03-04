@@ -17,11 +17,8 @@
             <div>
               <span>部门：</span>
               <el-checkbox
-                ref="text"
-                v-model="componyName"
                 v-for="(item,index) in company"
                 :key="index"
-                @click="companyBtn()"
               >{{item.name}}</el-checkbox>
             </div>
             <div>
