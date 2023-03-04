@@ -9,36 +9,68 @@
           </p>
         </div>
         <div class="main">
-          <div>
-            <input type="button" value="点击上传" id="fileImport" @click="clickLoad" />
-            <input type="file" id="files" ref="refFile" style="display: none" />
-            <p>（推荐下载模板文件，请填写后上传）点击查看文件上传要求</p>
-          </div>
-            <el-upload
-              class="upload-demo"
-              drag
-              action="https://jsonplaceholder.typicode.com/posts/"
-              multiple
-              style="border:none;margin-top:80px"
-            >
-              <i class="el-icon-upload" style="margin-left:-340px;margin-top:50px"></i>
-              <div class="el-upload__text" style="width:320px;margin-left:12px;
-              margin-top:120px">
-                将文件拖到此处，或
-                <em>点击上传</em>
-              </div>
-            </el-upload>
+          <upload-excel :on-success="success"></upload-excel>
         </div>
       </div>
     </el-card>
+    
   </div>
 </template>
 
 <script>
+import UploadExcel from '@/components/UploadExcel'
+import XLSX from 'xlsx'
+import {importEmployeeAPI} from '@/api'
 export default {
+  components:{
+    UploadExcel
+  },
+  data(){
+    return{
+
+    }
+  },
+  mounted(){
+    console.log(XLSX)
+  },
   methods: {
     clickLoad() {
       this.$refs.refFile.dispatchEvent(new MouseEvent("click"));
+    },
+    async success({header,results}){
+      const headerData={
+        '入职日期': 'timeOfEntry' ,
+        '手机号':'mobile' ,
+        '姓名':'username',
+        '转正日期':'correctionTime' ,
+        '工号': 'workNumber'
+      }
+      let newArr =results.map(item=>{
+        let newInfo={};
+        Object.keys(item).forEach(key=>{
+          newInfo[headerData[key]=item[key]]
+          if(headerData[key]=='timeOfEntry'||headerData[key]=='correctionTime'){
+            newInfo[headerData[key]]=new Date(this.formatDate(item[key],'/'))
+          }else{
+            newInfo[headerData[key]]=item[key]
+          }
+        })
+        return newInfo
+      })
+      await importEmployeeAPI(newArr)
+      
+    },
+     // 转化excel的日期格式
+     formatDate(numb, format) {
+      const time = new Date((numb - 1) * 24 * 3600000 + 1)
+      time.setYear(time.getFullYear() - 70)
+      const year = time.getFullYear() + ''
+      const month = time.getMonth() + 1 + ''
+      const date = time.getDate() - 1 + ''
+      if (format && format.length === 1) {
+        return year + format + month + format + date
+      }
+      return year + (month < 10 ? '0' + month : month) + (date < 10 ? '0' + date : date)
     }
   }
 };
