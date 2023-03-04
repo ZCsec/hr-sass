@@ -6,8 +6,8 @@ import Vuex from 'vuex'
 import login from '@/store/login/login.js'
 
 import home from '@/store/home/home.js'
-import SysSet from "@/store/SysSet/SysSet"
-import SocialSec from "@/store/SocialSec/SocialSec";
+import SysSet from '@/store/SysSet/SysSet'
+import SocialSec from '@/store/SocialSec/SocialSec'
 
 //考勤列表
 import attendances from '@/store/attendances/attendances.js'
@@ -27,18 +27,18 @@ export default new Vuex.Store({
     organ,
     SocialSec,
     salarys,
-    approval,
+    approval
   },
   // 快捷引用
   getters: {
-    token: state => state.login.token,
-    date: state => state.home.date,
-    depts: state => state.organ.depts,
-    powerLists: state => state.SysSet.powerLists,
-    data: state=>state.attendances.data,
-    SocialLists: state=>state.SocialSec.SocialLists,
+    token: (state) => state.login.token,
+    date: (state) => state.home.date,
+    depts: (state) => state.organ.depts,
+    powerLists: (state) => state.SysSet.powerLists,
+    data: (state) => state.attendances.data,
+    SocialLists: (state) => state.SocialSec.SocialLists,
     yearList: (state) => state.attendances.yearList,
-    list:(state)=>state.salarys.list,
-    userId:(state)=>state.home.userId
+    list: (state) => state.salarys.list,
+    userId: (state) => state.home.userId
   }
 })
