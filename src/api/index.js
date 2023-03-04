@@ -32,13 +32,8 @@ import { getApplication } from '@/api/home/application'
 import { getAttendancesList, getRepotsList } from '@/api/attendances/attendances'
 import { getProcess, getProcessDetail, getProcessRate } from '@/api/approval/approval'
 import { getUserData, getUserMsg } from '@/api/home/getUserMsg'
-<<<<<<< HEAD
 import { departmentList, addDepartment, updateDepartment, deleteDepartment, checkDepartment } from '@/api/organ/organ.js'
 import { getSalarysList, getSalaryDetail, importEmployee, setSalarys, getEmployeetDetail } from '@/api/salarys/salarys'
-=======
-import {departmentList,addDepartment,updateDepartment,deleteDepartment,checkDepartment} from '@/api/organ/Organ.js'
-import {getSalarysList,getSalaryDetail,importEmployee} from '@/api/salarys/salarys'
->>>>>>> a6e2dfe2e61cf951b1dfec79117add289d5a5bdb
 
 //月份报表数据接口
 //导入
