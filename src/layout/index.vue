@@ -18,7 +18,7 @@
             公司设置
           </el-menu-item>
           <el-menu-item index="/layout/sysSet"> 权限设置 </el-menu-item>
-          <el-menu-item index="/layout/home"> 社保 </el-menu-item>
+          <el-menu-item index="/layout/socialSec"> 社保 </el-menu-item>
           <el-menu-item index="/layout/attendances"> 考勤 </el-menu-item>
           <el-menu-item index="/layout/salarys"> 工资 </el-menu-item>
           <el-menu-item index="/layout/Approval"> 审批 </el-menu-item>

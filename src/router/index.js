@@ -11,7 +11,15 @@ import organs from '@/router/organ/organ'
 import home from '@/router/home/home'
 // 登陆主路由模块
 import Login from '@/components/login.vue'
+
+//导入权限路由
 import sysSet from '@/router/sysSet/sysSet'
+//导入社保路由
+import socialSec from './socialSec/socialSec'
+import socialHistorical from "@/router/socialSec/socialHistorical"  //历史归档
+import monthlyReport from "@/router/socialSec/monthlyReport"
+import userSocial from "@/router/socialSec/userSocial"              //员工社保详情
+
 //考勤模块路由
 import attendances from '@/router/attendances/attendances'
 import imports from '@/router/attendances/imports'
@@ -39,36 +47,35 @@ import Approvals from '@/router/Approval/Approvals'
 Vue.use(VueRouter)
 
 const routes = [
-  { path: '/', redirect: '/login' },
-  { path: '/login', component: Login },
-  {
-    path: '/layout',
-    component: Layout,
-    redirect: '/layout/home',
-    children: [
-      // 在这里放你对应的模块！！！
-      home,
-      attendances,
-      salarys,
-      salaryset,
-      companySettings,
-      sysSet,
-      employee,
-      imports,
-      historys,
-      isMonths,
-      report,
-      details,
-      organs,
-      imp,
-      golook,
-      Approval,
-      leaveApproval,
-      securitySetting,
-      myInfo,
-      Approvals
-    ]
-  }
+  {path:'/',redirect:'/login'},
+  {path:'/login',component:Login},
+  {path:'/layout',component:Layout,redirect:'/layout/home',children:[
+    // 在这里放你对应的模块！！！
+    home,
+    attendances,
+    imports,
+    historys,
+    isMonths,
+    salarys,
+    salaryset,
+    report,
+    details,
+    companySettings,
+    sysSet,
+    socialSec,
+    employee,
+    organs,
+    imp,
+    golook,
+    socialHistorical,
+    monthlyReport,
+    Approval,
+    userSocial,
+    leaveApproval,
+    securitySetting,
+    myInfo,
+    Approvals
+  ]},    
 ]
 
 const router = new VueRouter({
