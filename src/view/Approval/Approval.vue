@@ -2,28 +2,55 @@
   <div>
     <div class="header">
       <div class="header-tit">
-        当前审批中 <span>0</span> 本月审批通过 <span>1</span> 本月审批驳回
-        <span>0</span>
+        当前审批中 <span>{{ getStateTotal(1) }}</span> 本月审批通过
+        <span>{{ getStateTotal(2) }}</span> 本月审批驳回
+        <span>{{ getStateTotal(4) }}</span>
       </div>
-      <a href="#">流程设置</a>
+      <!-- <a href="#">流程设置</a> -->
+      <router-link to="/layout/Approval/securitySetting">流程设置</router-link>
     </div>
     <div class="main">
       <el-table
-        :data="tableData"
+        :data="list"
         style="width: 100%"
-        :default-sort="{ prop: 'date', order: 'descending' }"
+        :default-sort="{ prop: 'username', order: 'descending' }"
       >
-        <el-table-column prop="date" label="审批类型" sortable width="180">
+        <el-table-column class="num" label="序号">
+          <template slot-scope="data">
+            <span>{{ data.$index + 1 }}</span>
+          </template>
         </el-table-column>
-        <el-table-column prop="name" label="申请人" sortable width="180">
+        <el-table-column
+          prop="processName"
+          label="审批类型"
+          sortable
+          width="180"
+        >
         </el-table-column>
-        <el-table-column prop="address" sortable label="当前审批人">
+        <el-table-column prop="username" label="申请人" sortable width="180">
         </el-table-column>
-        <el-table-column prop="address" sortable label="审批发起时间">
+        <el-table-column
+          prop="procCurrNodeUserName"
+          sortable
+          label="当前审批人"
+          width="180"
+        >
         </el-table-column>
-        <el-table-column prop="address" sortable label="审批状态">
+        <el-table-column :formatter="formatter" sortable label="审批发起时间">
         </el-table-column>
-        <el-table-column prop="address" label="操作" :formatter="formatter">
+        <el-table-column :formatter="timeSet" sortable label="审批状态">
+        </el-table-column>
+        <el-table-column label="操作" prop="processId">
+          <template slot-scope="data">
+            <el-button
+              class="checkA"
+              size="mini"
+              @click="getDetail(data.row.processId)"
+              >查看</el-button
+            >
+          </template>
+          <!-- <button class="checkA">查看</button> -->
+          <!-- <a class="checkA" href="#">查看</a> -->
         </el-table-column>
       </el-table>
       <div class="block page">
@@ -34,9 +61,8 @@
           :page-sizes="[10, 20, 30, 50]"
           :page-size="10"
           layout="total, sizes, prev, pager, next, jumper"
-          :total="50"
+          :total="Number(total)"
         >
-          {{ currentPage }}
         </el-pagination>
       </div>
     </div>
@@ -44,52 +70,103 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import { getDate } from '@/utils/getDate'
+
 export default {
   data() {
     return {
-      tableData: [
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        },
-        {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄'
-        },
-        {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
-        },
-        {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
-        }
-      ],
-      currentPage: 1
+      currentPage: 1,
+      checked: false
     }
   },
   methods: {
-    formatter(row, column) {
-      return row.address
-    },
     handleSizeChange(val) {
       // console.log(`每页 ${val} 条`)
     },
     handleCurrentChange(val) {
       // console.log(`当前页: ${val}`)
+    },
+    getDetail(id) {
+      // 通过编程式导航跳转审批详情页 要在跳转过程中传去id 在详情页中发起两个请求并渲染页面
+      // console.log(id)
+      this.$router.push('/layout/Approval/leaveApproval/' + id)
+      // this.$router.push({
+      //   path: '/layout/Approval/leaveApproval/',
+      //   query: {
+      //     id: id
+      //   }
+      // })
+    },
+    formatter(row, column) {
+      return getDate(row.timeOfEntry)
+    },
+    timeSet(row) {
+      // console.log(row.processState)
+      switch (true) {
+        case row.processState == 1:
+          return '审批中'
+        case row.processState == 2:
+          return '审批通过'
+        case row.processState == 3:
+          return '审批不通过'
+        case row.processState == 4:
+          return '撤销'
+        default:
+          break
+      }
+      // if (row.processState == 1) {
+      //   return '审批中'
+      // } else if (row.processState == 2) {
+      //   return '审批通过'
+      // } else if (row.processState == 3) {
+      //   return '审批不通过'
+      // } else if (row.processState == 4) {
+      //   return '撤销'
+      // }
+    },
+    getStateTotal(index) {
+      return this.list.reduce((sum, item) => {
+        // console.log(sum)
+        return (sum += item.processState == index)
+      }, 0)
     }
   },
   created() {
-    this.$store.dispatch('approval/getProcessData')
+    this.$store.dispatch('approval/getProcessData').then(() => {
+      // console.log(this.list)
+    })
+  },
+  computed: {
+    ...mapState('approval', ['list', 'total'])
+    // getStateTotal() {
+    //   return this.list.reduce((sum, item) => {
+    //     // console.log(sum)
+    //     return (sum += item.processState == 2)
+    //   }, 0)
+    // }
+  },
+  filters: {
+    getState(value) {
+      // console.log(value)
+      switch (true) {
+        case value == 1:
+          return '审批中'
+        case value == 2:
+          return '审批通过'
+        case value == 3:
+          return '审批不通过'
+        case value == 4:
+          return '撤销'
+        default:
+          break
+      }
+    }
   }
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .header {
   height: 30px;
   padding: 20px;
@@ -108,6 +185,9 @@ export default {
     background: #e6f7ff;
     font-size: 14px;
     color: #555;
+    span {
+      font-weight: bold;
+    }
   }
   a {
     padding: 7px 15px;
@@ -129,5 +209,20 @@ export default {
     text-align: right;
     margin-right: 20px;
   }
+}
+
+/deep/.el-table th.el-table__cell > .cell {
+  text-align: center;
+}
+
+/deep/.el-table td.el-table__cell div {
+  text-align: center;
+}
+
+.checkA {
+  text-decoration: none;
+  color: #409eff;
+  font-size: 12px;
+  border: none;
 }
 </style>

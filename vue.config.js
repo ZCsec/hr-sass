@@ -5,13 +5,17 @@ module.exports = defineConfig({
   lintOnSave: false,
   devServer: {
     proxy: {
-      '/api': {
-        target: 'http://ihrm-java.itheima.net',
+      '': {
+        // target: 'http://ihrm-java.itheima.net',
+        target: 'http://ihrm.itheima.net/',
         changeOrigin: true,
-        pathRewrite: {
-          
-        }
+        pathRewrite: {}
       }
+      // '/prod-api': {
+      //   target: 'http://ihrm.itheima.net',
+      //   changeOrigin: true,
+      //   pathRewrite: {}
+      // }
     }
   }
 })

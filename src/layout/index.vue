@@ -18,7 +18,7 @@
             公司设置
           </el-menu-item>
           <el-menu-item index="/layout/sysSet"> 权限设置 </el-menu-item>
-          <el-menu-item index="/layout/home"> 社保 </el-menu-item>
+          <el-menu-item index="/layout/socialSec"> 社保 </el-menu-item>
           <el-menu-item index="/layout/attendances"> 考勤 </el-menu-item>
           <el-menu-item index="/layout/salarys"> 工资 </el-menu-item>
           <el-menu-item index="/layout/Approval"> 审批 </el-menu-item>
@@ -49,11 +49,12 @@
             </li>
             <li class="el-icon-rank" title="全屏" @click="isScreenFull"></li>
             <li class="admin">
-              <img
+              <!-- <img class="admin_img" :src="userImg" alt="" /> -->
+              <el-avatar
                 class="admin_img"
-                src="@/assets/common/bigUserHeader.png"
-                alt=""
-              />
+                :size="30"
+                :src="userImg"
+              ></el-avatar>
               <span>{{ username }}</span>
               <i class="el-icon-arrow-down"></i>
               <div class="userOperate">
@@ -141,7 +142,7 @@ export default {
     this.restaurants = this.loadAll()
   },
   computed: {
-    ...mapState('home', ['username'])
+    ...mapState('home', ['username', 'userImg'])
   }
 }
 </script>
@@ -285,5 +286,10 @@ export default {
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
+}
+
+/deep/.el-avatar--circle {
+  position: relative;
+  top: 8px;
 }
 </style>

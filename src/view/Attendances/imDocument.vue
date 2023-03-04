@@ -1,23 +1,19 @@
 <template>
   <div>
-    <el-card class="box-card" style="width:1250px;height:600px;border-radius:5px">
+    <el-card
+      class="box-card"
+      style="width: 1250px; height: 600px; border-radius: 5px"
+    >
       <div class="text item">
         <div class="nav">
           <h2>考勤导入</h2>
           <p>
-            <i class="el-icon-info" style="color:#E6A23C"></i> 如果某员工已有打卡记录，最新上传的不覆盖原有数据。可上传多名员工的打卡记录，同考勤日内取员工第一次和最后一次打卡时间
+            <i class="el-icon-info" style="color: #e6a23c"></i>
+            如果某员工已有打卡记录，最新上传的不覆盖原有数据。可上传多名员工的打卡记录，同考勤日内取员工第一次和最后一次打卡时间
           </p>
         </div>
         <div class="main">
-          <div>
-            <input type="button" value="点击上传" id="fileImport" @click="clickLoad">
-            <input type="file" id="files" ref="refFile" style="display: none">
-            <p>（推荐下载模板文件，请填写后上传）点击查看文件上传要求</p>
-          </div>
-          <div>
-            <div></div>
-            <p>将文件拖到此处</p>
-          </div>
+          <upload-excel :on-success="success"></upload-excel>
         </div>
       </div>
     </el-card>
@@ -25,16 +21,74 @@
 </template>
 
 <script>
+import UploadExcel from '@/components/UploadExcel'
+import XLSX from 'xlsx'
+import { importEmployeeAPI } from '@/api'
 export default {
-  methods:{
-    clickLoad(){
+  components: {
+    UploadExcel
+  },
+  data() {
+    return {}
+  },
+  mounted() {
+    console.log(XLSX)
+  },
+  methods: {
+    clickLoad() {
       this.$refs.refFile.dispatchEvent(new MouseEvent('click'))
+    },
+    async success({ header, results }) {
+      const headerData = {
+        入职日期: 'timeOfEntry',
+        手机号: 'mobile',
+        姓名: 'username',
+        转正日期: 'correctionTime',
+        工号: 'workNumber'
+      }
+      let newArr = results.map((item) => {
+        let newInfo = {}
+        Object.keys(item).forEach((key) => {
+          newInfo[(headerData[key] = item[key])]
+          if (
+            headerData[key] == 'timeOfEntry' ||
+            headerData[key] == 'correctionTime'
+          ) {
+            newInfo[headerData[key]] = new Date(this.formatDate(item[key], '/'))
+          } else {
+            newInfo[headerData[key]] = item[key]
+          }
+        })
+        return newInfo
+      })
+      await importEmployeeAPI(newArr);
+      console.log(newArr);
+    },
+    // 转化excel的日期格式
+    formatDate(numb, format) {
+      const time = new Date((numb - 1) * 24 * 3600000 + 1)
+      time.setYear(time.getFullYear() - 70)
+      const year = time.getFullYear() + ''
+      const month = time.getMonth() + 1 + ''
+      const date = time.getDate() - 1 + ''
+      if (format && format.length === 1) {
+        return year + format + month + format + date
+      }
+      return (
+        year +
+        (month < 10 ? '0' + month : month) +
+        (date < 10 ? '0' + date : date)
+      )
     }
   }
-};
+}
 </script>
 
 <style lang="less" scoped>
+.upload-excel{
+  margin-left: 200px;
+  margin-top: 80px;
+}
 .text {
   font-size: 14px;
   .nav {
@@ -76,7 +130,7 @@ export default {
         background-color: #3994ef;
         cursor: pointer;
       }
-      button:hover{
+      button:hover {
         background-color: #218bf5bb;
       }
       p {
@@ -87,29 +141,8 @@ export default {
         margin-top: 186px;
       }
     }
-    div:nth-of-type(2) {
-      position: relative;
-        div {
-          width: 130px;
-          height: 100px;
-          position: absolute;
-          left: 154px;
-          top: 104px;
-          background-image: url(../../assets/svg/shangchuan.svg);
-          background-size: 100px;
-          background-repeat: no-repeat;
-        }
-        p{
-          width: 100%;
-          height: 40px;
-          line-height: 40px;
-          text-align: center;
-          margin-top: 186px;
-        }
-      }
   }
 }
-
 .item {
   padding: 18px 0;
 }
