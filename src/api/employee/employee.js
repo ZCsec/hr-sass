@@ -24,7 +24,7 @@ export function getEmployeeList(params) {
 export function delEmployee(id) {
   return request({
     url: `/api/sys/user/${id}`,
-    method: 'get'
+    method: 'delete'
   })
 }
 export function addEmployee(data) {
