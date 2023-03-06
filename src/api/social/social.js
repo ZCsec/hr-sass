@@ -48,3 +48,20 @@ export function getArchivingArchive(data){
         data
     })
 }
+
+//获取社保员工详情
+export function user(params){
+    return request({
+        url:`/api/social_securitys/${params.id}`,
+        method:"get",
+        params
+    })
+}
+//查询参保城市的参保项目
+export function citysItem(params){
+    return request({
+        url:`/api/social_securitys/payment_item/${params.id}`,
+        method:"get",
+        params
+    })
+}

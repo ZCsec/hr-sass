@@ -8,23 +8,24 @@
             <img src="@/assets/common/img.jpeg" width="100" height="100" alt />
           </div>
           <div class="info">
-            <b>xx</b>
+            <b>{{usList.username}}</b>
             <!-- <span :class="dutyStatus?'job-txt-green':'job-txt-red'">离职</span> -->
-            <span>离职</span>
+            <span :class="usList.inServiceStatus?'job-txt-green':'job-txt-red'">{{usList.inServiceStatus == 0 ? "离职" : "在职"}}</span>
             <p>
               <span>最新工资基数</span>
               &emsp;&emsp;
-              <span>入职时间 2023-3-2</span>
+              <span>入职时间 {{ usList.timeOfEntry.substring(0,10) }}</span>
               &emsp;&emsp;
-              <span>联系电话 12345678900</span>
+              <span>联系电话 {{ usList.mobile }}</span>
             </p>
             <p>
               本月不缴纳社保<el-switch
-                v-model="isPaySocialInMonth"
+                v-model="usList.enterprisesPaySocialSecurityThisMonth"
                 active-color="#13ce66"
                 inactive-color="#ff4949"
-              />&emsp;&emsp; 本月不缴纳公积金<el-switch
-                v-model="isPayProvidentInMonth"
+              />&emsp;&emsp; 
+              本月不缴纳公积金<el-switch
+                v-model="usList.enterprisesPayTheProvidentFundThisMonth"
                 active-color="#13ce66"
                 inactive-color="#ff4949"
               />
@@ -42,10 +43,9 @@
           <el-form>
             <el-form-item label="参保城市" prop="participatingInTheCity">
               <el-select
-                v-model="sizeForm.userSocialSecurity.participatingInTheCity"
+                v-model="cityList[0]"
                 value-key="id"
                 placeholder="请选择参保城市"
-                @change="socialSecurityCityChange"
               >
                 <el-option
                   v-for="item in cityList"
@@ -57,7 +57,7 @@
             </el-form-item>
             <el-form-item label="社保类型" prop="socialSecurityType">
               <el-select
-                v-model="sizeForm.userSocialSecurity.socialSecurityType"
+                v-model="type"
                 placeholder="请选择社保类型"
               >
                 <el-option label="首次开户" :value="1" />
@@ -66,7 +66,7 @@
             </el-form-item>
             <el-form-item label="户籍类型" prop="householdRegistrationType">
               <el-select
-                v-model="sizeForm.userSocialSecurity.householdRegistrationType"
+                v-model="type2"
                 placeholder="请选择户籍类型"
               >
                 <el-option label="本市城镇" :value="1" />
@@ -90,41 +90,18 @@
               />（比例范围是0.2％ ~ 3％，推荐0.2％）
             </el-form-item>
             <el-form-item label="社保缴纳">
-              <el-form-item
-                label="个人"
-                label-width="74px"
-                style="display: inline-block"
-              >
-                <el-input
-                  v-model="personalPayment"
-                  style="width: 100%"
-                  placeholder="个人"
-                  inline="true"
-                  :disabled="true"
-                />
+              <el-form-item label="个人" label-width="74px" style="display: inline-block">
+                <el-input v-model="personalPayment" style="width: 100%" placeholder="个人" inline="true"
+                  :disabled="true"/>
               </el-form-item>
-              <el-form-item
-                label="公司"
-                label-width="74px"
-                style="display: inline-block"
-              >
-                <el-input
-                  v-model="companyPayment"
-                  style="width: 100%"
-                  placeholder="企业"
-                  size="small"
-                  inline="true"
-                  :disabled="true"
-                />
+              <el-form-item label="公司" label-width="74px" style="display: inline-block">
+                <el-input v-model="companyPayment" style="width: 100%" placeholder="企业" size="small"
+                  inline="true" :disabled="true" />
               </el-form-item>
-              <el-table :data="computePaymentItemList">
+              <el-table :data="cityItemList">
                 <el-table-column label="缴费项目" prop="name" />
                 <el-table-column label="企业基数">
-                  <template slot-scope="paymentItem">
-                    <span v-show="paymentItem.row.switchCompany">{{
-                      sizeForm.userSocialSecurity.socialSecurityBase
-                    }}</span>
-                  </template>
+                  {{10000}}
                 </el-table-column>
                 <el-table-column label="企业比例">
                   <template slot-scope="paymentItem">
@@ -134,11 +111,10 @@
                   </template>
                 </el-table-column>
                 <el-table-column label="企业缴纳">
-                  <template slot-scope="paymentItem">
+                  <template slot-scope="scope">
                     <el-input
-                      v-show="paymentItem.row.switchCompany"
-                      v-model="paymentItem.row.companyPay"
                       :disabled="true"
+                      :value="(10000*scope.row.scaleCompany)/100 +'.00' "
                     />
                   </template>
                 </el-table-column>
@@ -157,11 +133,10 @@
                   </template>
                 </el-table-column>
                 <el-table-column label="个人缴纳">
-                  <template slot-scope="paymentItem">
+                  <template slot-scope="scope">
                     <el-input
-                      v-show="paymentItem.row.switchPersonal"
-                      v-model="paymentItem.row.personalPay"
                       :disabled="true"
+                      :value="(10000*scope.row.scalePersonal)/100 +'.00' "
                     />
                   </template>
                 </el-table-column>
@@ -181,7 +156,7 @@
 
             <el-form-item label="公积金城市" prop="providentFundCity">
               <el-select
-                v-model="sizeForm.userSocialSecurity.providentFundCity"
+                v-model="cityList[0]"
                 placeholder="请选择公积金城市"
                 value-key="id"
               >
@@ -195,14 +170,15 @@
             </el-form-item>
             <el-form-item label="公积金基数" prop="providentFundBase">
               <el-input
-                v-model="sizeForm.userSocialSecurity.providentFundBase"
+                v-model="inp1"
                 style="width: 38%"
+                placeholder="5000"
                 type="number"
               />（基数范围是2273 ~ 25401）
             </el-form-item>
             <el-form-item label="企业比例" prop="enterpriseProportion">
               <el-input
-                v-model="sizeForm.userSocialSecurity.enterpriseProportion"
+                v-model="inp2"
                 style="width: 38%"
                 placeholder="12"
                 type="number"
@@ -210,7 +186,7 @@
             </el-form-item>
             <el-form-item label="个人比例" prop="personalProportion">
               <el-input
-                v-model="sizeForm.userSocialSecurity.personalProportion"
+                v-model="inp2"
                 style="width: 38%"
                 placeholder="12"
                 type="number"
@@ -224,11 +200,9 @@
                 prop="personalProvidentFundPayment"
               >
                 <el-input
-                  v-model="
-                    sizeForm.userSocialSecurity.personalProvidentFundPayment
-                  "
+                  v-model="inp3"
                   style="width: 100%"
-                  placeholder="个人"
+                  placeholder="600"
                   inline="true"
                   type="number"
                 />
@@ -240,11 +214,9 @@
                 prop="enterpriseProvidentFundPayment"
               >
                 <el-input
-                  v-model="
-                    sizeForm.userSocialSecurity.enterpriseProvidentFundPayment
-                  "
+                  v-model="inp3"
                   style="width: 100%"
-                  placeholder="企业"
+                  placeholder="600"
                   inline="true"
                   type="number"
                 />
@@ -267,7 +239,7 @@
 
             <el-form-item>
               <el-button type="primary">保存更新</el-button>
-              <el-button>取消</el-button>
+              <el-button @click="$router.back()">取消</el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -277,6 +249,8 @@
 </template>
 
 <script>
+import moment from "moment"
+import { userAPI,citysItemAPI } from "@/api/index";
 export default {
   data() {
     return {
@@ -287,14 +261,43 @@ export default {
           industrialInjuryRatio: 0.2,
         },
       },
+      usList:[],
+      cityItemList: [],
       isPaySocialInMonth: false,
       isPayProvidentInMonth: false,
       personalPayment: 0.0,
       companyPayment: 0.0,
-      cityList: [],
       paymentItemList: [],
+      cityList:["北京","上海","江西"],
+      inp1:5000,
+      inp2:12,
+      inp3:600,
+      type:"首次开户",
+      type2:"本市城镇"
     };
   },
+  async mounted(){
+    const res = await userAPI({
+      id:this.$route.query.id
+    })
+    this.usList = res.data.data.user;
+    this.usList2 = res.data.data.userSocialSecurity;
+    // console.log(res.data);
+
+    const res2 = await citysItemAPI({
+      id:this.usList2.participatingInTheCityId,
+    })
+    this.cityItemList = res2.data.data;
+    console.log(res2.data.data);
+  },
+  methods:{
+    dateFormat(row,column){
+      let date = row[column.property]
+      return moment(date).format('YYYY-MM-DD')
+    }
+  },
+  
+  
 };
 </script>
 

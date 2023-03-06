@@ -37,6 +37,7 @@ export default new Vuex.Store({
   // 快捷引用
   getters: {
     token: (state) => state.login.token,
+    tokenTime: (state) => state.login.tokenTime,
     date: (state) => state.home.date,
     depts: (state) => state.organ.depts,
     powerLists: (state) => state.SysSet.powerLists,
@@ -44,6 +45,7 @@ export default new Vuex.Store({
     SocialLists: (state) => state.SocialSec.SocialLists,
     yearList: (state) => state.attendances.yearList,
     list: (state) => state.salarys.list,
-    userId: (state) => state.home.userId
+    userId: (state) => state.home.userId,
+    approvalList: (state) => state.approval.list
   }
 })
