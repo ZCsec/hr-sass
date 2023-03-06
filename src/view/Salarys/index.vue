@@ -31,13 +31,14 @@
             </div>
             <div>
               <span>部门：</span>
-              <el-checkbox v-for="(item,index) in company" :key="index" @change="deparFilter(item.name)">{{item.name}}</el-checkbox>
+              <el-checkbox v-for="(item,index) in company" :key="index" @change="departFilter(item.name,index)">{{item.name}}</el-checkbox>
             </div>
           </div>
         </el-col>
       </el-row>
       <div class="table1">
-        <el-table :data="salarysList" style="width: 100%">
+        <!-- <el-table :data="salarysList" style="width: 100%"> -->
+          <el-table :data="salarysList" style="width: 100%" max-height="750">
           <el-table-column label="序号" prop="id"></el-table-column>
           <el-table-column label="姓名" prop="username"></el-table-column>
           <el-table-column label="手机" prop="mobile"></el-table-column>
@@ -57,7 +58,8 @@
             </template>
           </el-table-column>
         </el-table>
-        <div class="block page">
+        
+        <!-- <div class="block page">
           <el-pagination
             @current-change="changePage"
             :current-page="pageSalary.page"
@@ -65,7 +67,7 @@
             layout="prev, pager, next"
             :total="pageSalary.total"
           ></el-pagination>
-        </div>
+        </div> -->
 
         <!-- 调薪 -->
         <el-dialog
@@ -146,8 +148,7 @@ export default {
       formLabelWidth: "80px",
       dialogVisible: false,
       attendList: {},
-      company: {},
-      salarysList: [],
+      company: {},  //部门列表
       //基本工资
       BaseSalary: "",
       //岗位工资
@@ -162,10 +163,12 @@ export default {
       username:'',  //名字
       department:'',  //部门
       starttime:'', //入职时间
+      List:[],  //空数组
+      salarysList: [],  //数据列表
     };
   },
   created() {
-    this.getDispatch();
+    this.getCompany();
     this.getSalarys();
   },
   computed: {
@@ -187,15 +190,21 @@ export default {
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
     },
-    getDispatch() {
+    getCompany() {
       this.$store.dispatch("organ/getHomePage").then(res => {
         this.company = this.$store.getters.depts;
       });
     },
-    //筛选部门
-    deparFilter(name){
-      console.log(this.company);
-      console.log(name);
+    //部门筛选
+    departFilter(name,index){
+      this.List=this.salarysList.filter(item=>item.departmentName==name);
+      console.log(name,index);
+      //匹配条数为0
+      if(this.List.length==0){
+        this.getSalarys();  //调用数据接口函数
+      }else if(this.company[index]){
+        this.salarysList=this.List //不为0，赋值给数据变量
+      }
     },
     // getSalaryDetail(){
     //   this.$store.dispatch('salarys/getSalaryDetail')
@@ -254,7 +263,7 @@ export default {
       this.employeeId = userId;
       this.username=name;
       this.department=part;
-      this.starttime=time
+      this.starttime=time.substring(0,10);
     },
     //修改薪资
     async onCommit(userId) {

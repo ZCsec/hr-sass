@@ -1,406 +1,344 @@
 <template>
-  <div>
-    <el-tabs v-model="activeName">
-      <el-tab-pane label="计薪设置" name="first">
-        <div class="main">
-          <div class="main_1">
-            <div>对应社保自然月</div>
-            <div>
-              <el-select v-model="value" placeholder="次月" style="width:320px;margin-left:40px">
-                <el-option
-                  v-for="item in options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-            </div>
-          </div>
-          <div class="main_2">
-            <div>社保数据来源</div>
-            <div>
-              <el-select
-                v-model="value"
-                disabled
-                placeholder="次月"
-                style="width:320px;margin-left:40px"
-              >
-                <el-option
-                  v-for="item in options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-            </div>
-          </div>
-          <div class="main_3">
-            <div>考勤数据来源</div>
-            <div>
-              <el-select
-                v-model="value"
-                disabled
-                placeholder="次月"
-                style="width:320px;margin-left:40px"
-              >
-                <el-option
-                  v-for="item in options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-            </div>
-          </div>
-          <div class="main_4">
-            <div>
-              <input type="button" value="提交" />
-            </div>
-            <div>
-              <input type="button" value="重置" />
-            </div>
-          </div>
-        </div>
-      </el-tab-pane>
-      <el-tab-pane label="津贴设置" name="second">
-        <div class="main">
-          <div class="main_5">
-            <div>通用方案</div>
-            <div>
-                <el-input v-model="input" style="width:320px"></el-input>
-            </div>
-          </div>
-          <div class="main_6">
-            <div>备注</div>
-            <div>
-                <el-input v-model="input2" style="width:320px"></el-input>
-            </div>
-          </div>
-          <div class="main_7">
-            <div>津贴名称</div>
-            <div>
-              <el-select
-                v-model="value"
-                disabled
-                placeholder="交通补贴"
-                style="width:160px"
-              >
-                <el-option
-                  v-for="item in options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-              <el-select
-                v-model="value1"
-                placeholder="出勤"
-                style="width:160px"
-              >
-                <el-option
-                  v-for="item in options1"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-              <el-input v-model="input1" style="width:160px;margin:10px"></el-input>
-            </div>
-          </div>
-          <div class="main_8">
-            <div></div>
-            <div>
-              <el-select
-                v-model="value"
-                disabled
-                placeholder="通讯补贴"
-                style="width:160px"
-              >
-                <el-option
-                  v-for="item in options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-              <el-select
-                v-model="value8"
-                placeholder="出勤"
-                style="width:160px"
-              >
-                <el-option
-                  v-for="item in options1"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-              <el-input v-model="input8" style="width:160px;margin:10px"></el-input>
-            </div>
-          </div>
-          <div class="main_9">
-            <div></div>
-            <div>
-              <el-select
-                v-model="value"
-                disabled
-                placeholder="午餐补贴"
-                style="width:160px"
-              >
-                <el-option
-                  v-for="item in options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-              <el-select
-                v-model="value9"
-                placeholder="出勤"
-                style="width:160px"
-              >
-                <el-option
-                  v-for="item in options1"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-              <el-input v-model="input9" style="width:160px;margin:10px"></el-input>
-            </div>
-          </div>
-          <div class="main_10">
-            <div class="main_1">
-            <div>适用计税方式</div>
-            <div>
-                <el-radio v-model="radio" label="1">税前</el-radio>
-                <el-radio v-model="radio" label="2">税后</el-radio>
-            </div>
-          </div>
-          </div>
-          <div class="main_11">
-            <div>
-              <input type="button" value="提交" />
-            </div>
-            <div>
-              <input type="button" value="重置" />
-            </div>
-          </div>
-        </div>
-      </el-tab-pane>
-    </el-tabs>
+  <!-- 工资---设置 -->
+  <div class="setUpBox">
+    <el-main class="setUp_top">
+      <el-tabs v-model="activeName" @tab-click="handleClick">
+        <el-tab-pane label="计薪设置" name="first">
+          <el-row class="payroll">
+            <div style="margin: 20px"></div>
+            <el-form
+              :label-position="labelPosition"
+              label-width="80px"
+              ref="getform"
+            >
+              <el-form-item label="社保自然月" label-width="130px">
+                <el-select v-model="seList.socialSecurityType" ref="month">
+                  <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :value="item.value"
+                    :label="item.label"
+                  ></el-option>
+                </el-select>
+                <i class="el-icon-question"></i>
+              </el-form-item>
+              <el-form-item label="社保数据来源" label-width="130px">
+                <el-input disabled="disabled"></el-input>
+                <i class="el-icon-question"></i>
+              </el-form-item>
+              <el-form-item label="考勤数据来源" label-width="130px">
+                <el-input disabled="disabled"></el-input>
+                <i class="el-icon-question"></i>
+              </el-form-item>
+            </el-form>
+          </el-row>
+        </el-tab-pane>
+        <el-tab-pane label="津贴设置" name="second">
+          <el-row class="payroll" :data="seList">
+            <div style="margin: 20px"></div>
+            <el-form
+              :label-position="labelPosition2"
+              label-width="80px"
+              ref="getform"
+            >
+              <el-form-item label="通用方案" label-width="130px">
+                <el-input
+                  class="inputBox"
+                  :value="seList.subsidyName"
+                  ref="scheme"
+                  v-model="seList.subsidyName"
+                ></el-input>
+              </el-form-item>
+              <el-form-item label="备注" label-width="130px">
+                <el-input
+                  class="inputBox"
+                  :value="seList.subsidyRemark"
+                  ref="remarks"
+                  v-model="seList.subsidyRemark"
+                ></el-input>
+              </el-form-item>
+              <el-form-item label="津贴名称" label-width="130px" class="subsidy"
+                ><el-input value="交通补贴" disabled="disabled"></el-input>
+                <el-select
+                  placeholder="每月固定"
+                  class="areaBox"
+                  ref="value1"
+                  v-model="seList.transportationSubsidyScheme"
+                >
+                  <el-option
+                    v-for="item in options2"
+                    :label="item.label"
+                    :key="item.value"
+                    :value="item.value"
+                  ></el-option>
+                </el-select>
+                <i class="el-icon-question"></i>
+                <el-input
+                  :value="seList.transportationSubsidyAmount"
+                  v-model="seList.transportationSubsidyAmount"
+                  ref="money1"
+                ></el-input>
+              </el-form-item>
+              <el-form-item label="" label-width="130px" class="subsidy"
+                ><el-input value="通讯补贴" disabled="disabled"></el-input>
+                <el-select
+                  placeholder="每月固定"
+                  class="areaBox"
+                  ref="value2"
+                  v-model="seList.communicationSubsidyScheme"
+                >
+                  <el-option
+                    v-for="item in options2"
+                    :label="item.label"
+                    :key="item.value"
+                    :value="item.value"
+                  ></el-option> </el-select
+                ><i class="el-icon-question"></i>
+                <el-input
+                  v-model="seList.communicationSubsidyAmount"
+                  :value="seList.communicationSubsidyAmount"
+                  ref="money2"
+                ></el-input>
+              </el-form-item>
+              <el-form-item label="" label-width="130px" class="subsidy"
+                ><el-input value="午餐补贴" disabled="disabled"></el-input>
+                <el-select
+                  placeholder="每月固定"
+                  class="areaBox"
+                  ref="value3"
+                  v-model="seList.lunchAllowanceScheme"
+                >
+                  <el-option
+                    v-for="item in options2"
+                    :label="item.label"
+                    :key="item.value"
+                    :value="item.value"
+                  ></el-option>
+                </el-select>
+                <i class="el-icon-question"></i>
+                <el-input
+                  v-model="seList.lunchAllowanceAmount"
+                  :value="seList.lunchAllowanceAmount"
+                  ref="money3"
+                ></el-input>
+              </el-form-item>
+              <el-form-item label="" label-width="130px" class="subsidy"
+                ><el-input value="住房补贴" disabled="disabled"></el-input>
+                <el-select
+                  class="areaBox"
+                  ref="value4"
+                  :value="seList.housingSubsidyScheme"
+                  v-model="seList.housingSubsidyScheme"
+                  label="123"
+                >
+                  <el-option
+                    v-for="item in options2"
+                    :label="item.label"
+                    :key="item.value"
+                    :value="item.value"
+                  ></el-option> </el-select
+                ><i class="el-icon-question"></i>
+                <el-input
+                  v-model="seList.housingSubsidyAmount"
+                  :value="seList.housingSubsidyAmount"
+                  ref="money4"
+                ></el-input>
+              </el-form-item>
+              <el-form-item label="适用计税方式" label-width="130px">
+                <el-radio-group v-model="seList.taxCalculationType">
+                  <el-radio
+                    v-for="item in options3"
+                    :key="item.value"
+                    :label="item.label"
+                    ref="type"
+                    >{{ item.value }}</el-radio
+                  >
+                </el-radio-group>
+              </el-form-item>
+            </el-form>
+          </el-row>
+        </el-tab-pane>
+      </el-tabs>
+      <el-button @click="submitFn">提交</el-button>
+      <el-button @click="changeFn">重置</el-button>
+    </el-main>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import { settingsAPI, submitSettingsAPI } from "@/api/index";
 export default {
   data() {
     return {
-      activeName: "first",
       options: [
         {
-          value: "选项1",
-          label: "当月"
+          value: 1,
+          label: "当月",
         },
         {
-          value: "选项2",
-          label: "次月"
-        }
+          value: 2,
+          label: "次月",
+        },
       ],
-      options1: [
+      options2: [
         {
-          value: "选项1",
-          label: "每出勤日"
+          value: 1,
+          label: "每日出勤",
         },
         {
-          value: "选项2",
-          label: "每月固定"
-        }
+          value: 3,
+          label: "每月固定",
+        },
       ],
-      value: "",
-      value1:'',
-      value8:'',
-      value9:'',
-      input:'',
-      input1:'',
-      input2:'',
-      input8:'',
-      input9:'',
-      radio: '1'
+      options3: [
+        {
+          value: "税前",
+          label: 1,
+        },
+        {
+          value: "税后",
+          label: 2,
+        },
+      ],
+      seList: "",
+      activeName: "first",
+      labelPosition: "left",
+      labelPosition2: "right",
     };
-  }
+  },
+  methods: {
+    // 切换计薪设置和津贴设置
+    handleClick(tab, event) {
+      console.log(tab, event);
+    },
+    // 点击提交按钮提交计薪/津贴设置
+    async submitFn() {
+      this.seList.transportationSubsidyAmount = Number(
+        this.seList.transportationSubsidyAmount
+      );
+      this.seList.communicationSubsidyAmount = Number(
+        this.seList.communicationSubsidyAmount
+      );
+      this.seList.lunchAllowanceAmount = Number(
+        this.seList.lunchAllowanceAmount
+      );
+      this.seList.housingSubsidyAmount = Number(
+        this.seList.housingSubsidyAmount
+      );
+      const res = await submitSettingsAPI({
+        socialSecurityType: this.seList.taxCalculationType,
+        subsidyName: this.$refs.scheme.value,
+        subsidyRemark: this.$refs.remarks.value,
+        transportationSubsidyScheme: this.seList.transportationSubsidyScheme,
+        communicationSubsidyScheme: this.seList.communicationSubsidyScheme,
+        lunchAllowanceScheme: this.seList.lunchAllowanceScheme,
+        housingSubsidyScheme: this.seList.housingSubsidyScheme,
+        transportationSubsidyAmount: this.seList.transportationSubsidyAmount,
+        communicationSubsidyAmount: this.seList.communicationSubsidyAmount,
+        lunchAllowanceAmount: this.seList.lunchAllowanceAmount,
+        housingSubsidyAmount: this.seList.housingSubsidyAmount,
+        taxCalculationType: this.seList.taxCalculationType,
+        companyId: "1",
+      });
+      // 修改成功提示弹框
+      if ((res.code = 10000 && (res.message = "操作成功！"))) {
+        this.$message({
+          message: "保存成功",
+          type: "success",
+        });
+      }
+    },
+    // 获取计薪和津贴数据
+    async getSettingsFn(){
+      const res = await settingsAPI({});
+      this.seList = res.data;
+    },
+    // 点击重置
+    changeFn(){
+      this.getSettingsFn();
+    }
+  },
+  mounted() {
+    // 调用计薪和津贴数据方法
+    this.getSettingsFn();
+  },
 };
 </script>
 
 <style lang="less" scoped>
-.main {
-  width: 100%;
-  height: 550px;
-  background-color: rgb(249, 249, 249);
-  border-radius: 4px;
-  box-shadow: 0px 0px 8px 8px rgba(195, 195, 195, 0.573);
-  div {
-    width: 100%;
-    height: 80px;
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-decoration: none;
+  .el-main{
+    background-color: rgba(255, 255, 255, 0.629) !important;
   }
-  .main_1 {
-    div {
-      float: left;
-      width: 80%;
-      height: 60px;
-    }
-    div:nth-of-type(1) {
-      width: 10%;
-      text-align: center;
-      line-height: 60px;
-      margin: 10px;
-    }
-    div:nth-of-type(2) {
-      width: 60%;
-      .el-radio{
-        margin-top: 33px;
+  .setUpBox {
+    width: 97%;
+    margin: 0 auto;
+    .setUp_top {
+      width: 99%;
+      margin: 20px auto;
+      padding-left: 15px;
+      padding-bottom: 15px;
+      box-shadow: 0px 0px 10px rgb(213, 213, 213);
+      .payroll {
+        width: 99%;
+        margin: 0 auto;
+        .el-form-item {
+          height: 60px;
+          line-height: 60px;
+          .el-select {
+            width: 280px;
+            .el-option {
+              height: 20px;
+              line-height: 20px;
+            }
+          }
+          .areaBox {
+            margin-left: 10px;
+          }
+          .el-input {
+            height: 36px;
+            width: 280px;
+          }
+          .el-icon-question {
+            font-size: 20px;
+            margin: 0 10px;
+            color: #ccc;
+          }
+          .el-radio:last-of-type {
+            margin-left: 25px;
+          }
+          .inputBox {
+            width: 400px;
+          }
+        }
+        .subsidy {
+          .el-input {
+            width: 200px;
+          }
+          .el-select {
+            width: 200px;
+          }
+        }
       }
-    }
-  }
-  .main_2 {
-    div {
-      float: left;
-      width: 80%;
-      height: 60px;
-    }
-    div:nth-of-type(1) {
-      width: 10%;
-      text-align: center;
-      line-height: 60px;
-      margin: 10px;
-    }
-    div:nth-of-type(2) {
-      width: 60%;
-    }
-  }
-  .main_3 {
-    div {
-      float: left;
-      width: 80%;
-      height: 60px;
-    }
-    div:nth-of-type(1) {
-      width: 10%;
-      text-align: center;
-      line-height: 60px;
-      margin: 10px;
-    }
-    div:nth-of-type(2) {
-      width: 60%;
-    }
-  }
-  .main_4 {
-    div {
-      float: left;
-      width: 80%;
-      height: 60px;
-      margin: auto;
-      width: 10%;
-      text-align: center;
-      line-height: 60px;
-      input {
-        width: 60px;
-        height: 30px;
-        border: none;
-        color: white;
-        border-radius: 5px;
-        background-color: #5aa8fb;
-        cursor: pointer;
+      .el-button {
+        width: 80px;
+        height: 38px;
+        line-height: 16px;
+        font-size: 14px;
+        color: #fff;
       }
-      input:hover {
-        background-color: #76b6f9e1;
+      .el-button:first-of-type {
+        margin-left: 50px;
+        background: rgb(56,179,255);
       }
-    }
-    div:nth-of-type(1) {
-      margin-left: 154px;
-    }
-    div:nth-of-type(2) {
-    }
-  }
-
-  .main_5 {
-    div {
-      float: left;
-      width: 80%;
-      height: 60px;
-    }
-    div:nth-of-type(1) {
-      width: 10%;
-      text-align: right;
-      line-height: 60px;
-      margin: 10px;
-    }
-    div:nth-of-type(2) {
-      width: 60%;
-    }
-  }
-  .main_6 {
-    div {
-      float: left;
-      width: 80%;
-      height: 60px;
-    }
-    div:nth-of-type(1) {
-      width: 10%;
-      text-align: right;
-      line-height: 60px;
-      margin: 10px;
-    }
-    div:nth-of-type(2) {
-      width: 60%;
-    }
-  }
-  .main_7,.main_8,.main_9{
-    height: 80px;
-    div{
-        float: left;
-      width: 80%;
-      height: 60px;
-      width: 10%;
-      text-align: right;
-      line-height: 60px;
-      margin: 10px;
-    }
-    div:nth-of-type(2) {
-        margin: 0;
-        height: 60px;
-      width: 70%;
-      .el-select:nth-of-type(2){
-        margin: 10px;
+      .el-button:last-of-type {
+        color: #606266;
       }
-    }
-  }
-  .main_11 {
-    div {
-      float: left;
-      width: 80%;
-      height: 60px;
-      margin: auto;
-      width: 10%;
-      text-align: center;
-      line-height: 60px;
-      input {
-        width: 60px;
-        height: 30px;
-        border: none;
-        color: white;
-        border-radius: 5px;
-        background-color: #5aa8fb;
-        cursor: pointer;
-      }
-      input:hover {
-        background-color: #76b6f9e1;
-      }
-    }
-    div:nth-of-type(1) {
-      margin-left: 154px;
-    }
-    div:nth-of-type(2) {
     }
   }
 }

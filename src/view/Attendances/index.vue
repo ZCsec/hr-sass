@@ -19,23 +19,23 @@
               <el-checkbox
                 v-for="(item,index) in company"
                 :key="index"
-              >{{item.name}}</el-checkbox>
+                @change="departFilter(item.name,index)">{{item.name}}</el-checkbox>
             </div>
             <div>
               <span>考勤状态：</span>
-              <el-checkbox>正常</el-checkbox>
-              <el-checkbox>旷工</el-checkbox>
-              <el-checkbox>事假</el-checkbox>
-              <el-checkbox>调休</el-checkbox>
-              <el-checkbox>迟到</el-checkbox>
-              <el-checkbox>早退</el-checkbox>
+              <el-radio v-model="radio" label="1">正常</el-radio>
+              <el-radio v-model="radio" label="2">事假</el-radio>
+              <el-radio v-model="radio" label="3">调休</el-radio>
+              <el-radio v-model="radio" label="4">迟到</el-radio>
+              <el-radio v-model="radio" label="5">旷工</el-radio>
+              <el-radio v-model="radio" label="6">早退</el-radio>
             </div>
           </div>
         </el-col>
       </el-row>
 
       <div class="table1">
-        <el-table :data="acttendList" type="index" border style="width: 100%">
+        <el-table :data="acttendList" type="index" border style="width: 100%" max-height="750">
           <el-table-column prop="id" label="序号" width="150"></el-table-column>
           <el-table-column prop="username" label="姓名" width="120"></el-table-column>
           <el-table-column prop="workNumber" label="工号" width="120"></el-table-column>
@@ -465,12 +465,15 @@
 export default {
   data() {
     return {
+      //考勤状态
+      radio:1,
       //监听部门变量
       componyName: "",
       //时间集合
       dateList: [],
       //设置按钮状态
       dialogFormVisible: false,
+      List:[],
 
       //设置选项卡片
       activeName: "first",
@@ -524,10 +527,21 @@ export default {
     };
   },
   created() {
-    // this.getDispatch();
+    this.getDispatch();
     this.getAttend();
   },
   methods: {
+    //部门筛选
+    departFilter(name,index){
+      this.List=this.acttendList.filter(item=>item.departmentName==name);
+      console.log(name,index);
+      //匹配条数为0
+      if(this.List.length==0){
+        this.getAttend();  //调用数据接口函数
+      }else if(this.company[index]){
+        this.acttendList=this.List //不为0，赋值给数据变量
+      }
+    },
     //提醒
     open() {
       this.$confirm(
