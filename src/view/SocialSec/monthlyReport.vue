@@ -16,13 +16,13 @@
             <div><span style="background-color: #fedbd7" />公司合计</div>
             <div><span style="background-color: #ffe8c9" />一级部门</div>
             <div><span style="background-color: #fdfcd5" />二级部门</div>
-            <div class="rightLabBox"><div>导出</div></div>
+            <div class="rightLabBox"><el-button type="primary" icon="el-icon-printer" @click="exportExcel">导出</el-button></div>
           </div>
           <!-- 报表详情 -->
           <el-table v-loading="loading" :data="yearsMonth" id="item" border style="width: 100%;text-align: center">
             <el-table-column type="index" label="序号" center width="50" />
             <el-table-column prop="username" label="姓名" width="150px" />
-            <el-table-column prop="timeOfEntry" label="入职时间" width="150px" />
+            <el-table-column prop="timeOfEntry" :formatter="dateFormat" label="入职时间" width="150px" />
             <el-table-column prop="mobile" label="手机号" width="150px" />
             <el-table-column prop="idNumber" label="身份证号码" width="150px" />
             <el-table-column prop="theHighestDegreeOfEducation" label="学历" width="150px" />
@@ -92,7 +92,6 @@
       <el-row type="flex" justify="center" align="middle" style="height:60px">
       <el-col :span="12">
         <el-button size="small" type="primary" @click="archive">归档{{ yearVal ? yearVal.substr(4) : '' }}报表</el-button>
-        <el-button size="small" type="primary" >新建报表</el-button>
         <el-button size="small" @click="$router.back()">取消</el-button>
       </el-col>
     </el-row>
@@ -102,7 +101,11 @@
 </template>
 
 <script>
+import moment from "moment"
 import { getArchivingContAPI,getArchivingArchiveAPI } from "@/api/index";
+import * as XLSX from 'xlsx'
+import FileSaver from "file-saver";
+
 export default {
   name: "HistoricalArchiving",
   data() {
@@ -122,13 +125,36 @@ export default {
   },
   methods:{
     archive() {
-      this.$confirm(`您确定要归档${this.yearVal}报表？报表归档将覆盖上一次归档记录，无法恢复。`).then(async() => {
+      this.$confirm(`您确定要归档报表？报表归档将覆盖上一次归档记录，无法恢复。`).then(async() => {
         await getArchivingArchiveAPI({ yearMonth: this.yearVal })
         this.$message({
           type: 'success',
           message: '操作成功!'
         })
       })
+    },
+    exportExcel() {
+            var xlsxParam = { raw: true };
+            let fix = document.querySelector('.el-table__fixed');
+            let wb;
+            if (fix) { //判断要导出的节点中是否有fixed的表格，如果有，转换excel时先将该dom移除，然后append回去
+                wb = XLSX.utils.table_to_book(document.querySelector('#item').removeChild(fix), xlsxParam);
+                document.querySelector('#item').appendChild(fix);
+            } else {
+                wb = XLSX.utils.table_to_book(document.querySelector('#item'));
+            }
+            let wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'array' })
+            try {
+                FileSaver.saveAs(new Blob([wbout], { type: 'application/octet-stream' }), `报表.xlsx`)
+            } catch (e) {
+                if (typeof console !== 'undefined') console.log(e, wbout)
+            }
+            this.$message({ message: '表格导出成功！（有延迟请稍等)', type: 'success' })
+            return wbout
+    },
+    dateFormat(row,column){
+        let date = row[column.property]
+        return moment(date).format('YYYY-MM-DD')
     },
   }
 };

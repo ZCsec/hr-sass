@@ -11,13 +11,15 @@
 import { getLogin } from "@/api/login/login";
 
 //社保
-import { getSocialList,getSettings,getArchivingCont,getArchivingList,getYearsMonth,getArchivingArchive } from "@/api/social/social"
+import { getSocialList,getSettings,getArchivingCont,getArchivingList,getYearsMonth,getArchivingArchive,user,citysItem } from "@/api/social/social"
 export const getSocialListAPI = getSocialList;
 export const getSettingsAPI = getSettings;
 export const getArchivingContAPI = getArchivingCont;
 export const getArchivingListAPI = getArchivingList;
 export const getYearsMonthAPI = getYearsMonth;
 export const getArchivingArchiveAPI = getArchivingArchive;
+export const userAPI = user;
+export const citysItemAPI = citysItem;
 
 //权限
 import { getPermissionList,delPermission,addPermission,updatePermission,getPermissionDetail } from "@/api/permission/permission"
