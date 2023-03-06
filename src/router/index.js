@@ -37,7 +37,7 @@ import store from '@/store/index'
 import companySettings from '@/router/CompanySettings/CompanySettings'
 import employee from '@/router/CompanySettings/Employee'
 import imp from '@/router/CompanySettings/Imp'
-import golook from '@/router/CompanySettings/golook'
+import detail from '@/router/CompanySettings/golook'
 // 导入审批模块
 import Approval from '@/router/Approval/Approval'
 import leaveApproval from '@/router/Approval/leaveApproval'
