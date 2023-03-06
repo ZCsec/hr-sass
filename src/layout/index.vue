@@ -11,17 +11,52 @@
           style="background-color: rgb(75, 124, 251)"
         >
           <div class="logo"><img src="@/assets/common/logo.png" alt="" /></div>
-          <el-menu-item index="/layout/home"> 首页 </el-menu-item>
-          <el-menu-item index="/layout/organ"> 组织架构 </el-menu-item>
-          <el-menu-item index="/layout/employee"> 员工 </el-menu-item>
-          <el-menu-item index="/layout/companySettings">
-            公司设置
+          <el-menu-item index="/layout/home">
+            <div class="svg-box">
+              <img class="svg" src="@/assets/svg/dashboard.svg" alt="" />
+              首页
+            </div>
           </el-menu-item>
-          <el-menu-item index="/layout/sysSet"> 权限设置 </el-menu-item>
-          <el-menu-item index="/layout/socialSec"> 社保 </el-menu-item>
-          <el-menu-item index="/layout/attendances"> 考勤 </el-menu-item>
-          <el-menu-item index="/layout/salarys"> 工资 </el-menu-item>
-          <el-menu-item index="/layout/Approval"> 审批 </el-menu-item>
+          <el-menu-item index="/layout/organ">
+            <div class="svg-box">
+              <img class="svg" src="@/assets/svg/tree.svg" alt="" />组织架构
+            </div>
+          </el-menu-item>
+          <el-menu-item index="/layout/employee">
+            <div class="svg-box">
+              <img class="svg" src="@/assets/svg/people.svg" alt="" />员工
+            </div>
+          </el-menu-item>
+          <el-menu-item index="/layout/companySettings">
+            <div class="svg-box">
+              <img class="svg" src="@/assets/svg/setting.svg" alt="" />公司设置
+            </div>
+          </el-menu-item>
+          <el-menu-item index="/layout/sysSet">
+            <div class="svg-box">
+              <img class="svg" src="@/assets/svg/lock.svg" alt="" />权限设置
+            </div>
+          </el-menu-item>
+          <el-menu-item index="/layout/socialSec">
+            <div class="svg-box">
+              <img class="svg" src="@/assets/svg/table.svg" alt="" />社保
+            </div>
+          </el-menu-item>
+          <el-menu-item index="/layout/attendances">
+            <div class="svg-box">
+              <img class="svg" src="@/assets/svg/excel.svg" alt="" />考勤
+            </div>
+          </el-menu-item>
+          <el-menu-item index="/layout/salarys">
+            <div class="svg-box">
+              <img class="svg" src="@/assets/svg/money.svg" alt="" />工资
+            </div>
+          </el-menu-item>
+          <el-menu-item index="/layout/Approval">
+            <div class="svg-box">
+              <img class="svg" src="@/assets/svg/tree-table.svg" alt="" />审批
+            </div>
+          </el-menu-item>
         </el-menu>
         <div class="left-bottom-bg"></div>
       </el-aside>
@@ -245,10 +280,16 @@ export default {
 
   .el-menu-item:hover {
     color: #43a7fe !important;
+    .svg {
+      filter: drop-shadow(#409eff 20px 0);
+    }
   }
 
   .el-menu-item:focus {
     color: #43a7fe !important;
+    .svg {
+      filter: drop-shadow(#409eff 20px 0);
+    }
   }
 
   .logo {
@@ -291,5 +332,19 @@ export default {
 /deep/.el-avatar--circle {
   position: relative;
   top: 8px;
+}
+
+.svg {
+  width: 20px;
+  margin-right: 8px;
+  position: relative;
+  top: -1px;
+  left: -20px;
+  filter: drop-shadow(#fff 20px 0);
+}
+
+.svg-box {
+  // border: 1px solid red;
+  overflow: hidden;
 }
 </style>

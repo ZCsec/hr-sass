@@ -68,7 +68,7 @@
         </div>
         <div class="footer">
           <span>计数天数（正式）：</span>
-          <el-input style="width:320px" placeholder="请输入内容" v-model="input" :disabled="true"></el-input>
+          <el-input style="width:320px" placeholder="请输入内容" v-model="input1" :disabled="true"></el-input>
         </div>
       </div>
     </el-card>
@@ -81,10 +81,14 @@
         <div class="recruit">招聘日程</div>
         <div class="recruit_main">
           <div>
-            <li><p>HR专员</p>
-            <p>2018-12-3-3:30</p></li>
-            <li><p>HR专员</p>
-            <p>2018-12-3-3:30</p></li>
+            <li>
+              <p>HR专员</p>
+              <p>2018-12-3-3:30</p>
+            </li>
+            <li>
+              <p>HR专员</p>
+              <p>2018-12-3-3:30</p>
+            </li>
           </div>
           <div style="height: 200px;margin-left:40px">
             <el-steps direction="vertical" :active="1">
@@ -100,10 +104,30 @@
 </template>
   
   <script>
+import { getSalaryDetailAPI } from "@/api/index";
 export default {
+  data() {
+    return {
+      input: "",
+      input1: ""
+    };
+  },
+  created() {
+    this.getEmpliyeet();
+  },
   methods: {
-    clickLoad() {
-      this.$refs.refFile.dispatchEvent(new MouseEvent("click"));
+    // clickLoad() {
+    //   this.$refs.refFile.dispatchEvent(new MouseEvent("click"));
+    // },
+    async getEmpliyeet() {
+      var url = window.location.href;
+      var index = url.lastIndexOf("\/");
+      url = url.substring(index + 1, url.length);
+      console.log(url);
+      const res =await getSalaryDetailAPI(
+        {userId:url}
+      );
+      console.log(res.data);
     }
   }
 };
@@ -199,18 +223,18 @@ export default {
   font-size: 16px;
   font-weight: 600;
 }
-.recruit_main{
+.recruit_main {
   margin-top: 20px;
-  div{
+  div {
     float: left;
   }
-  div:first-child{
-    li{
+  div:first-child {
+    li {
       width: 100%;
       height: 50%;
       list-style: none;
-      margin-top:10px ;
-      p{
+      margin-top: 10px;
+      p {
         height: 20px;
         line-height: 20px;
       }

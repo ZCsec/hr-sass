@@ -1,11 +1,15 @@
 <template>
   <div>
-    <el-card class="box-card" style="width:1250px;height:600px;border-radius:5px">
+    <el-card
+      class="box-card"
+      style="width: 1250px; height: 600px; border-radius: 5px"
+    >
       <div class="text item">
         <div class="nav">
           <h2>考勤导入</h2>
           <p>
-            <i class="el-icon-info" style="color:#E6A23C"></i> 如果某员工已有打卡记录，最新上传的不覆盖原有数据。可上传多名员工的打卡记录，同考勤日内取员工第一次和最后一次打卡时间
+            <i class="el-icon-info" style="color: #e6a23c"></i>
+            如果某员工已有打卡记录，最新上传的不覆盖原有数据。可上传多名员工的打卡记录，同考勤日内取员工第一次和最后一次打卡时间
           </p>
         </div>
         <div class="main">
@@ -13,55 +17,55 @@
         </div>
       </div>
     </el-card>
-    
   </div>
 </template>
 
 <script>
 import UploadExcel from '@/components/UploadExcel'
 import XLSX from 'xlsx'
-import {importEmployeeAPI} from '@/api'
+import { importEmployeeAPI } from '@/api'
 export default {
-  components:{
+  components: {
     UploadExcel
   },
-  data(){
-    return{
-
-    }
+  data() {
+    return {}
   },
-  mounted(){
+  mounted() {
     console.log(XLSX)
   },
   methods: {
     clickLoad() {
-      this.$refs.refFile.dispatchEvent(new MouseEvent("click"));
+      this.$refs.refFile.dispatchEvent(new MouseEvent('click'))
     },
-    async success({header,results}){
-      const headerData={
-        '入职日期': 'timeOfEntry' ,
-        '手机号':'mobile' ,
-        '姓名':'username',
-        '转正日期':'correctionTime' ,
-        '工号': 'workNumber'
+    async success({ header, results }) {
+      const headerData = {
+        入职日期: 'timeOfEntry',
+        手机号: 'mobile',
+        姓名: 'username',
+        转正日期: 'correctionTime',
+        工号: 'workNumber'
       }
-      let newArr =results.map(item=>{
-        let newInfo={};
-        Object.keys(item).forEach(key=>{
-          newInfo[headerData[key]=item[key]]
-          if(headerData[key]=='timeOfEntry'||headerData[key]=='correctionTime'){
-            newInfo[headerData[key]]=new Date(this.formatDate(item[key],'/'))
-          }else{
-            newInfo[headerData[key]]=item[key]
+      let newArr = results.map((item) => {
+        let newInfo = {}
+        Object.keys(item).forEach((key) => {
+          newInfo[(headerData[key] = item[key])]
+          if (
+            headerData[key] == 'timeOfEntry' ||
+            headerData[key] == 'correctionTime'
+          ) {
+            newInfo[headerData[key]] = new Date(this.formatDate(item[key], '/'))
+          } else {
+            newInfo[headerData[key]] = item[key]
           }
         })
         return newInfo
       })
-      await importEmployeeAPI(newArr)
-      
+      await importEmployeeAPI(newArr);
+      console.log(newArr);
     },
-     // 转化excel的日期格式
-     formatDate(numb, format) {
+    // 转化excel的日期格式
+    formatDate(numb, format) {
       const time = new Date((numb - 1) * 24 * 3600000 + 1)
       time.setYear(time.getFullYear() - 70)
       const year = time.getFullYear() + ''
@@ -70,13 +74,21 @@ export default {
       if (format && format.length === 1) {
         return year + format + month + format + date
       }
-      return year + (month < 10 ? '0' + month : month) + (date < 10 ? '0' + date : date)
+      return (
+        year +
+        (month < 10 ? '0' + month : month) +
+        (date < 10 ? '0' + date : date)
+      )
     }
   }
-};
+}
 </script>
 
 <style lang="less" scoped>
+.upload-excel{
+  margin-left: 200px;
+  margin-top: 80px;
+}
 .text {
   font-size: 14px;
   .nav {

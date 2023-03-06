@@ -1,110 +1,125 @@
 <template>
   <div>
-    <el-container>
-  <el-header class="top">员工导入</el-header>
-  <el-main>
-      <el-button type="warning" disabled class="btn"><span>!</span> 每次导入仅可添加1000名员工，姓名、手机、入职时间、聘用形式为必填项</el-button>
-      <div class="click-imp">
-        <div class="impleft">
-        <el-upload
-  class="upload-demo"
-  action="https://jsonplaceholder.typicode.com/posts/"
-  :on-preview="handlePreview"
-  :on-remove="handleRemove"
-  :file-list="fileList"
-  list-type="picture">
-  <el-button size="small" type="primary">点击上传</el-button>
-  <div slot="tip" class="el-upload__tip">(推荐下载模板文件，填写后上传)
-点击查看文件上传要求</div>
-</el-upload>
-        </div>
-        <div class="impright">
-        <el-upload
-  class="upload-demo"
-  drag
-  action="https://jsonplaceholder.typicode.com/posts/"
-  multiple>
-      <i class="el-icon-upload"></i>
-       <div class="el-upload__text">将文件拖到此处</div>
-</el-upload>
-        </div>
-      </div>
-  </el-main>
-</el-container>
+    <uploadexcel :on-success="success"></uploadexcel>
   </div>
 </template>
 
 <script>
+import uploadexcel from '@/components/UploadExcel/index.vue'
+import {importEmployee} from '@/api/employee/employee'
+
 export default {
-  name: 'HrSassImport',
+  components:{
+    uploadexcel
+  },
 
   data() {
     return {
-      fileList:[]
+      type: this.$route.query.type,
     };
   },
-
-  mounted() {
-    
-  },
-
   methods: {
-      handleRemove(file, fileList) {
-        console.log(file, fileList);
-      },
-      handlePreview(file) {
-        console.log(file);
+
+    async success({header,results}) {
+      const userRelations = {
+          入职日期: "timeOfEntry",
+          手机号: "mobile",
+          姓名: "username",
+          转正日期: "correctionTime",
+          工号: "workNumber",
+        };
+        var newArr = results.map(item =>{
+          var userInfo = {}
+          Object.keys(item).forEach(key =>{
+            if(userRelations[key] === 'timeOfEntry' || userRelations[key] === 'correctionTime'){
+              userInfo[userRelations[key]] = new Date(this.formatDate(item[key],'/'))
+            }else {
+              userInfo[userRelations[key]] = item[key]
+            }
+          })
+          return userInfo
+        })
+        await importEmployee(newArr)
+        this.$message.success('导入成功')
+    },
+    formatDate(numb, format) {
+      const time = new Date((numb - 1) * 24 * 3600000 + 1);
+      time.setYear(time.getFullYear() - 70);
+      const year = time.getFullYear() + "";
+      const month = time.getMonth() + 1 + "";
+      const date = time.getDate() - 1 + "";
+      if (format && format.length === 1) {
+        return year + format + month + format + date;
       }
+      return (
+        year +
+        (month < 10 ? "0" + month : month) +
+        (date < 10 ? "0" + date : date)
+      );
+    },
+
+
+
+
+
+
+
+
+
+    // async success({ header, results }) {
+    //   if (this.type == "user") {
+    //     const userRelations = {
+    //       入职日期: "timeOfEntry",
+    //       手机号: "mobile",
+    //       姓名: "username",
+    //       转正日期: "correctionTime",
+    //       工号: "workNumber",
+    //     };
+    //     const arr = [];
+    //     results.forEach((item) => {
+    //       // 需要将数据里的中文都换成英文
+    //       const userInfo = {};
+    //       Object.keys(item).forEach((key) => {
+    //         // 转换一下时间戳
+    //         if (
+    //           userRelations[key] == "timeOfEntry" ||
+    //           userRelations[key] == "correctionTime"
+    //         ) {
+    //           userInfo[userRelations[key]] = new Date(
+    //             this.formatDate(item[key], "/")
+    //           );
+    //           return;
+    //         }
+    //         // 中文换英文
+    //         userInfo[userRelations[key]] = item[key];
+    //       });
+    //       arr.push(userInfo);
+    //     });
+    //     await importEmployee(arr); //调用导入接口
+    //     this.$message.success("导入成功");
+    //     this.$router.back();
+    //   } else {
+    //   }
+    // },
+    // formatDate(numb, format) {
+    //   const time = new Date((numb - 1) * 24 * 3600000 + 1);
+    //   time.setYear(time.getFullYear() - 70);
+    //   const year = time.getFullYear() + "";
+    //   const month = time.getMonth() + 1 + "";
+    //   const date = time.getDate() - 1 + "";
+    //   if (format && format.length === 1) {
+    //     return year + format + month + format + date;
+    //   }
+    //   return (
+    //     year +
+    //     (month < 10 ? "0" + month : month) +
+    //     (date < 10 ? "0" + date : date)
+    //   );
+    // },
   },
 };
 </script>
 
-<style lang="scss">
-.top {
-  text-align: center;
-  font-size: 30px;
-  font-weight: 700;
-}
-.btn {
-  width: 100%;
-  height: 15px;
-  font-size: 10px;
-  display: flex;
-  justify-content: left;
-  align-items: center;
-}
-.click-imp {
-  width: 720px;
-  height: 180px;
-  border: 1px dashed #d9d9d9;
-  margin: 120px 0 0 25%;
-  background-color: #fff;
-  display: flex;
-  .impleft {
-    width: 360px;
-    border-right: 1px dashed #d9d9d9;
-    height: 180px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    .upload-demo {
-      display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    .el-upload__tip {
-      width: 80%;
-    }
-    }
-}
-.impright{
- width: 274px;
-   height: 180px;
-   .upload-demo {
-    width: 100%;
-    height: 100%;
-   }
-}
-}
+<style lang="scss" scoped>
 
 </style>
