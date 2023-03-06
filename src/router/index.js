@@ -72,7 +72,7 @@ const routes = [
       employee,
       organs,
       imp,
-      golook,
+      detail,
       socialHistorical,
       monthlyReport,
       Approval,
