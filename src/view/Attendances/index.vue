@@ -536,7 +536,7 @@ export default {
       this.List=this.acttendList.filter(item=>item.departmentName==name);
       console.log(name,index);
       //匹配条数为0
-      if(this.List.length==0){
+      if(this.List.length!=0){
         this.getAttend();  //调用数据接口函数
       }else if(this.company[index]){
         this.acttendList=this.List //不为0，赋值给数据变量
@@ -679,9 +679,9 @@ export default {
 .grid-content {
   border-top-left-radius: 2px;
   border-top-right-radius: 2px;
-  min-height: 190px;
+  min-height: 232px;
   box-shadow: 0px 0px 8px 1px rgba(195, 195, 195, 0.573);
-
+  overflow: hidden;
   div {
     width: 220px;
     float: left;
@@ -727,11 +727,12 @@ export default {
     }
   }
   div:nth-of-type(3) {
-    width: 100%;
+    width: 97%;
     height: auto;
     margin: 0;
     margin-top: 10px;
     margin-left: 20px;
+    line-height: 34px;
     span {
       font-weight: 600;
       color: rgb(91, 91, 91);
@@ -742,6 +743,7 @@ export default {
     height: auto;
     margin: 0;
     margin-left: 20px;
+    margin-top: 10px;
     span {
       font-weight: 600;
       color: rgb(91, 91, 91);

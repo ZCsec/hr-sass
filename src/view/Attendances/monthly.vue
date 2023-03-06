@@ -178,7 +178,7 @@ export default {
             "salaryStandard",
             "officialSalaryDays"
           ];
-          const data = this.formatJson(filterVal, this.tableList);
+          const data = this.formatJson(filterVal, this.List);
           excel.export_json_to_excel({
             header: tHeader,
             data: data,
