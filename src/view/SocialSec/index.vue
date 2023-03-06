@@ -12,9 +12,13 @@
             <el-button class="btn" @click="socialHistorical()">历史归档</el-button>
           </template>
 
-          <el-row>
-            <span class="leftName">部门：</span>
-            <el-checkbox>总裁办</el-checkbox>
+          <el-row style="display:flex;width:1000px">
+            <span class="leftName" style="margin-top:30px;">部门：</span>
+            <el-checkbox-group v-model="departmentChecks" style="width:700px;margin-top:30px;">
+              <el-checkbox v-for="item in departmentList" :key="item.id" :label="item.id" @change="checkChange" >{{ item.name }}
+            </el-checkbox>
+            </el-checkbox-group>
+            
           </el-row>
           <el-row>
             <span class="leftName">社保城市：</span>
@@ -32,7 +36,7 @@
     <el-row class="bottom">
       <el-col :span="24">
         <div class="grid-content1 bg-purple-dark">
-          <el-table id="item" :data="SocialLists" style="width: 100%">
+          <el-table id="item" :data="SocialLists" style="width: 100%" @row-click="userSocial">
             <el-table-column type="index" label="序号" width="120"></el-table-column>
             <el-table-column prop="username" label="姓名" width="120"></el-table-column>
             <el-table-column prop="mobile" label="手机" width="120"></el-table-column>
@@ -44,9 +48,6 @@
             <el-table-column prop="providentFundCity" label="公积金城市" width="120"></el-table-column>
             <el-table-column prop="socialSecurityBase" label="社保基数" width="120"></el-table-column>
             <el-table-column prop="providentFundBase" label="公积金基数" width="120"></el-table-column>
-            <el-table-column label="操作">
-              <el-button class="btn" @click="userSocial()">查看</el-button>
-            </el-table-column>
           </el-table>
         </div>
       </el-col>
@@ -68,7 +69,7 @@
 </template>
 
 <script>
-import { getSocialListAPI, getSettingsAPI } from "@/api/index";
+import { getSocialListAPI, getSettingsAPI,departmentListAPI } from "@/api/index";
 import elForm from '../Home/elForm/elForm.vue';
 // import { mapGetters } from "vuex";
 
@@ -94,6 +95,8 @@ export default {
       ],
       SocialLists: [],
       city:[],
+      departmentList: [],
+      departmentChecks:[],
       yearMonth: "",
       page: {
         page: 1,
@@ -102,9 +105,9 @@ export default {
       },
     };
   },
-  // created() {
-  //   this.getSocialList();
-  // },
+  created() {
+    this.getDepartments()
+  },
   async mounted() {
     // 获取社保下方界面
     const res = await getSocialListAPI({});
@@ -129,11 +132,26 @@ export default {
         path: "/layout/monthlyReport"
       });
     },
-    userSocial(){
+    userSocial(row){
       this.$router.push({
-        path: "/layout/userSocial"
+        path: "/layout/userSocial",
+        query:{
+          id:row.id
+        }
       });
     },
+    // 获取组织架构
+    async getDepartments() {
+      const depts = await departmentListAPI()
+      this.departmentList = depts.data.data.depts
+      // console.log(this.departmentList);
+    },
+    checkChange() {
+      const selectParams = {
+        'departmentChecks': this.departmentChecks,
+      }
+      this.$parent.changeSelectParams && this.$parent.changeSelectParams(selectParams)
+    }
   },
   computed: {
     // ...mapGetters(["SocialLists"]),
@@ -156,7 +174,7 @@ export default {
 }
 .grid-content {
   border-radius: 5px;
-  min-height: 200px;
+  min-height: 250px;
   box-shadow: 2px 4px 4px 2px rgba(195, 195, 195, 0.692);
 }
 .grid-content .btn{

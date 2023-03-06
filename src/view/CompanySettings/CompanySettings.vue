@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="top">
-      <el-tabs v-model="activeName" @tab-click="handleClick" class="left">
+      <el-tabs v-model="activeName" @tab-click="" class="left">
       <el-tab-pane label="角色管理" name="first" class="role"><RoleManagement /></el-tab-pane>
       <el-tab-pane label="公司信息" name="second" class="comp"><CompanyInformation /></el-tab-pane>
   </el-tabs>

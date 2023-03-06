@@ -203,27 +203,30 @@ export default {
     getCompany() {
       this.$store.dispatch("organ/getHomePage").then(res => {
         this.company = this.$store.getters.depts;
+        //设置默认状态全部为false
+        this.company.forEach((item, index) => {
+          this.List[index] = false
+        })
       });
     },
     //部门筛选
     departFilter(name,index) {
-      console.log(this.$store.getters.list);
       this.$store.dispatch("salarys/getSalarys").then(() => {
         if (
           this.List.every((item) => item === true) ||
-          this.List.every((item) => item === false)
+          this.List.every((item) => item === false) //如果全选或全部选
         ) {
-          this.salarysList = this.$store.getters.list;
+          this.salarysList = this.$store.getters.list;  //显示所有数据
         } else {
           this.salarysList = this.$store.getters.list;
-          this.nameList = [];
+          this.nameList = []; //空数组存放部门名称
           this.List.forEach((item, index) => {
             if (item) {
-              this.nameList.push(this.company[index].name);
+              this.nameList.push(this.company[index].name);   //如果List里的状态为选中true，把相同下表的部门名称添加到空数组
             }
           });
           this.salarysList = this.salarysList.filter((item, index) => {
-            return this.nameList.indexOf(item.departmentName) != -1;
+            return this.nameList.indexOf(item.departmentName) != -1;  //过滤返回新数组里包含相同名称的部门，重新赋值给数据遍历数组
           });
         }
       });

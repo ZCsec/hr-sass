@@ -11,13 +11,15 @@
 import { getLogin } from '@/api/login/login'
 
 //社保
-import { getSocialList, getSettings, getArchivingCont, getArchivingList, getYearsMonth, getArchivingArchive } from "@/api/social/social"
+import { getSocialList, getSettings, getArchivingCont, getArchivingList, getYearsMonth, getArchivingArchive, user, citysItem } from "@/api/social/social"
 export const getSocialListAPI = getSocialList;
 export const getSettingsAPI = getSettings;
 export const getArchivingContAPI = getArchivingCont;
 export const getArchivingListAPI = getArchivingList;
 export const getYearsMonthAPI = getYearsMonth;
 export const getArchivingArchiveAPI = getArchivingArchive;
+export const userAPI = user;
+export const citysItemAPI = citysItem;
 
 //权限
 import { getPermissionList, delPermission, addPermission, updatePermission, getPermissionDetail } from "@/api/permission/permission"
@@ -27,8 +29,13 @@ export const addPermissionAPI = addPermission;  //添加
 export const updatePermissionAPI = updatePermission;  //更改
 export const getPermissionDetailAPI = getPermissionDetail;  //获取权限详情
 
-
 import { getApplication } from '@/api/home/application'
+
+
+//月份报表数据接口
+//导入
+export const importEmployeeAPI = importEmployee
+
 export const getApplicationAPI = getApplication
 
 
@@ -36,7 +43,6 @@ import { getProcess, getProcessDetail, getProcessRate } from '@/api/approval/app
 export const getProcessAPI = getProcess
 export const getProcessDetailAPI = getProcessDetail
 export const getProcessRateAPI = getProcessRate
-
 
 import { getUserData, getUserMsg } from '@/api/home/getUserMsg'
 export const getUserDataAPI = getUserData
@@ -51,31 +57,36 @@ export const updateDepartmentAPI = updateDepartment
 export const deleteDepartmentAPI = deleteDepartment
 export const checkDepartmentAPI = checkDepartment
 
-
 import { getDefinition, getSuspend } from '@/api/approval/securitySetting'
 export const getDefinitionAPI = getDefinition
 export const getSuspendAPI = getSuspend
-
 
 import { getInfo, saveInfo } from '@/api/approval/myInfo'
 export const getInfoAPI = getInfo
 export const saveInfoAPI = saveInfo
 
 //考勤
-import { getAttendancesList, getRepotsList,importEmployee,reportsList, file, newReports, getReports } from '@/api/attendances/attendances'
+import { getAttendancesList, getRepotsList, importEmployee, reportsList, file, newReports, getReports } from '@/api/attendances/attendances'
 export const getAttendancesListAPI = getAttendancesList     //获取考勤数据列表
 export const getRepotsListAPI = getRepotsList   //获取月份报表数据
-export const importEmployeeAPI = importEmployee     //导入
 export const reportsListAPI = reportsList       //导出
 export const fileAPI = file     // 月份归档
 export const newReportsAPI = newReports     // 新建报表
 export const getReportsAPI = getReports     // 获取月考勤报表数据
 
 //工资
-import { getSalarysList, getSalaryDetail, setSalarys, getEmployeetDetail, setAllowance, settings, submitSettings} from '@/api/salarys/salarys'
-export const getSalarysListAPI = getSalarysList     //工资列表
-export const getSalaryDetailAPI = getSalaryDetail    //调薪//获取员工薪资
-export const setSalarysAPI = setSalarys     //定薪
+import {
+  getSalarysList,
+  getSalaryDetail,
+  setSalarys,
+  getEmployeetDetail,
+  setAllowance,
+  settings,
+  submitSettings
+} from '@/api/salarys/salarys'
+export const getSalarysListAPI = getSalarysList //工资列表
+export const getSalaryDetailAPI = getSalaryDetail //调薪//获取员工薪资
+export const setSalarysAPI = setSalarys //定薪
 export const getEmployeetDetailAPI = getEmployeetDetail //员工详情
 export const setAllowanceAPI = setAllowance  //津贴
 export const settingsAPI = settings     //获取薪资/津贴列表
