@@ -12,10 +12,9 @@ export default {
   actions: {
     async getSalarys(context) {
       const res = await getSalarysListAPI(
-        {"total":0,"page":1,"pageSize":10,"approvalsTypeChecks":[],"approvalsStateChecks":[],"departmentChecks":[]}
+        {"total":0,"page":1,"pageSize":60,"approvalsTypeChecks":[],"approvalsStateChecks":[],"departmentChecks":[]}
       )
       //表格数据
-      console.log(res.data.data.rows)
       context.commit('getSalarysList', res.data.data)
     }
   }

@@ -11,31 +11,47 @@ export const getSalarysList = data => request({
 export function getSalaryDetail(params) {
   return request({
     url: `/api/salarys/modify/${params.userId}`,
-    method:'get',
+    method: 'get',
     params
   })
 }
 
 //定薪
-export function setSalarys(userId){
+export function setSalarys(userId) {
   request({
-    url:`/api/salarys/init/${userId}`,
-    method:'post'
+    url: `/api/salarys/init/${userId}`,
+    method: 'post'
   })
 }
 
 //员工详情
-export const getEmployeetDetail =params=>({
+export const getEmployeetDetail = params => request({
   url: `/api/sys/user/${params.id}`,
-  method:'get',
+  method: 'get',
   params
 })
 
-//导入
-export function importEmployee(data) {
+//保存津贴设置
+export const setAllowance = data => request({
+  url: '/salarys/settings',
+  method: "post",
+  data
+})
+
+//获取薪资/津贴列表
+export function settings(params){
   return request({
-    url: '/api/sys/user/batch',
-    method: 'post',
+    url:'/api/salarys/settings',
+    method:'get',
+    params
+  })
+}
+
+//提交计薪/津贴设置列表
+export function submitSettings(data){
+  return request({
+    url:`/api/salarys/settings`,
+    method:'post',
     data
   })
 }
