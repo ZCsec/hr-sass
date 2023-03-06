@@ -52,7 +52,6 @@ export default {
   data() {
     return {
       currentPage: 1,
-      // total: 10,
       tableData: [
         // {
         //   date: '2016-05-02',
@@ -117,7 +116,6 @@ export default {
       handler(newVal, oldVal) {
         // 在函数内对数组进行遍历判断
         // 1.全选或全不选的状态下显示完整的数据
-
         if (
           this.checkList.every((item) => item === false) ||
           this.checkList.every((item) => item === true)
@@ -148,17 +146,13 @@ export default {
             .replace('撤销', 4)
             .split(',')
           // 对数组内的值进行转型
-
           // console.log(this.stateList)
-
           this.getProcess().then(() => {
-            // this.list = this.list.slice(0, 1)
             this.list = this.list.filter((item, index) => {
               return this.stateList.indexOf(item.processState) != -1
             })
           })
-          // console.log('有个别复选按钮被选中')
-          console.log(this.list)
+          // console.log(this.list)
         }
       },
       deep: true

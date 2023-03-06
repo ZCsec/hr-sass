@@ -10,7 +10,7 @@
         <div class="btunshtn">
           <p>江苏传智播客教育科技股份有限公司</p>
           <div class="btunshtn_right">
-            <span>负责人</span>
+            <span class="fzPerson">负责人</span>
             <span
               ><el-dropdown>
                 <span class="el-dropdown-link">
@@ -352,5 +352,9 @@ export default {
       background-color: rgb(207, 207, 207);
     }
   }
+}
+.fzPerson {
+  position: relative;
+  left: -300px;
 }
 </style>
