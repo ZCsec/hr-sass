@@ -206,12 +206,15 @@ this.getEmployeeList()
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .app {
   margin-top: 15px;
 }
 .block {
   float: right;
   margin-top: 10px;
+}
+/deep/.el-table .el-table__cell{
+text-align:center;
 }
 </style>
