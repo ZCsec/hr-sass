@@ -75,7 +75,6 @@
   </el-table>
   <div class="block">
     <el-pagination
-      @size-change=""
       @current-change="changepage"
       :current-page.sync="page.page"
       :page-size="page.size"

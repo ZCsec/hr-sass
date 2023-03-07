@@ -12,13 +12,13 @@ import { getLogin } from '@/api/login/login'
 
 //社保
 import {
-  getSocialList,
-  getSettings,
-  getArchivingCont,
-  getArchivingList,
-  getYearsMonth,
-  getArchivingArchive,
-  user,
+  getSocialList, 
+  getSettings, 
+  getArchivingCont, 
+  getArchivingList, 
+  getYearsMonth, 
+  getArchivingArchive, 
+  user, 
   citysItem
 } from '@/api/social/social'
 export const getSocialListAPI = getSocialList
@@ -65,13 +65,8 @@ import { getUserData, getUserMsg } from '@/api/home/getUserMsg'
 export const getUserDataAPI = getUserData
 export const getUserMsgAPI = getUserMsg
 
-import {
-  departmentList,
-  addDepartment,
-  updateDepartment,
-  deleteDepartment,
-  checkDepartment
-} from '@/api/organ/Organ.js'
+
+import { departmentList, addDepartment, updateDepartment, deleteDepartment, checkDepartment } from '@/api/organ/organ.js'
 export const departmentListAPI = departmentList
 export const getLoginAPI = getLogin
 export const addDepartmentAPI = addDepartment
@@ -90,8 +85,8 @@ export const saveInfoAPI = saveInfo
 //考勤
 import {
   getAttendancesList,
-  getRepotsList,
-  importEmployee,
+  getRepotsList, 
+  importEmployee, 
   reportsList,
   file,
   newReports,
