@@ -100,12 +100,8 @@ export default {
     JobInfo,
   },
   created() {
-   console.log(this.userId);
-   console.log(this)
-   console.log(this.$router)
-   console.log(this.username)
     this.getUserDetailById();
-  },
+  }
 };
 </script>
 

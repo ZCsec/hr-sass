@@ -7,9 +7,9 @@
             <img src alt />
           </div>
           <div>
-            <li>管理员</li>
-            <li>部门：总裁办</li>
-            <li>入职时间：2018-10-12</li>
+            <li>姓名：{{userName}}</li>
+            <li>部门：{{departName}}</li>
+            <li>入职时间：{{startTime}}</li>
           </div>
         </div>
         <div class="allowance">
@@ -104,12 +104,17 @@
 </template>
   
   <script>
-import { getSalaryDetailAPI } from "@/api/index";
+import { getSalarysListAPI } from "@/api/index";
 export default {
   data() {
     return {
       input: "",
-      input1: ""
+      input1: "",
+      idList: [],
+      nameList: [],
+      userName:'',
+      departName:'',
+      startTime:''
     };
   },
   created() {
@@ -121,13 +126,31 @@ export default {
     // },
     async getEmpliyeet() {
       var url = window.location.href;
-      var index = url.lastIndexOf("\/");
+      var index = url.lastIndexOf("/");
       url = url.substring(index + 1, url.length);
       console.log(url);
-      const res =await getSalaryDetailAPI(
-        {userId:url}
-      );
-      console.log(res.data);
+      const res = await getSalarysListAPI({
+        total: 0,
+        page: 1,
+        pageSize: 60,
+        approvalsTypeChecks: [],
+        approvalsStateChecks: [],
+        departmentChecks: []
+      });
+      this.idList = [];
+      this.idList = res.data.data.rows;
+      this.idList.map(item => {
+        if (item.id == url) {
+          this.nameList.push(
+            item.username,
+            item.departmentName,
+            item.timeOfEntry
+          );
+        }
+      });
+      this.userName=this.nameList[0];
+      this.departName=this.nameList[1];
+      this.startTime=this.nameList[2].substring(0, 10)
     }
   }
 };
@@ -148,10 +171,11 @@ export default {
     background-size: 80px;
   }
   div:nth-of-type(2) {
-    width: 28%;
+    width: 50%;
     height: 120px;
     margin-left: 20px;
     li {
+      width: 100%;
       list-style: none;
       height: 24px;
       line-height: 24px;

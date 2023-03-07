@@ -18,7 +18,8 @@ export default{
        async getAttendance(context){
         const res = await getAttendancesListAPI({
             page:1,
-            pagesize:50
+            pagesize:50,
+            total:100
         });
         context.commit("getAttendList",res.data.data.data);
        },
