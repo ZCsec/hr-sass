@@ -15,14 +15,14 @@
   :default-checked-keys="[5]"
   :props="defaultProps">
 </el-tree>
-<el-checkbox v-model="checked" class="check">组织架构</el-checkbox>
-<el-checkbox v-model="checked" class="check">公司设置</el-checkbox>
-<el-checkbox v-model="checked" class="check">权限管理</el-checkbox>
-<el-checkbox v-model="checked" class="check">社保</el-checkbox>
-<el-checkbox v-model="checked" class="check">考勤</el-checkbox>
-<el-checkbox v-model="checked" class="check">工资</el-checkbox>
-<el-checkbox v-model="checked" class="check">员工自助</el-checkbox>
-<el-checkbox v-model="checked" class="check">审批</el-checkbox>
+<el-checkbox v-model="checked1" class="check">组织架构</el-checkbox>
+<el-checkbox v-model="checked2" class="check">公司设置</el-checkbox>
+<el-checkbox v-model="checked3" class="check">权限管理</el-checkbox>
+<el-checkbox v-model="checked4" class="check">社保</el-checkbox>
+<el-checkbox v-model="checked5" class="check">考勤</el-checkbox>
+<el-checkbox v-model="checked6" class="check">工资</el-checkbox>
+<el-checkbox v-model="checked7" class="check">员工自助</el-checkbox>
+<el-checkbox v-model="checked8" class="check">审批</el-checkbox>
   <!-- 选项 -->
   <span slot="footer" class="dialog-footer">
     <el-button @click="dialogVisible = false">取 消</el-button>
@@ -38,6 +38,14 @@ export default {
 
   data() {
     return {
+      checked1:true,
+      checked2:true,
+      checked3:true,
+      checked4:true,
+      checked5:true,
+      checked6:true,
+      checked7:true,
+      checked8:true,
       dialogVisible: false,
        data: [{
           id: 3,

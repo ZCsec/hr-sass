@@ -10,7 +10,7 @@ export const getSalarysList = data => request({
 //获取员工薪资  //调薪
 export function getSalaryDetail(params) {
   return request({
-    url: `/api/salarys/modify/${params.userId}`,
+    url: `/prod-api/salarys/modify/${params.userId}`,
     method: 'get',
     params
   })
