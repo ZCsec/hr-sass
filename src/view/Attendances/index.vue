@@ -11,9 +11,7 @@
             <div>
               <button class="el-button" @click="import1()">导入</button>
               <button class="el-button" @click="open">提醒</button>
-              <button class="el-button" @click="dialogFormVisible = true">
-                设置
-              </button>
+              <button class="el-button" @click="dialogFormVisible = true">设置</button>
               <button class="el-button" @click="history()">历史归档</button>
               <button class="el-button" @click="isMonth()">3月份报表</button>
             </div>
@@ -24,8 +22,7 @@
                 :key="index"
                 v-model="checkList[index]"
                 @change="departFilter(item.name, index)"
-                >{{ item.name }}</el-checkbox
-              >
+              >{{ item.name }}</el-checkbox>
             </div>
             <div>
               <span>考勤状态：</span>
@@ -41,34 +38,19 @@
       </el-row>
 
       <div class="table1">
-        <el-table
-          :data="acttendList"
-          type="index"
-          border
-          style="width: 100%"
-          max-height="750"
-        >
-          <el-table-column prop="id" label="序号" width="150"></el-table-column>
+        <el-table :data="acttendList" type="index" border style="width: 100%" max-height="750">
+          <el-table-column align="center" prop="id" label="序号" width="150"></el-table-column>
+          <el-table-column align="center" prop="username" label="姓名" width="120"></el-table-column>
+          <el-table-column align="center" prop="workNumber" label="工号" width="120"></el-table-column>
+          <el-table-column align="center" prop="departmentName" label="部门" width="120"></el-table-column>
+          <el-table-column align="center" prop="mobile" label="手机" width="220"></el-table-column>
           <el-table-column
-            prop="username"
-            label="姓名"
-            width="120"
-          ></el-table-column>
-          <el-table-column
-            prop="workNumber"
-            label="工号"
-            width="120"
-          ></el-table-column>
-          <el-table-column
-            prop="departmentName"
-            label="部门"
-            width="120"
-          ></el-table-column>
-          <el-table-column
-            prop="mobile"
-            label="手机"
-            width="300"
-          ></el-table-column>
+            v-for="(item,index) in timework"
+            :key="index"
+            align="center"
+            :label="item"
+            width="150"
+          >{{outwork}}</el-table-column>
         </el-table>
       </div>
       <!-- 设置点击效果 -->
@@ -96,8 +78,7 @@
                   step: '00:15',
                   end: '18:30'
                 }"
-              ></el-time-select
-              >-
+              ></el-time-select>-
               <el-time-select
                 style="width: 140px"
                 v-model="endTime"
@@ -107,8 +88,7 @@
                   end: '18:30',
                   minTime: startTime
                 }"
-              ></el-time-select
-              >-
+              ></el-time-select>-
               <el-time-select
                 style="width: 140px"
                 v-model="startTime1"
@@ -117,8 +97,7 @@
                   step: '00:15',
                   end: '17:30'
                 }"
-              ></el-time-select
-              >-
+              ></el-time-select>-
               <el-time-select
                 style="width: 140px"
                 v-model="endTime1"
@@ -151,19 +130,11 @@
             <div class="main3">
               <li>
                 事假
-                <el-switch
-                  v-model="value1"
-                  active-color="#13ce66"
-                  inactive-color="#ff4949"
-                ></el-switch>
+                <el-switch v-model="value1" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
               </li>
               <li>
                 事假
-                <el-switch
-                  v-model="value1"
-                  active-color="#13ce66"
-                  inactive-color="#ff4949"
-                ></el-switch>
+                <el-switch v-model="value1" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
               </li>
             </div>
           </el-tab-pane>
@@ -183,20 +154,12 @@
               <div>
                 <div class="monny">
                   迟到扣款
-                  <el-switch
-                    v-model="value3"
-                    active-color="#13ce66"
-                    inactive-color="#ff4949"
-                  ></el-switch>
+                  <el-switch v-model="value3" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
                 </div>
                 <div class="attentInfo">
                   <p>
                     迟到≤
-                    <el-input
-                      class="inputInfo"
-                      value="30"
-                      style="width: 50px"
-                    />分钟
+                    <el-input class="inputInfo" value="30" style="width: 50px" />分钟
                   </p>
                   <div class="deductionInfo">
                     <p>
@@ -214,11 +177,7 @@
                     </p>
                     <p>
                       迟到>
-                      <el-input
-                        class="inputInfo"
-                        disabled
-                        @input.native="handleInput($event)"
-                      />次，每次扣款
+                      <el-input class="inputInfo" disabled @input.native="handleInput($event)" />次，每次扣款
                       <el-input
                         v-model="text2"
                         class="inputInfo"
@@ -244,11 +203,7 @@
                 </div>
                 <div>
                   早退扣款
-                  <el-switch
-                    v-model="value3"
-                    active-color="#13ce66"
-                    inactive-color="#ff4949"
-                  ></el-switch>
+                  <el-switch v-model="value3" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
                 </div>
                 <div class="attentInfo">
                   <p>
@@ -302,11 +257,7 @@
                 </div>
                 <div>
                   旷工扣款
-                  <el-switch
-                    v-model="value3"
-                    active-color="#13ce66"
-                    inactive-color="#ff4949"
-                  ></el-switch>
+                  <el-switch v-model="value3" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
                 </div>
                 <div class="attentInfo">
                   <p>
@@ -361,8 +312,7 @@
                               v-model="value5"
                               active-color="#13ce66"
                               inactive-color="#ff4949"
-                            ></el-switch
-                            >&nbsp;&nbsp; 工作日可申请加班
+                            ></el-switch>&nbsp;&nbsp; 工作日可申请加班
                           </div>
                         </el-col>
                         <el-col :span="16">
@@ -402,8 +352,7 @@
                               v-model="value6"
                               active-color="#13ce66"
                               inactive-color="#ff4949"
-                            ></el-switch
-                            >&nbsp;&nbsp; 休息日可申请加班
+                            ></el-switch>&nbsp;&nbsp; 休息日可申请加班
                           </div>
                         </el-col>
                         <el-col :span="16">
@@ -443,8 +392,7 @@
                               v-model="value7"
                               active-color="#13ce66"
                               inactive-color="#ff4949"
-                            ></el-switch
-                            >&nbsp;&nbsp; 法定节假日可申请加班
+                            ></el-switch>&nbsp;&nbsp; 法定节假日可申请加班
                           </div>
                         </el-col>
                         <el-col :span="16">
@@ -478,19 +426,10 @@
                     </div>
                   </el-form-item>
                   <el-form-item label="打卡验证:" prop="isClock">
-                    <el-switch
-                      v-model="value4"
-                      active-color="#13ce66"
-                      inactive-color="#ff4949"
-                    ></el-switch
-                    >&nbsp;&nbsp;加班需要有打卡记录
+                    <el-switch v-model="value4" active-color="#13ce66" inactive-color="#ff4949"></el-switch>&nbsp;&nbsp;加班需要有打卡记录
                   </el-form-item>
                   <el-form-item label="开启补偿:" prop="isCompensationint">
-                    <el-switch
-                      v-model="value8"
-                      active-color="#13ce66"
-                      inactive-color="#ff4949"
-                    ></el-switch>
+                    <el-switch v-model="value8" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
                   </el-form-item>
                   <el-form-item label="调休设置:" prop="latestEffectDate">
                     <div class="ruleInfo">
@@ -522,9 +461,7 @@
         </div>
         <div slot="footer" class="dialog-footer">
           <el-button @click="dialogFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="dialogFormVisible = false"
-            >保存更新</el-button
-          >
+          <el-button type="primary" @click="dialogFormVisible = false">保存更新</el-button>
         </div>
       </el-dialog>
     </div>
@@ -535,24 +472,59 @@
 export default {
   data() {
     return {
+      //日期
+      timework: [
+        "3/1",
+        "3/2",
+        "3/3",
+        "3/4",
+        "3/5",
+        "3/6",
+        "3/7",
+        "3/8",
+        "3/9",
+        "3/10",
+        "3/11",
+        "3/12",
+        "3/13",
+        "3/14",
+        "3/15",
+        "3/16",
+        "3/17",
+        "3/18",
+        "3/19",
+        "3/20",
+        "3/21",
+        "3/22",
+        "3/23",
+        "3/24",
+        "3/25",
+        "3/26",
+        "3/27",
+        "3/28",
+        "3/29",
+        "3/30",
+        "3/31"
+      ],
       //考勤状态
       radio: 1,
       //监听部门变量
-      componyName: '',
+      componyName: "",
       //时间集合
       dateList: [],
       //设置按钮状态
       dialogFormVisible: false,
       List: [],
-
+      //旷工
+      outwork: "正常",
       //设置选项卡片
-      activeName: 'first',
-      value: '',
-      time: '',
-      startTime: '',
-      endTime: '',
-      startTime1: '',
-      endTime1: '',
+      activeName: "first",
+      value: "",
+      time: "",
+      startTime: "",
+      endTime: "",
+      startTime1: "",
+      endTime1: "",
       value1: true,
       value2: false,
       value3: false,
@@ -561,135 +533,135 @@ export default {
       value6: false,
       value7: false,
       value8: false,
-      input: '',
+      input: "",
       //扣款
-      text: '',
-      text1: '',
-      text2: '',
-      text3: '',
-      text4: '',
-      text5: '',
-      text6: '',
-      text7: '',
-      text8: '',
-      text9: '',
+      text: "",
+      text1: "",
+      text2: "",
+      text3: "",
+      text4: "",
+      text5: "",
+      text6: "",
+      text7: "",
+      text8: "",
+      text9: "",
       //调休
-      furlough: '',
-      furlough1: '',
-      furlough2: '',
-      furlough3: '',
-      furlough4: '',
-      furlough5: '',
+      furlough: "",
+      furlough1: "",
+      furlough2: "",
+      furlough3: "",
+      furlough4: "",
+      furlough5: "",
       //部门集合
       company: {},
       //考勤集合
       acttendList: [],
       form: {
-        name: '',
-        region: '',
-        date1: '',
-        date2: '',
+        name: "",
+        region: "",
+        date1: "",
+        date2: "",
         delivery: false,
         type: [],
-        resource: '',
-        desc: ''
+        resource: "",
+        desc: ""
       },
       checkList: [],
       nameList: []
-    }
+    };
   },
   created() {
-    this.getDispatch()
-    this.getAttend()
+    this.getDispatch();
+    this.getAttend();
   },
   methods: {
     //部门筛选
     departFilter(name, index) {
-      this.$store.dispatch('attendances/getAttendance').then(() => {
+      this.$store.dispatch("attendances/getAttendance").then(() => {
         // 如果所有复选按钮被选中或都不被选中
         if (
-          this.checkList.every((item) => item === true) ||
-          this.checkList.every((item) => item === false)
+          this.checkList.every(item => item === true) ||
+          this.checkList.every(item => item === false)
         ) {
-          this.acttendList = this.$store.getters.data
+          this.acttendList = this.$store.getters.data;
         } else {
           // 如果有单个或多个复选按钮被选中
-          this.acttendList = this.$store.getters.data
-          this.nameList = []
+          this.acttendList = this.$store.getters.data;
+          this.nameList = [];
           this.checkList.forEach((item, index) => {
             if (item) {
-              this.nameList.push(this.company[index].name)
+              this.nameList.push(this.company[index].name);
             }
-          })
+          });
 
           this.acttendList = this.acttendList.filter((item, index) => {
-            return this.nameList.indexOf(item.departmentName) != -1
-          })
+            return this.nameList.indexOf(item.departmentName) != -1;
+          });
         }
-      })
+      });
     },
     //提醒
     open() {
       this.$confirm(
-        '系统将通过邮件与短信的形式，对全体员工中存在旷工的考勤进行提醒，该提醒每月仅可发送 1 次。',
-        '提醒',
+        "系统将通过邮件与短信的形式，对全体员工中存在旷工的考勤进行提醒，该提醒每月仅可发送 1 次。",
+        "提醒",
         {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
         }
       )
         .then(() => {
           this.$message({
-            type: 'success',
-            message: '提醒成功!'
-          })
+            type: "success",
+            message: "提醒成功!"
+          });
         })
         .catch(() => {
           this.$message({
-            type: 'info',
-            message: '已取消提醒'
-          })
-        })
+            type: "info",
+            message: "已取消提醒"
+          });
+        });
     },
     getDispatch() {
-      this.$store.dispatch('organ/getHomePage').then((res) => {
-        this.company = this.$store.getters.depts
+      this.$store.dispatch("organ/getHomePage").then(res => {
+        this.company = this.$store.getters.depts;
         // console.log(this.company)
         this.company.forEach((item, index) => {
-          this.checkList[index] = false
-        })
+          this.checkList[index] = false;
+        });
         // console.log(this.checkList)
-      })
+      });
     },
     getAttend() {
-      this.$store.dispatch('attendances/getAttendance').then((res) => {
-        this.acttendList = this.$store.getters.data
-      })
+      this.$store.dispatch("attendances/getAttendance").then(res => {
+        this.acttendList = this.$store.getters.data;
+      });
     },
     import1() {
       this.$router.push({
-        path: '/layout/imports'
-      })
+        path: "/layout/imports"
+      });
       // this.$router.replace('/layout/attendances/imdocument');
     },
     history() {
       this.$router.push({
-        path: '/layout/historys'
-      })
+        path: "/layout/historys"
+      });
     },
     //跳转月份表格
     isMonth() {
       this.$router.push({
-        path: '/layout/isMonths'
-      })
+        path: "/layout/isMonths"
+      });
     }
   },
   watch: {
-    componyName: function (val) {
-      console.log(val)
-      var text = this.$refs.text
-      console.log(text)
+    componyName: function(val) {
+      console.log(val);
+      var text = this.$refs.text;
+      console.log(text);
       // if(text=='总裁办'){
       //   this.acttendList=this.acttendList.filter(item=>{
       //     this.acttendList.departmentName=val
@@ -697,10 +669,14 @@ export default {
       // }
     }
   }
-}
+};
 </script>
 
 <style lang="less" scoped>
+.el-table th.el-table__cell > .cell {
+  text-align: center !important;
+}
+
 .chidao1 {
   margin-top: 20px;
 }
@@ -770,7 +746,7 @@ export default {
 .grid-content {
   border-top-left-radius: 2px;
   border-top-right-radius: 2px;
-  min-height: 232px;
+  min-height: auto;
   box-shadow: 0px 0px 8px 1px rgba(195, 195, 195, 0.573);
   overflow: hidden;
   div {
@@ -835,6 +811,7 @@ export default {
     margin: 0;
     margin-left: 20px;
     margin-top: 10px;
+    margin-bottom: 20px;
     span {
       font-weight: 600;
       color: rgb(91, 91, 91);

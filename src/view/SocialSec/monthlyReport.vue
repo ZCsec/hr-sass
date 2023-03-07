@@ -121,7 +121,7 @@ export default {
     const res = await getArchivingContAPI({ month: this.yearVal, opType: 1 })
     this.yearsMonth = res.data.data;
     this.loading = false
-    console.log(res);
+    // console.log(res);
   },
   methods:{
     archive() {

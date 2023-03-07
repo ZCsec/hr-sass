@@ -104,7 +104,7 @@ export default {
     JobInfo,
   },
   created() {
-    console.log(this);
+    // console.log(this);
     bus.$on("userID", id => {
 		this.userId = id
 	});

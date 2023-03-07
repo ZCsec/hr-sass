@@ -238,7 +238,7 @@
             </el-form-item>
 
             <el-form-item>
-              <el-button type="primary">保存更新</el-button>
+              <el-button type="primary" @click="update">保存更新</el-button>
               <el-button @click="$router.back()">取消</el-button>
             </el-form-item>
           </el-form>
@@ -294,7 +294,18 @@ export default {
     dateFormat(row,column){
       let date = row[column.property]
       return moment(date).format('YYYY-MM-DD')
-    }
+    },
+    update() {
+      this.$confirm(`您确定保存吗`).then(async() => {
+        this.$message({
+          type: 'success',
+          message: '操作成功!'
+        }),
+        this.$router.push({
+          path: "/layout/SocialSec"
+        });
+      })
+    },
   },
   
   
@@ -302,6 +313,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
+/deep/.el-table .el-table__cell{
+text-align:center;
+}
 .el-row {
   margin-bottom: 20px;
   color: rgb(88, 88, 88);

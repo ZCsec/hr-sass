@@ -32,7 +32,7 @@ export default {
     return {}
   },
   mounted() {
-    console.log(XLSX)
+    // console.log(XLSX)
   },
   methods: {
     clickLoad() {
