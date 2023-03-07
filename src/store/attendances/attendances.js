@@ -18,8 +18,10 @@ export default{
        async getAttendance(context){
         const res = await getAttendancesListAPI({
             page:1,
-            pagesize:50
+            pagesize:50,
+            total:100
         });
+        console.log(res);
         context.commit("getAttendList",res.data.data.data);
        },
        async getyearList(context){

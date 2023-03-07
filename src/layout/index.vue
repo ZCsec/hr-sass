@@ -145,9 +145,9 @@ export default {
         )
       }
     },
-    handleSelect(item) {
-      console.log(item)
-    },
+    // handleSelect(item) {
+    //   console.log(item)
+    // },
     showInp() {
       this.searchShow = true
       this.$nextTick(() => {

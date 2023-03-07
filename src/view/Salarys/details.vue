@@ -104,12 +104,13 @@
 </template>
   
   <script>
-import { getSalaryDetailAPI } from "@/api/index";
+import { getSalarysListAPI } from "@/api/index";
 export default {
   data() {
     return {
       input: "",
-      input1: ""
+      input1: "",
+      idList:[]
     };
   },
   created() {
@@ -124,10 +125,12 @@ export default {
       var index = url.lastIndexOf("\/");
       url = url.substring(index + 1, url.length);
       console.log(url);
-      const res =await getSalaryDetailAPI(
-        {userId:url}
-      );
-      console.log(res.data);
+      const res=await getSalarysListAPI(
+        {"total":0,"page":1,"pageSize":60,"approvalsTypeChecks":[],"approvalsStateChecks":[],"departmentChecks":[]}
+      )
+      this.idList=[]
+      this.idList=res.data.data.rows;
+      this.idList=this.idList.forEach((item)=>{console.log(item.id);});
     }
   }
 };

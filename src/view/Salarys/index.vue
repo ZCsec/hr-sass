@@ -42,19 +42,18 @@
         </el-col>
       </el-row>
       <div class="table1">
-        <!-- <el-table :data="salarysList" style="width: 100%"> -->
         <el-table :data="salarysList" style="width: 100%" max-height="750">
-          <el-table-column label="序号" prop="id"></el-table-column>
-          <el-table-column label="姓名" prop="username"></el-table-column>
-          <el-table-column label="手机" prop="mobile"></el-table-column>
-          <el-table-column label="工号" prop="workNumber"></el-table-column>
-          <el-table-column label="聘用形式" prop="formOfEmployment"></el-table-column>
-          <el-table-column label="部门" prop="departmentName"></el-table-column>
-          <el-table-column label="入职时间" :formatter="formatter"></el-table-column>
-          <el-table-column label="工资基数" prop="currentBasicSalary"></el-table-column>
-          <el-table-column label="津贴方案" prop="scheme"></el-table-column>
-          <el-table-column label="操作" class="operate">
-            //使用scope绑定行属性
+          <el-table-column align="center" label="序号" prop="id"></el-table-column>
+          <el-table-column align="center" label="姓名" prop="username"></el-table-column>
+          <el-table-column align="center" label="手机" prop="mobile"></el-table-column>
+          <el-table-column align="center" label="工号" prop="workNumber"></el-table-column>
+          <el-table-column align="center" label="聘用形式" prop="formOfEmployment"></el-table-column>
+          <el-table-column align="center" label="部门" prop="departmentName"></el-table-column>
+          <el-table-column align="center" label="入职时间" :formatter="formatter"></el-table-column>
+          <el-table-column align="center" label="工资基数" prop="currentBasicSalary"></el-table-column>
+          <el-table-column align="center" label="津贴方案" prop="scheme"></el-table-column>
+          <el-table-column align="center" label="操作" class="operate">
+            <!-- //使用scope绑定行属性 -->
             <template slot-scope="scope" style>
               <el-button
                 size="mini"
@@ -174,7 +173,7 @@ export default {
       starttime: "", //入职时间
       List: [], //空数组
       salarysList: [], //数据列表
-      nameList:[]
+      nameList: []
     };
   },
   created() {
@@ -205,28 +204,28 @@ export default {
         this.company = this.$store.getters.depts;
         //设置默认状态全部为false
         this.company.forEach((item, index) => {
-          this.List[index] = false
-        })
+          this.List[index] = false;
+        });
       });
     },
     //部门筛选
-    departFilter(name,index) {
+    departFilter(name, index) {
       this.$store.dispatch("salarys/getSalarys").then(() => {
         if (
-          this.List.every((item) => item === true) ||
-          this.List.every((item) => item === false) //如果全选或全部选
+          this.List.every(item => item === true) ||
+          this.List.every(item => item === false) //如果全选或全部选
         ) {
-          this.salarysList = this.$store.getters.list;  //显示所有数据
+          this.salarysList = this.$store.getters.list; //显示所有数据
         } else {
           this.salarysList = this.$store.getters.list;
           this.nameList = []; //空数组存放部门名称
           this.List.forEach((item, index) => {
             if (item) {
-              this.nameList.push(this.company[index].name);   //如果List里的状态为选中true，把相同下表的部门名称添加到空数组
+              this.nameList.push(this.company[index].name); //如果List里的状态为选中true，把相同下标的部门名称添加到空数组
             }
           });
           this.salarysList = this.salarysList.filter((item, index) => {
-            return this.nameList.indexOf(item.departmentName) != -1;  //过滤返回新数组里包含相同名称的部门，重新赋值给数据遍历数组
+            return this.nameList.indexOf(item.departmentName) != -1; //过滤返回新数组里包含相同名称的部门，重新赋值给数据遍历数组
           });
         }
       });
@@ -256,7 +255,7 @@ export default {
         })
         .catch(_ => {});
     },
-    //薪资
+    //薪资列表
     getSalarys() {
       this.$store.dispatch("salarys/getSalarys").then(res => {
         this.salarysList = this.$store.getters.list;
@@ -300,12 +299,12 @@ export default {
         getSalaryDetailAPI({
           currentBasicSalary: this.BaseSalary,
           currentPostWage: this.JobSalary,
-          userId:userId
-        }).then(()=>{
+          userId: userId
+        }).then(() => {
           this.$message({ message: "保存成功", type: "success" });
-        this.$emit("success");
-        this.dialogVisible = false;
-        this.getSalarys();
+          this.$emit("success");
+          this.dialogVisible = false;
+          this.getSalarys();
         });
       }
     },
@@ -447,7 +446,7 @@ export default {
 }
 .grid-content1 {
   border-radius: 2px;
-  min-height: 184px;
+  min-height: auto;
   background: #ffffff2d;
   box-shadow: 0px 0px 8px 1px rgba(195, 195, 195, 0.573);
   div:nth-of-type(1) {
@@ -466,9 +465,10 @@ export default {
   }
   div:nth-of-type(2) {
     width: 97%;
-    height: 120px;
+    height: auto;
     margin-left: 20px;
     line-height: 34px;
+    text-align: left;
     overflow: hidden;
     span {
       font-weight: 600;
