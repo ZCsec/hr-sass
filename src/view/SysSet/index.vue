@@ -215,4 +215,7 @@ a {
 .ope {
   margin-left: 10px;
 }
+.el-table{
+  margin-left: 30px;
+}
 </style>
