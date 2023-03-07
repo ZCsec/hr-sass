@@ -8,6 +8,7 @@
     :data="list"
     style="width: 100%"
     :default-sort = "{prop: 'date', order: 'descending'}"
+    
     >
     <el-table-column
     type="index"
@@ -62,9 +63,9 @@
       :visible="showDialog"
       @close="btnCancel"
      >
-     <el-form label-width="120px" :rules="rules" ref="roleForm">
+     <el-form label-width="120px" :rules="rules" ref="roleForm" :model="roleForm">
       <el-form-item label="角色名称"  prop="name">
-        <el-input v-model="roleForm.name" prop="name"></el-input>
+        <el-input v-model="roleForm.name"></el-input>
       </el-form-item>
       <el-form-item label="角色描述">
         <el-input v-model="roleForm.description"></el-input>
@@ -87,7 +88,7 @@ import { delRole } from '@/api/employee/setting'
 
 
 export default {
-  name: 'HrSassRoleManagement',
+  // name: 'HrSassRoleManagement',
   components :{
    Permissions,
    Revise
@@ -122,7 +123,7 @@ export default {
           total:0
         },
         rules:{
-          name:[{required:true,message:'角色名称不能为空',trigger:'blur'}]
+          name:[{required: true,message: "角色名称不能为空",trigger: "blur"}]
         }
     };
   },
@@ -160,7 +161,6 @@ export default {
       this.showDialog = true
     },
     async btnOK() {
-      console.log(this.$refs);
       try {
         await this.$refs.roleForm.validate()
         if(this.roleForm.id) {
@@ -186,7 +186,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="less">
 .btn33 {
   margin-bottom: 15px;
 }
@@ -211,5 +211,7 @@ export default {
 .pad {
   margin-right: 15px;
 }
-
+/deep/.el-table .el-table__cell{
+text-align:center;
+}
 </style>

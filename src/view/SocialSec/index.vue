@@ -15,7 +15,7 @@
           <el-row style="display:flex;width:1000px">
             <span class="leftName" style="margin-top:30px;">部门：</span>
             <el-checkbox-group v-model="departmentChecks" style="width:700px;margin-top:30px;">
-              <el-checkbox v-for="item in departmentList" :key="item.id" :label="item.id" @change="checkChange" >{{ item.name }}
+              <el-checkbox v-for="(item,id) in departmentList" :key="item.id" :label="item.id" @change="checkChange(item.name,id)" >{{ item.name }}
             </el-checkbox>
             </el-checkbox-group>
             
@@ -106,15 +106,10 @@ export default {
     };
   },
   created() {
-    this.getDepartments()
+    this.getDepartments(),
+    this.mounted()
   },
-  async mounted() {
-    // 获取社保下方界面
-    const res = await getSocialListAPI({});
-    this.SocialLists = res.data.data.rows;
-    console.log(res.data.data.rows);
-    //获取社保上方部门 城市
-  },
+  
   methods: {
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
@@ -140,18 +135,30 @@ export default {
         }
       });
     },
+    async mounted() {
+    // 获取社保下方界面
+      const res = await getSocialListAPI({});
+      this.SocialLists = res.data.data.rows;
+      console.log(res.data.data.rows);
+    },
     // 获取组织架构
     async getDepartments() {
       const depts = await departmentListAPI()
       this.departmentList = depts.data.data.depts
       // console.log(this.departmentList);
     },
-    checkChange() {
-      const selectParams = {
-        'departmentChecks': this.departmentChecks,
+    //部门筛选
+    checkChange(name,id){
+      this.List=this.SocialLists.filter(item=>item.departmentName==name);
+      console.log(name,id);
+      console.log(this.List);
+      //匹配条数为0
+      if(this.List.length==0){
+        this.mounted();  //调用数据接口函数
+      }else if(this.departmentList[id]){
+        this.SocialLists=this.List //不为0，赋值给数据变量
       }
-      this.$parent.changeSelectParams && this.$parent.changeSelectParams(selectParams)
-    }
+    },
   },
   computed: {
     // ...mapGetters(["SocialLists"]),
@@ -160,6 +167,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
+/deep/.el-table .el-table__cell{
+text-align:center;
+}
 .el-row {
   margin-bottom: 20px;
   &:last-child {

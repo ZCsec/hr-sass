@@ -49,7 +49,7 @@ export const getUserDataAPI = getUserData
 export const getUserMsgAPI = getUserMsg
 
 
-import { departmentList, addDepartment, updateDepartment, deleteDepartment, checkDepartment } from '@/api/organ/organ.js'
+import { departmentList, addDepartment, updateDepartment, deleteDepartment, checkDepartment } from '@/api/organ/Organ.js'
 export const departmentListAPI = departmentList
 export const getLoginAPI = getLogin
 export const addDepartmentAPI = addDepartment
