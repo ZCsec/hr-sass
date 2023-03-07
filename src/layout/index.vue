@@ -1,6 +1,6 @@
 <template>
-  <div class="em">
-    <el-container style="height: 690px; border: 1px solid #eee">
+  <div class="em" style="height: 100%; width: 100%">
+    <el-container style="height: 100%; width: 100%; border: 1px solid #eee">
       <el-aside
         width="200px"
         style="background-color: rgb(75, 124, 251); height: 100%"
@@ -61,7 +61,7 @@
         <div class="left-bottom-bg"></div>
       </el-aside>
 
-      <el-container>
+      <el-container style="margin-left: 200px; min-height: 100%">
         <el-header>
           <span style="text-align: left; color: #fff"
             >南昌中兴软件技术有限公司</span
@@ -271,7 +271,7 @@ export default {
 }
 
 .el-aside {
-  position: relative !important;
+  position: fixed !important;
   box-shadow: 3px 0 10px 0 rgba(0, 0, 0, 0.6) !important;
 
   .el-menu {
