@@ -11,7 +11,7 @@
 import { getLogin } from '@/api/login/login'
 
 //社保
-import { getSocialList,getSettings,getArchivingCont,getArchivingList,getYearsMonth,getArchivingArchive,user,citysItem } from "@/api/social/social"
+import { getSocialList, getSettings, getArchivingCont, getArchivingList, getYearsMonth, getArchivingArchive, user, citysItem } from "@/api/social/social"
 export const getSocialListAPI = getSocialList;
 export const getSettingsAPI = getSettings;
 export const getArchivingContAPI = getArchivingCont;
@@ -49,7 +49,7 @@ export const getUserDataAPI = getUserData
 export const getUserMsgAPI = getUserMsg
 
 
-import { departmentList, addDepartment, updateDepartment, deleteDepartment, checkDepartment } from '@/api/organ/Organ.js'
+import { departmentList, addDepartment, updateDepartment, deleteDepartment, checkDepartment } from '@/api/organ/organ.js'
 export const departmentListAPI = departmentList
 export const getLoginAPI = getLogin
 export const addDepartmentAPI = addDepartment
@@ -66,7 +66,7 @@ export const getInfoAPI = getInfo
 export const saveInfoAPI = saveInfo
 
 //考勤
-import { getAttendancesList, getRepotsList,importEmployee,reportsList, file, newReports, getReports } from '@/api/attendances/attendances'
+import { getAttendancesList, getRepotsList, importEmployee, reportsList, file, newReports, getReports } from '@/api/attendances/attendances'
 export const getAttendancesListAPI = getAttendancesList     //获取考勤数据列表
 export const getRepotsListAPI = getRepotsList   //获取月份报表数据
 export const reportsListAPI = reportsList       //导出

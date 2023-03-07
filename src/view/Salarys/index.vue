@@ -31,14 +31,19 @@
             </div>
             <div>
               <span>部门：</span>
-              <el-checkbox v-for="(item,index) in company" :key="index" @change="departFilter(item.name,index)">{{item.name}}</el-checkbox>
+              <el-checkbox
+                v-for="(item,index) in company"
+                :key="index"
+                v-model="List[index]"
+                @change="departFilter(item.name,index)"
+              >{{item.name}}</el-checkbox>
             </div>
           </div>
         </el-col>
       </el-row>
       <div class="table1">
         <!-- <el-table :data="salarysList" style="width: 100%"> -->
-          <el-table :data="salarysList" style="width: 100%" max-height="750">
+        <el-table :data="salarysList" style="width: 100%" max-height="750">
           <el-table-column label="序号" prop="id"></el-table-column>
           <el-table-column label="姓名" prop="username"></el-table-column>
           <el-table-column label="手机" prop="mobile"></el-table-column>
@@ -51,14 +56,18 @@
           <el-table-column label="操作" class="operate">
             //使用scope绑定行属性
             <template slot-scope="scope" style>
-              <el-button size="mini" type="primary" @click="changeSalary(scope.row.id,scope.row.username,scope.row.departmentName,scope.row.timeOfEntry)">调薪</el-button>
+              <el-button
+                size="mini"
+                type="primary"
+                @click="changeSalary(scope.row.id,scope.row.username,scope.row.departmentName,scope.row.timeOfEntry)"
+              >调薪</el-button>
               <el-button type="text" size="mini">
-                <router-link  :to="{'path':'/layout/details/'+scope.row.id}">查看</router-link>
+                <router-link :to="{'path':'/layout/details/'+scope.row.id}">查看</router-link>
               </el-button>
             </template>
           </el-table-column>
         </el-table>
-        
+
         <!-- <div class="block page">
           <el-pagination
             @current-change="changePage"
@@ -67,7 +76,7 @@
             layout="prev, pager, next"
             :total="pageSalary.total"
           ></el-pagination>
-        </div> -->
+        </div>-->
 
         <!-- 调薪 -->
         <el-dialog
@@ -134,21 +143,21 @@
 
 <script>
 import { getDate } from "@/utils/getDate";
-import { getSalaryDetailAPI} from "@/api/index";
+import { getSalaryDetailAPI } from "@/api/index";
 export default {
   data() {
     return {
       //分页
-      pageSalary:{
-        page:1,
-        pagesize:10,
-        total:0
+      pageSalary: {
+        page: 1,
+        pagesize: 10,
+        total: 0
       },
       dialogTableVisible: false,
       formLabelWidth: "80px",
       dialogVisible: false,
       attendList: {},
-      company: {},  //部门列表
+      company: {}, //部门列表
       //基本工资
       BaseSalary: "",
       //岗位工资
@@ -160,11 +169,12 @@ export default {
       topLabel: "转正",
       //员工id
       employeeId: "",
-      username:'',  //名字
-      department:'',  //部门
-      starttime:'', //入职时间
-      List:[],  //空数组
-      salarysList: [],  //数据列表
+      username: "", //名字
+      department: "", //部门
+      starttime: "", //入职时间
+      List: [], //空数组
+      salarysList: [], //数据列表
+      nameList:[]
     };
   },
   created() {
@@ -193,18 +203,33 @@ export default {
     getCompany() {
       this.$store.dispatch("organ/getHomePage").then(res => {
         this.company = this.$store.getters.depts;
+        //设置默认状态全部为false
+        this.company.forEach((item, index) => {
+          this.List[index] = false
+        })
       });
     },
     //部门筛选
-    departFilter(name,index){
-      this.List=this.salarysList.filter(item=>item.departmentName==name);
-      console.log(name,index);
-      //匹配条数为0
-      if(this.List.length==0){
-        this.getSalarys();  //调用数据接口函数
-      }else if(this.company[index]){
-        this.salarysList=this.List //不为0，赋值给数据变量
-      }
+    departFilter(name,index) {
+      this.$store.dispatch("salarys/getSalarys").then(() => {
+        if (
+          this.List.every((item) => item === true) ||
+          this.List.every((item) => item === false) //如果全选或全部选
+        ) {
+          this.salarysList = this.$store.getters.list;  //显示所有数据
+        } else {
+          this.salarysList = this.$store.getters.list;
+          this.nameList = []; //空数组存放部门名称
+          this.List.forEach((item, index) => {
+            if (item) {
+              this.nameList.push(this.company[index].name);   //如果List里的状态为选中true，把相同下表的部门名称添加到空数组
+            }
+          });
+          this.salarysList = this.salarysList.filter((item, index) => {
+            return this.nameList.indexOf(item.departmentName) != -1;  //过滤返回新数组里包含相同名称的部门，重新赋值给数据遍历数组
+          });
+        }
+      });
     },
     // getSalaryDetail(){
     //   this.$store.dispatch('salarys/getSalaryDetail')
@@ -237,6 +262,7 @@ export default {
         this.salarysList = this.$store.getters.list;
       });
     },
+    //时间格式化
     formatter(row) {
       return getDate(row.timeOfEntry);
     },
@@ -255,36 +281,37 @@ export default {
     //   console.log(userId);
     //   console.log(res);
     // }
-    async changeSalary(userId,name,part,time) {
+    async changeSalary(userId, name, part, time) {
       this.dialogVisible = true;
       await getSalaryDetailAPI({
         userId
       });
       this.employeeId = userId;
-      this.username=name;
-      this.department=part;
-      this.starttime=time.substring(0,10);
+      this.username = name;
+      this.department = part;
+      this.starttime = time.substring(0, 10);
     },
     //修改薪资
-    async onCommit(userId) {
+    onCommit(userId) {
       if (this.BaseSalary == "" || this.JobSalary == "") {
         this.$message({ message: "请输入要调整的工资", type: "failed" });
         this.$emit("failed");
       } else {
-        await getSalaryDetailAPI({
+        getSalaryDetailAPI({
           currentBasicSalary: this.BaseSalary,
           currentPostWage: this.JobSalary,
-          userId: userId
-        })
-        this.$message({ message: "保存成功", type: "success" });
+          userId:userId
+        }).then(()=>{
+          this.$message({ message: "保存成功", type: "success" });
         this.$emit("success");
         this.dialogVisible = false;
         this.getSalarys();
+        });
       }
     },
     //分页
-    changePage(page){
-      this.pageSalary.page=page;
+    changePage(page) {
+      this.pageSalary.page = page;
       this.getSalarys();
     }
   }
@@ -438,10 +465,10 @@ export default {
     }
   }
   div:nth-of-type(2) {
-    width: 100%;
+    width: 97%;
     height: 120px;
     margin-left: 20px;
-    line-height: 60px;
+    line-height: 34px;
     overflow: hidden;
     span {
       font-weight: 600;
