@@ -35,7 +35,7 @@
                 v-for="(item,index) in company"
                 :key="index"
                 v-model="List[index]"
-                @change="departFilter(item.name,index)"
+                @change="departFilter()"
               >{{item.name}}</el-checkbox>
             </div>
           </div>
@@ -51,7 +51,7 @@
           <el-table-column align="center" label="部门" prop="departmentName"></el-table-column>
           <el-table-column align="center" label="入职时间" :formatter="formatter"></el-table-column>
           <el-table-column align="center" label="工资基数" prop="currentBasicSalary"></el-table-column>
-          <el-table-column align="center" label="津贴方案" prop="scheme"></el-table-column>
+          <el-table-column align="center" label="津贴方案">{{ scheme }}</el-table-column>
           <el-table-column align="center" label="操作" class="operate">
             <!-- //使用scope绑定行属性 -->
             <template slot-scope="scope" style>
@@ -146,6 +146,7 @@ import { getSalaryDetailAPI } from "@/api/index";
 export default {
   data() {
     return {
+      scheme:'通用方案',
       //分页
       pageSalary: {
         page: 1,
@@ -209,7 +210,7 @@ export default {
       });
     },
     //部门筛选
-    departFilter(name, index) {
+    departFilter() {
       this.$store.dispatch("salarys/getSalarys").then(() => {
         if (
           this.List.every(item => item === true) ||
@@ -224,7 +225,7 @@ export default {
               this.nameList.push(this.company[index].name); //如果List里的状态为选中true，把相同下标的部门名称添加到空数组
             }
           });
-          this.salarysList = this.salarysList.filter((item, index) => {
+          this.salarysList = this.salarysList.filter((item) => {
             return this.nameList.indexOf(item.departmentName) != -1; //过滤返回新数组里包含相同名称的部门，重新赋值给数据遍历数组
           });
         }
@@ -409,7 +410,7 @@ export default {
 }
 .grid-content {
   border-radius: 2px;
-  background: #ffffff2d;
+  background: #ffffff;
   min-height: 64px;
   box-shadow: 0px 0px 8px 1px rgba(195, 195, 195, 0.573);
   div {
@@ -447,7 +448,7 @@ export default {
 .grid-content1 {
   border-radius: 2px;
   min-height: auto;
-  background: #ffffff2d;
+  background: #ffffff;
   box-shadow: 0px 0px 8px 1px rgba(195, 195, 195, 0.573);
   div:nth-of-type(1) {
     width: 100%;

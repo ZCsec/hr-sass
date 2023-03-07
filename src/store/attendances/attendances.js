@@ -21,7 +21,6 @@ export default{
             pagesize:50,
             total:100
         });
-        console.log(res);
         context.commit("getAttendList",res.data.data.data);
        },
        async getyearList(context){

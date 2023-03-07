@@ -29,7 +29,9 @@ export default {
     UploadExcel
   },
   data() {
-    return {}
+    return {
+      importList:[]
+    }
   },
   mounted() {
     // console.log(XLSX)
@@ -40,7 +42,7 @@ export default {
     },
     async success({ header, results }) {
       const headerData = {
-        入职日期: 'timeOfEntry',
+        timeOfEntry:'入职日期',
         手机号: 'mobile',
         姓名: 'username',
         转正日期: 'correctionTime',
@@ -62,7 +64,8 @@ export default {
         return newInfo
       })
       await importEmployeeAPI(newArr);
-      console.log(newArr);
+      this.importList=newArr;
+      console.log(this.importList);
     },
     // 转化excel的日期格式
     formatDate(numb, format) {
