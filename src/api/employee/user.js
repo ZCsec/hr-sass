@@ -1,4 +1,4 @@
-import request from '@/utils/request'
+import request from '@/utils/requeest'
 
 /** *
  * 登陆接口封装
@@ -6,7 +6,7 @@ import request from '@/utils/request'
 export function login(data) {
 // 返回一个promise对象
   return request({
-    url: '/sys/login',
+    url: '/api/sys/login',
     method: 'post',
     data
   })
@@ -16,7 +16,7 @@ export function login(data) {
 **/
 export function getUserInfo() {
   return request({
-    url: '/sys/profile',
+    url: '/api/sys/profile',
     method: 'post'
   })
 }
@@ -26,7 +26,7 @@ export function getUserInfo() {
  * ****/
 export function getUserDetailById(id) {
   return request({
-    url: `/sys/user/${id}`
+    url: `/api/sys/user/${id}`
   })
 }
 export function logout() {

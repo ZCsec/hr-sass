@@ -57,7 +57,7 @@
         <el-col :span="12">
           <el-form-item label="员工头像">
             <!-- 放置上传图片 -->
-            <image-upload ref="staffPhoto"></image-upload>
+            <!-- <image-upload ref="staffPhoto"></image-upload> -->
           </el-form-item>
         </el-col>
       </el-row>
@@ -91,7 +91,7 @@
 
         <el-form-item label="员工照片">
           <!-- 放置上传图片 -->
-          <image-upload ref="myStaffPhoto"></image-upload>
+          <!-- <image-upload ref="myStaffPhoto"></image-upload> -->
         </el-form-item>
         <el-form-item label="国家/地区">
           <el-select v-model="formData.nationalArea" class="inputW2">
@@ -515,4 +515,6 @@ export default {
   },
 };
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+
+</style>

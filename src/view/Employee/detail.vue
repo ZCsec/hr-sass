@@ -60,13 +60,12 @@ import { saveUserDetailById } from "@/api/employee/employee";
 import { getUserDetailById } from "@/api/employee/user";
 import UserInfo from "./components/user-info.vue";
 import JobInfo from "./components/job-info.vue";
-import bus from '@/view/Employee/eventBus'
 export default {
   data() {
     return {
       userComponent: "user-info",
       jobComponent: "job-info",
-      userId: '1',
+      userId: this.$route.params.id,
       userInfo: {
         username: "",
         password: "",
@@ -81,9 +80,6 @@ export default {
         ],
       },
     };
-  },
-  mounted() {
-    
   },
   methods: {
     async getUserDetailById() {
@@ -104,12 +100,8 @@ export default {
     JobInfo,
   },
   created() {
-    // console.log(this);
-    bus.$on("userID", id => {
-		this.userId = id
-	});
     this.getUserDetailById();
-  },
+  }
 };
 </script>
 

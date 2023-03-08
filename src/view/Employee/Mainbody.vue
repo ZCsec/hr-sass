@@ -151,8 +151,9 @@ mounted() {
 
   methods: {
     detail(id) {
-      console.log(bus);
-      bus.$emit("userID", id);
+      console.log(bus.$on);
+      console.log(id);
+      console.log(this);
       this.$router.push({
         path:`/layout/detail/${id}`
       })
