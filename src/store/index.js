@@ -16,8 +16,9 @@ import organ from '@/store/modules/Organ'
 //薪资列表
 import salarys from '@/store/salarys/salarys'
 
-
 import employee from '@/store/employee/employee'
+
+import tagsView from '@/store/tagsView/tagsView'
 
 Vue.use(Vuex)
 
@@ -32,7 +33,8 @@ export default new Vuex.Store({
     salarys,
     approval,
     organ,
-    employee
+    employee,
+    tagsView
   },
   // 快捷引用
   getters: {

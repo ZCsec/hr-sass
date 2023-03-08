@@ -100,7 +100,8 @@
           </ul>
           <!-- 站内搜索 -->
         </el-header>
-
+        
+        <tabsView></tabsView>
         <el-main>
           <router-view></router-view>
         </el-main>
@@ -112,6 +113,7 @@
 <script>
 import { removeToken, removeTokenTime } from '@/utils/cookie'
 import screenfull from 'screenfull'
+import tabsView from '@/layout/TabsView/index.vue'
 import { mapState } from 'vuex'
 export default {
   data() {
@@ -178,6 +180,9 @@ export default {
   },
   computed: {
     ...mapState('home', ['username', 'userImg'])
+  },
+  components: {
+    tabsView
   }
 }
 </script>
